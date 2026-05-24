@@ -1,0 +1,12 @@
+[
+  {
+    "paths": ["face_expression_model-shard1"],
+    "weights": [
+      {
+        "name": "face_expression/conv2d/kernel",
+        "shape": [3,3,1,32],
+        "dtype": "float32"
+      }
+    ]
+  }
+]
