@@ -17,7 +17,7 @@ export default defineConfig({
 
       '/api': {
 
-        target: 'http://localhost:5000',
+        target: 'https://namabackend-koyeb.app',
 
         changeOrigin: true,
 
