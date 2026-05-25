@@ -40,7 +40,7 @@ export default function LoginAdmin() {
     try {
 
       const response = await fetch(
-        '/api/admin/login',
+        'fetch("https://silica-purging-durable.ngrok-free.dev/api/admin/login")',
         {
           method: 'POST',
 

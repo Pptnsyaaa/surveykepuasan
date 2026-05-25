@@ -343,7 +343,7 @@ app.get('/', (req, res) => {
 // LOGIN ADMIN MYSQL
 // ===============================
 
-app.post('/api/admin/login', (req, res) => {
+app.post('fetch("https://silica-purging-durable.ngrok-free.dev/api/admin/login")', (req, res) => {
 
   const {
     username,
