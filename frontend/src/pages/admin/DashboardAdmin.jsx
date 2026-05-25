@@ -108,9 +108,7 @@ async()=>{
 try{
 
 const response=
-await fetch(
-'/api/notifications'
-)
+await fetch('https://silica-purging-durable.ngrok-free.dev/api/notifications')
 
 const result=
 await response.json()
@@ -130,12 +128,7 @@ console.log(error)
 const deleteNotification =
 async(id)=>{
   try{
-    const response = await fetch(
-      `/api/notifications/${id}`,
-      {
-        method: 'DELETE'
-      }
-    )
+    const response = await fetch(`https://silica-purging-durable.ngrok-free.dev/api/notifications/${id}`)
 
     if(response.ok){
       setNotifications(prev=>
@@ -159,7 +152,7 @@ async()=>{
       try {
 
         const response =
-  await fetch('/api/survey')
+  await fetch('https://silica-purging-durable.ngrok-free.dev/api/survey')
 
 if(!response.ok){
   throw new Error('API gagal')
@@ -509,12 +502,7 @@ return ()=>clearInterval(interval)
   const markNotificationRead =
   async(id)=>{
     try{
-      const response = await fetch(
-        `/api/notifications/${id}/read`,
-        {
-          method: 'PATCH'
-        }
-      )
+      const response = await fetch(`https://silica-purging-durable.ngrok-free.dev/api/notifications/${id}/read`)
 
       if(response.ok){
         setNotifications(prev=>
@@ -534,12 +522,7 @@ return ()=>clearInterval(interval)
   const markAllNotificationsRead =
   async()=>{
     try{
-      const response = await fetch(
-        '/api/notifications/read-all',
-        {
-          method: 'PATCH'
-        }
-      )
+      const response = await fetch('https://silica-purging-durable.ngrok-free.dev/api/notifications/read-all')
 
       if(response.ok){
         setNotifications(prev=>
