@@ -10,7 +10,7 @@ export const analyzeEmotion = async (imageBlob) => {
 
   const response = await fetch(
 
-    "https://vanity-demanding-liver.ngrok-free.dev/analyze",
+    "https://silica-purging-durable.ngrok-free.dev/analyze",
 
     {
       method: "POST",
