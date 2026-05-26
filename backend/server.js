@@ -19,11 +19,7 @@ const db = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-
-  ssl: {
-  rejectUnauthorized: false
-}
+  port: process.env.DB_PORT
 })
 
 db.connect((err) => {
@@ -31,7 +27,7 @@ db.connect((err) => {
   if (err) {
 
     console.error(
-      'Database connection failed:',
+      '❌ Database connection failed:',
       err
     )
 
@@ -44,48 +40,21 @@ db.connect((err) => {
 })
 
 // ===============================
-// MIDDLEWARE
+// CORS
 // ===============================
 
 app.use(cors({
-
-  origin: function(origin, callback) {
-    const allowedOrigins = [
-      'https://surveykepuasan-seven.vercel.app',
-      'http://localhost:3000',
-      'http://localhost:5173',
-      'http://localhost:5174',
-      'http://127.0.0.1:3000',
-      'http://127.0.0.1:5173',
-      'http://127.0.0.1:5174'
-    ];
-    
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else if (origin && origin.includes('ngrok')) {
-      // Allow ngrok URLs in development
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-
-  methods: [
-    'GET',
-    'POST',
-    'PUT',
-    'DELETE'
+  origin: [
+    "https://surveykepuasan-seven.vercel.app"
   ],
-
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
-
 }))
 
 app.use(express.json())
 
 // ===============================
-// ROUTES MODULAR
+// ROUTES
 // ===============================
 
 app.use('/api/survey', surveyRoutes)
@@ -94,6 +63,18 @@ app.use(
   '/api/notifications',
   notificationsRoutes
 )
+
+// ===============================
+// TEST API
+// ===============================
+
+app.get('/', (req, res) => {
+
+  res.send(
+    '🚀 Backend Survey AI Running'
+  )
+
+})
 
 // ===============================
 // SAVE SURVEY
@@ -106,18 +87,13 @@ app.post('/api/save-survey', (req, res) => {
     const {
       averageRating,
       responses
-
     } = req.body
 
-    // support fakultas provided either at root or nested under `student`
-    const fakultas = req.body.fakultas
+    const fakultas =
+      req.body.fakultas
       || req.body.student?.fakultas
       || req.body.student?.jurusan
       || null
-
-    // ===============================
-    // VALIDASI
-    // ===============================
 
     if (
       !responses ||
@@ -135,10 +111,6 @@ app.post('/api/save-survey', (req, res) => {
 
     }
 
-    // ===============================
-    // INSERT KE TABEL surveys
-    // ===============================
-
     const surveyQuery = `
       INSERT INTO surveys
       (
@@ -155,13 +127,9 @@ app.post('/api/save-survey', (req, res) => {
       surveyQuery,
 
       [
-
         fakultas,
-
         averageRating,
-
         JSON.stringify(responses)
-
       ],
 
       (err, surveyResult) => {
@@ -176,17 +144,15 @@ app.post('/api/save-survey', (req, res) => {
           return res.status(500).json({
 
             status: 'error'
-
           })
 
         }
 
-        // ambil id survey terbaru
         const surveyId =
           surveyResult.insertId
 
         // ===============================
-        // INSERT DETAIL RESPON
+        // INSERT RESPONSES
         // ===============================
 
         for (const item of responses) {
@@ -209,17 +175,11 @@ app.post('/api/save-survey', (req, res) => {
             responseQuery,
 
             [
-
               surveyId,
-
               item.serviceName,
-
               item.rating,
-
               item.comment || null,
-
               item.serviceId || null
-
             ],
 
             (err) => {
@@ -240,20 +200,21 @@ app.post('/api/save-survey', (req, res) => {
         }
 
         // ===============================
-        // RESPONSE SUCCESS
+        // NOTIFICATION
         // ===============================
 
         const notifQuery = `
-  INSERT INTO notifications
-  (
-    pesan,
-    created_at,
-    status
-  )
-  VALUES (?, NOW(), ?)
-`
+          INSERT INTO notifications
+          (
+            pesan,
+            created_at,
+            status
+          )
+          VALUES (?, NOW(), ?)
+        `
 
         db.query(
+
           notifQuery,
 
           [
@@ -277,12 +238,13 @@ app.post('/api/save-survey', (req, res) => {
         )
 
         // ===============================
-        // SENTIMENT ANALYSIS INSERT
+        // SENTIMENT
         // ===============================
 
         try {
 
-          const avg = Number(averageRating) || 0
+          const avg =
+            Number(averageRating) || 0
 
           let hasil = 'Netral'
 
@@ -304,28 +266,52 @@ app.post('/api/save-survey', (req, res) => {
           `
 
           db.query(
+
             sentimentQuery,
+
             [
               surveyId,
               hasil,
               avg
             ],
+
             (sentErr) => {
+
               if (sentErr) {
-                console.error('❌ ERROR SENTIMENT:', sentErr)
+
+                console.error(
+                  '❌ ERROR SENTIMENT:',
+                  sentErr
+                )
+
               } else {
-                console.log('✅ Sentiment berhasil')
+
+                console.log(
+                  '✅ Sentiment berhasil'
+                )
+
               }
+
             }
+
           )
 
         } catch (e) {
-          console.error('❌ Sentiment processing error:', e)
+
+          console.error(
+            '❌ Sentiment processing error:',
+            e
+          )
+
         }
 
         return res.status(200).json({
+
           status: 'success',
-          message: 'Survey berhasil disimpan'
+
+          message:
+            'Survey berhasil disimpan'
+
         })
 
       }
@@ -333,32 +319,27 @@ app.post('/api/save-survey', (req, res) => {
     )
 
   } catch (err) {
-    console.error('❌ Save survey error:', err)
+
+    console.error(
+      '❌ Save survey error:',
+      err
+    )
+
     return res.status(500).json({
+
       status: 'error',
-      message: 'Internal server error'
+
+      message:
+        'Internal server error'
+
     })
+
   }
 
 })
 
 // ===============================
-// GET SURVEY DATA
-// ===============================
-// ===============================
-// TEST API
-// ===============================
-
-app.get('/', (req, res) => {
-
-  res.send(
-    '🚀 Backend Survey AI Running'
-  )
-
-})
-
-// ===============================
-// LOGIN ADMIN MYSQL
+// LOGIN ADMIN
 // ===============================
 
 app.post('/api/admin/login', (req, res) => {
@@ -368,7 +349,6 @@ app.post('/api/admin/login', (req, res) => {
     password
   } = req.body
 
-  // validasi kosong
   if (!username || !password) {
 
     return res.status(400).json({
@@ -382,7 +362,6 @@ app.post('/api/admin/login', (req, res) => {
 
   }
 
-  // query mysql
   const query = `
     SELECT *
     FROM admins
@@ -420,7 +399,6 @@ app.post('/api/admin/login', (req, res) => {
 
       }
 
-      // kalau user tidak ditemukan
       if (results.length === 0) {
 
         return res.status(401).json({
@@ -434,10 +412,8 @@ app.post('/api/admin/login', (req, res) => {
 
       }
 
-      // ambil data admin
       const admin = results[0]
 
-      // update last login
       const updateLogin = `
         UPDATE admins
         SET last_login = NOW()
@@ -449,7 +425,6 @@ app.post('/api/admin/login', (req, res) => {
         [admin.id]
       )
 
-      // login sukses
       return res.status(200).json({
 
         success: true,

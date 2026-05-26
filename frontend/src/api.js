@@ -1,3 +1,33 @@
+// ===============================
+// API CONFIGURATION
+// ===============================
+
+const API_BASE_URL = 
+  import.meta.env.VITE_API_URL || 
+  'https://silica-purging-durable.ngrok-free.dev'
+
+console.log('🔌 API Base URL:', API_BASE_URL)
+
+export const API = {
+  SURVEY: {
+    GET_ALL: `${API_BASE_URL}/api/survey`,
+    SAVE: `${API_BASE_URL}/api/save-survey`
+  },
+  NOTIFICATIONS: {
+    GET_ALL: `${API_BASE_URL}/api/notifications`,
+    MARK_READ: (id) => `${API_BASE_URL}/api/notifications/${id}/read`,
+    READ_ALL: `${API_BASE_URL}/api/notifications/read-all`,
+    DELETE: (id) => `${API_BASE_URL}/api/notifications/${id}`
+  },
+  ADMIN: {
+    LOGIN: `${API_BASE_URL}/api/admin/login`
+  }
+}
+
+// ===============================
+// EMOTION ANALYSIS
+// ===============================
+
 export const analyzeEmotion = async (imageBlob) => {
 
   const formData = new FormData()

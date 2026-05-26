@@ -6,6 +6,8 @@ import {
   EyeOff
 } from 'lucide-react'
 
+import { API } from '../../api'
+
 export default function LoginAdmin() {
 
   const darkMode =
@@ -40,7 +42,7 @@ export default function LoginAdmin() {
     try {
 
       const response = await fetch(
-  'https://silica-purging-durable.ngrok-free.dev/api/admin/login',
+  API.ADMIN.LOGIN,
         {
           method: 'POST',
 

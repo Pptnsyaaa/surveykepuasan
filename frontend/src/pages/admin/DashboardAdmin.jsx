@@ -12,6 +12,8 @@ import * as XLSX from 'xlsx'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 
+import { API } from '../../api'
+
 import Overview from '../../components/dashboard/Overview'
 import PerProgramStudi from '../../components/dashboard/PerProgramStudi'
 import PerLayanan from '../../components/dashboard/PerLayanan'
@@ -108,7 +110,7 @@ async()=>{
 try{
 
 const response=
-await fetch('https://silica-purging-durable.ngrok-free.dev/api/notifications')
+await fetch(API.NOTIFICATIONS.GET_ALL)
 
 const result=
 await response.json()
@@ -128,7 +130,7 @@ console.log(error)
 const deleteNotification =
 async(id)=>{
   try{
-    const response = await fetch(`https://silica-purging-durable.ngrok-free.dev/api/notifications/${id}`)
+    const response = await fetch(API.NOTIFICATIONS.DELETE(id))
 
     if(response.ok){
       setNotifications(prev=>
@@ -152,7 +154,7 @@ async()=>{
       try {
 
         const response =
-  await fetch('https://silica-purging-durable.ngrok-free.dev/api/survey')
+  await fetch(API.SURVEY.GET_ALL)
 
 if(!response.ok){
   throw new Error('API gagal')
@@ -502,7 +504,7 @@ return ()=>clearInterval(interval)
   const markNotificationRead =
   async(id)=>{
     try{
-      const response = await fetch(`https://silica-purging-durable.ngrok-free.dev/api/notifications/${id}/read`)
+      const response = await fetch(API.NOTIFICATIONS.MARK_READ(id))
 
       if(response.ok){
         setNotifications(prev=>
@@ -522,7 +524,7 @@ return ()=>clearInterval(interval)
   const markAllNotificationsRead =
   async()=>{
     try{
-      const response = await fetch('https://silica-purging-durable.ngrok-free.dev/api/notifications/read-all')
+      const response = await fetch(API.NOTIFICATIONS.READ_ALL)
 
       if(response.ok){
         setNotifications(prev=>
