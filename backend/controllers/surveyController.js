@@ -332,17 +332,26 @@ res
 
 )=>{
 
-db.query(
+const period = req.query.period || '30'
 
-`
+const days = parseInt(period)
+
+const sql = `
 
 SELECT *
 
 FROM surveys
 
+WHERE created_at >= DATE_SUB(NOW(), INTERVAL ? DAY)
+
 ORDER BY id DESC
 
-`,
+`
+
+db.query(
+
+sql,
+[days],
 
 (err,results)=>{
 
@@ -361,9 +370,13 @@ err.message
 
 }
 
-res.json(
-results
-)
+res.json({
+
+success: true,
+
+data: results
+
+})
 
 }
 

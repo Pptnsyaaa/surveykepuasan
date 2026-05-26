@@ -46,13 +46,15 @@ db.connect((err) => {
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://surveykepuasan-seven.vercel.app"
+    "https://surveykepuasan-seven.vercel.app",
+    "https://silica-purging-durable.ngrok-free.dev"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }))
 
 app.use(express.json())
+
 
 // ===============================
 // ROUTES
