@@ -286,7 +286,7 @@ if (!navigator.mediaDevices.getUserMedia) {
 
     const response =
     await fetch(
-      "https://rosaliaindah20-emotion-realtime-api.hf.space/analyze",
+      "https://fitrohtunnisha-emotion-realtime-api.hf.space/analyze",
       {
         method: "POST",
 
