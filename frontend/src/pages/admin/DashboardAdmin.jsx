@@ -937,8 +937,6 @@ scrollbar-hide
 
           w-full
           max-w-full
-
-          mx-auto
           ">
 
         {/* MENU UTAMA */}
@@ -1321,10 +1319,13 @@ pointer-events-none
           sm:mt-0
 
           flex
-          justify-end
-          items-center
-          flex-wrap
-          gap-6
+          flex-col
+          xl:flex-row
+
+          xl:justify-between
+          xl:items-start
+
+          gap-8
           mb-10
         ">
 
@@ -1333,9 +1334,7 @@ pointer-events-none
           <div>
 
 <p className="
-text-sm
-text-slate-400
-mb-2
+max-w-[700px]
 ">
 
 Dashboard Monitoring
@@ -1392,10 +1391,12 @@ Pantau respon mahasiswa secara realtime
           <div className="
             flex
             flex-wrap
+
+            xl:justify-end
+
             gap-4
             items-center
           ">
-
             
 
             {/* FILTER */}
