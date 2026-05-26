@@ -45,6 +45,7 @@ db.connect((err) => {
 
 app.use(cors({
   origin: [
+    "http://localhost:5173",
     "https://surveykepuasan-seven.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
