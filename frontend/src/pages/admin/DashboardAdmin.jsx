@@ -4,7 +4,7 @@
 // IMPORT
 // ======================
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 
 import * as XLSX from 'xlsx'
@@ -66,6 +66,13 @@ export default function DashboardAdmin() {
   const [showExport,
     setShowExport] =
       useState(false)
+
+      const [mobileMenu,
+      setMobileMenu] =
+      useState(false)
+
+      const mainRef = useRef(null)
+      const [showHandle, setShowHandle] = useState(false)
 
   // ======================
   // SERVICES
@@ -165,7 +172,7 @@ if(!response.ok){
           await response.json()
 
         const formatted =
-  result.map(item => ({
+  result.data.map(item => ({
 
     ...item,
 
@@ -212,6 +219,8 @@ fetchSurvey()
 
 fetchNotifications()
 
+
+
 const interval=
 
 setInterval(()=>{
@@ -225,6 +234,7 @@ fetchNotifications()
 return ()=>clearInterval(interval)
 
 },[])
+
 
   // ======================
   // FILTER
@@ -566,6 +576,7 @@ return ()=>clearInterval(interval)
 
       <div className="
         min-h-screen
+        overflow-y-auto
         flex
         items-center
         justify-center
@@ -621,7 +632,11 @@ lg:flex
 flex-col
 
 w-[280px]
-min-h-screen
+h-screen
+
+sticky
+top-0
+self-start
 
 bg-gradient-to-b
 from-[#0f172a]
@@ -636,7 +651,7 @@ border-r
 border-slate-800
 
 relative
-overflow-hidden
+overflow-x-hidden
 ">
 
 <div className="
@@ -771,11 +786,18 @@ label:'👨‍🎓 Data Responden'
 
 key={menu.key}
 
-onClick={()=>
-setActiveMenu(
-menu.key
-)
-}
+onClick={() => {
+
+setActiveMenu(menu.key)
+
+setMobileMenu(false)
+
+mainRef.current?.scrollTo({
+  top: 0,
+  behavior: 'smooth'
+})
+
+}}
 
 className={`
 
@@ -788,6 +810,8 @@ py-4
 rounded-2xl
 
 font-medium
+text-sm
+tracking-wide
 
 transition-all
 duration-300
@@ -845,10 +869,12 @@ window.location.href=
 }}
 
 className="
-mt-10
+mt-8
 w-full
 
-py-4
+py-3
+
+text-sm
 
 rounded-2xl
 
@@ -873,16 +899,37 @@ Logout
 
       {/* MAIN */}
 
-      <main className="
-        flex-1
-        p-4
-        sm:p-6
-        lg:p-8
+      <main
+ref={mainRef}
 
-        relative
-        overflow-x-visible
-        overflow-y-auto
-        ">
+onScroll={(e) => {
+
+if(e.currentTarget.scrollTop > 120){
+
+setShowHandle(true)
+
+}else{
+
+setShowHandle(false)
+
+}
+
+}}
+
+className="
+flex-1
+p-4
+sm:p-6
+lg:p-8
+
+relative
+overflow-x-visible
+overflow-y-scroll
+h-screen
+
+scrollbar-hide
+"
+>
 
         <div className="
           relative
@@ -894,70 +941,348 @@ Logout
           mx-auto
           ">
 
-        <div className="lg:hidden mb-6">
-          <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-3">
-            {
-              [
-                { key: 'overview', label: '📈 Overview' },
-                { key: 'layanan', label: '🏢 Per Layanan' },
-                { key: 'jurusan', label: '🎓 Per Program Studi' },
-                { key: 'tren', label: '📅 Tren Waktu' },
-                { key: 'responden', label: '👨‍🎓 Data Responden' }
-              ].map(menu => (
-                <button
-                  key={menu.key}
-                  onClick={() => setActiveMenu(menu.key)}
-                  className={`
-                    w-full
-                    h-[44px] sm:h-[48px]
-                    rounded-xl sm:rounded-2xl
-                    px-2 sm:px-4
-                    py-2 sm:py-3
-                    text-xs sm:text-sm
-                    font-medium
-                    text-center
-                    transition-all
-                    duration-300
-                    flex
-                    items-center
-                    justify-center
-                    line-clamp-2
-                    ${
-                      activeMenu === menu.key
-                        ? 'bg-indigo-600 text-white shadow-lg'
-                        : 'bg-white/90 text-slate-700 hover:bg-slate-100'
-                    }
-                  `}
-                >
-                  {menu.label}
-                </button>
-              ))
-            }
-          </div>
+        {/* MENU UTAMA */}
 
-          <button
-            onClick={() => {
-              localStorage.removeItem('adminLogin')
-              window.location.href = '/admin/login'
-            }}
-            className="
-              w-full
-              py-3
-              px-4
-              rounded-2xl
-              bg-red-500
-              hover:bg-red-600
-              text-white
-              font-semibold
-              transition-all
-              text-sm
-            "
-          >
-            Logout
-          </button>
-        </div>
+{
 
-        <div className="
+!showHandle && !mobileMenu && (
+
+<div className="
+lg:hidden
+
+fixed
+top-5
+left-4
+
+z-[80]
+
+transition-all
+duration-300
+">
+
+<button
+
+onClick={() =>
+setMobileMenu(true)
+}
+
+className="
+
+w-12
+h-12
+
+rounded-2xl
+
+bg-gradient-to-r
+from-indigo-600
+to-purple-600
+
+shadow-xl
+shadow-indigo-500/30
+
+text-white
+text-xl
+
+flex
+items-center
+justify-center
+
+backdrop-blur-xl
+
+active:scale-95
+
+transition-all
+duration-300
+
+hover:scale-105
+"
+
+>
+
+☰
+
+</button>
+
+</div>
+
+)
+
+}
+
+{/* HANDLE SAAT SCROLL */}
+
+{
+
+showHandle && !mobileMenu && (
+
+<div
+
+onClick={() =>
+setMobileMenu(true)
+}
+
+className="
+lg:hidden
+
+fixed
+top-1/2
+left-0
+
+-translate-y-1/2
+
+z-[90]
+
+w-2
+h-24
+
+rounded-r-full
+
+bg-gradient-to-b
+from-cyan-400
+to-purple-600
+
+shadow-lg
+shadow-cyan-500/30
+
+opacity-80
+
+transition-all
+duration-300
+
+active:w-4
+hover:opacity-100
+
+cursor-pointer
+"
+
+/>
+
+)
+
+}
+
+        {
+
+mobileMenu && (
+
+<div
+
+onClick={() =>
+setMobileMenu(false)
+}
+
+className="
+lg:hidden
+
+fixed
+inset-0
+
+bg-black/50
+backdrop-blur-sm
+animate-in
+fade-in
+duration-300
+
+z-40
+"
+
+/>
+
+)
+
+}
+
+        {/* MOBILE SIDEBAR */}
+
+<div className={`
+fixed
+top-0
+left-0
+
+h-screen
+w-[220px]
+
+z-50
+
+bg-gradient-to-b
+from-[#0f172a]
+via-[#111827]
+to-[#1e1b4b]
+
+p-5
+
+text-white
+
+shadow-2xl
+
+border-r
+border-white/10
+
+transition-all
+duration-500
+ease-[cubic-bezier(0.22,1,0.36,1)]
+
+lg:hidden
+
+${
+
+mobileMenu
+
+?
+
+'translate-x-0 opacity-100'
+
+:
+
+'-translate-x-full opacity-0'
+
+}
+
+`}>
+
+<div className="
+flex
+justify-between
+items-center
+
+mb-8
+">
+
+
+
+<button
+
+onClick={() =>
+setMobileMenu(false)
+}
+
+className="
+text-2xl
+"
+>
+
+✕
+
+</button>
+
+</div>
+
+<div className="
+space-y-4
+">
+
+{
+
+[
+{ key:'overview', label:'📈 Overview' },
+{ key:'layanan', label:'🏢 Per Layanan' },
+{ key:'jurusan', label:'🎓 Per Program Studi' },
+{ key:'tren', label:'📅 Tren Waktu' },
+{ key:'responden', label:'👨‍🎓 Data Responden' }
+
+].map(menu => (
+
+<button
+
+key={menu.key}
+
+onClick={() => {
+
+setActiveMenu(menu.key)
+
+setMobileMenu(false)
+
+mainRef.current?.scrollTo({
+top: 0,
+behavior: 'smooth'
+})
+
+}}
+
+className={`
+
+w-full
+text-left
+
+px-4
+py-3
+
+rounded-2xl
+
+font-medium
+
+transition-all
+
+${
+
+activeMenu === menu.key
+
+?
+
+`
+bg-gradient-to-r
+from-cyan-500
+via-indigo-500
+to-purple-600
+`
+
+:
+
+`
+hover:bg-white/10
+hover:translate-x-2
+hover:scale-[1.02]
+`
+
+}
+
+`}
+>
+
+{menu.label}
+
+</button>
+
+))
+
+}
+
+<button
+
+onClick={() => {
+
+localStorage.removeItem('adminLogin')
+
+window.location.href =
+'/admin/login'
+
+}}
+
+className="
+w-full
+mt-6
+py-3
+
+rounded-2xl
+
+bg-red-500
+
+hover:bg-red-600
+
+font-semibold
+"
+
+>
+
+Logout
+
+</button>
+
+</div>
+
+</div>
+
+<div className="
 absolute
 top-0
 right-0
@@ -992,8 +1317,11 @@ pointer-events-none
         {/* HEADER */}
 
         <div className="
+          mt-14
+          sm:mt-0
+
           flex
-          justify-between
+          justify-end
           items-center
           flex-wrap
           gap-6
@@ -1026,6 +1354,7 @@ to-cyan-500
 
 bg-clip-text
 text-transparent
+drop-shadow-[0_0_20px_rgba(99,102,241,0.35)]
 `}>
 
 Survei Kepuasan Mahasiswa
@@ -1110,6 +1439,11 @@ Pantau respon mahasiswa secara realtime
                       border-white
 
                       shadow-lg
+                      transition-all
+                      duration-300
+
+                      hover:-translate-y-1
+                      hover:shadow-2xl
 
                       text-slate-700
                     `
@@ -1374,6 +1708,11 @@ Pantau respon mahasiswa secara realtime
                 hover:to-purple-700
 
                 shadow-lg
+                transition-all
+                duration-300
+
+                hover:-translate-y-1
+                hover:shadow-2xl
                 shadow-purple-300/40
                 transition-all
                 text-white

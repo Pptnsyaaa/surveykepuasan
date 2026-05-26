@@ -342,16 +342,12 @@ SELECT *
 
 FROM surveys
 
-WHERE created_at >= DATE_SUB(NOW(), INTERVAL ? DAY)
-
 ORDER BY id DESC
 
 `
 
 db.query(
-
-sql,
-[days],
+  sql,
 
 (err,results)=>{
 
