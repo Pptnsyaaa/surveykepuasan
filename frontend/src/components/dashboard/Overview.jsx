@@ -780,13 +780,34 @@ relative
   {/* KIRI */}
   <div>
 
-    <h1 className="text-4xl font-bold">
-      Dashboard Admin
-    </h1>
+    <h1
+className={`
+text-4xl
+font-bold
 
-    <p className="text-slate-500 mt-2">
-      Monitoring data survei secara realtime
-    </p>
+${
+  darkMode
+    ? 'text-white'
+    : 'text-slate-900'
+}
+`}
+>
+  Dashboard Admin
+        </h1>
+
+        <p
+        className={`
+        mt-2
+
+        ${
+          darkMode
+            ? 'text-slate-300'
+            : 'text-slate-500'
+        }
+        `}
+        >
+          Monitoring data survei secara realtime
+        </p>
 
   </div>
 
