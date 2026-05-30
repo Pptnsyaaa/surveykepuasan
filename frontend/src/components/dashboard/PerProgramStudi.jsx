@@ -242,8 +242,8 @@ facultyData
 
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
 
-<div className="
-bg-white
+<div
+className={`
 rounded-xl sm:rounded-3xl
 shadow-lg
 p-4 sm:p-5 md:p-6
@@ -253,24 +253,44 @@ hover:-translate-y-1
 hover:shadow-xl
 transition-all
 duration-300
-">
 
-<p className="text-slate-500 text-xs sm:text-sm">
+${
+darkMode
+? 'bg-slate-800 border-slate-700'
+: 'bg-white border-slate-100'
+}
+`}
+>
+
+<p
+className={`
+text-xs sm:text-sm
+${darkMode ? 'text-slate-300' : 'text-slate-500'}
+`}
+>
 📚 Jumlah Program Studi
 </p>
 
-<h2 className="
+<h2
+className={`
 text-2xl sm:text-3xl
 font-black
-text-indigo-600
 mt-2
-">
+
+${darkMode ? 'text-indigo-400' : 'text-indigo-600'}
+`}
+>
 
 {labels.length}
 
 </h2>
 
-<p className="text-xs text-slate-400 mt-1">
+<p
+className={`
+text-xs mt-1
+${darkMode ? 'text-slate-400' : 'text-slate-400'}
+`}
+>
 Program Studi aktif
 </p>
 
@@ -278,21 +298,32 @@ Program Studi aktif
 
 
 
-<div className="
-bg-white
+<div
+className={`
 rounded-xl sm:rounded-3xl
 shadow-lg
 p-4 sm:p-5 md:p-6
 border
-border-slate-100
 cursor-pointer
 hover:-translate-y-1
 hover:shadow-xl
 transition-all
 duration-300
-">
 
-<p className="text-slate-500 text-xs sm:text-sm">
+${
+darkMode
+? 'bg-slate-800 border-slate-700'
+: 'bg-white border-slate-100'
+}
+`}
+>
+
+<p
+className={`
+text-xs sm:text-sm
+${darkMode ? 'text-slate-300' : 'text-slate-500'}
+`}
+>
 ⭐ Rating Tertinggi
 </p>
 
@@ -333,7 +364,12 @@ return avgA>avgB?a:b
 
 </h2>
 
-<p className="text-xs text-slate-400 mt-1">
+<p
+className={`
+text-xs mt-1
+${darkMode ? 'text-slate-400' : 'text-slate-400'}
+`}
+>
 Rating tertinggi
 </p>
 
@@ -341,21 +377,32 @@ Rating tertinggi
 
 
 
-<div className="
-bg-white
+<div
+className={`
 rounded-xl sm:rounded-3xl
 shadow-lg
 p-4 sm:p-5 md:p-6
 border
-border-slate-100
 cursor-pointer
 hover:-translate-y-1
 hover:shadow-xl
 transition-all
 duration-300
-">
 
-<p className="text-slate-500 text-xs sm:text-sm">
+${
+darkMode
+? 'bg-slate-800 border-slate-700'
+: 'bg-white border-slate-100'
+}
+`}
+>
+
+<p
+className={`
+text-xs sm:text-sm
+${darkMode ? 'text-slate-300' : 'text-slate-500'}
+`}
+>
 🚀 Program Studi Teraktif
 </p>
 
@@ -388,7 +435,12 @@ facultyData[b].count
 
 </h2>
 
-<p className="text-xs text-slate-400 mt-1">
+<p
+className={`
+text-xs mt-1
+${darkMode ? 'text-slate-400' : 'text-slate-400'}
+`}
+>
 Responden terbanyak
 </p>
 

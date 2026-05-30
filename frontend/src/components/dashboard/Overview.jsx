@@ -606,6 +606,14 @@ lastId.current=terbaru.id
           responsive: true,
           maintainAspectRatio: false,
 
+          plugins: {
+          legend: {
+            labels: {
+              color: darkMode ? '#ffffff' : '#334155'
+            }
+          }
+        },
+
             scales: {
 
               r: {
@@ -1649,11 +1657,19 @@ darkMode
 
 >
 
-<h3 className="
+<h3
+className={`
 font-bold
 text-sm sm:text-base
 mb-4 sm:mb-5
-">
+
+${
+darkMode
+? 'text-white'
+: 'text-slate-900'
+}
+`}
+>
 
 Distribusi Rating
 
@@ -1704,11 +1720,19 @@ darkMode
 
 >
 
-<h3 className="
+<h3
+className={`
 font-bold
 text-sm sm:text-base
 mb-4 sm:mb-5
-">
+
+${
+darkMode
+? 'text-white'
+: 'text-slate-900'
+}
+`}
+>
 
 Rating per Layanan
 
@@ -1764,26 +1788,40 @@ flex-col sm:flex-row
 gap-2
 ">
 
-<h3 className="
+<h3
+className={`
 font-bold
 text-base sm:text-lg
-">
+
+${
+darkMode
+? 'text-white'
+: 'text-slate-900'
+}
+`}
+>
 
 Sebaran Kepuasan
 
 </h3>
 
-<span className="
+<span
+className={`
 text-xs
-px-2 sm:px-3
-py-1
+px-3
+py-1.5
 rounded-full
-bg-indigo-50
-text-indigo-500
-">
+font-semibold
+shadow-sm
 
-Realtime
-
+${
+darkMode
+? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white'
+: 'bg-indigo-50 text-indigo-500'
+}
+`}
+>
+⚡ Realtime
 </span>
 
 </div>

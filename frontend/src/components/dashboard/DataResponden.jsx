@@ -139,6 +139,7 @@ export default function DataResponden({
               `
 
           }
+          
 
         `}>
 
@@ -176,26 +177,50 @@ export default function DataResponden({
                 sm:w-auto
                 ">
 
-<div className="
-bg-white
+<div
+className={`
 border
 rounded-lg sm:rounded-2xl
 px-3 sm:px-5
-
 py-2 sm:py-3
 shadow
-">
 
-<p className="text-xs sm:text-xs text-slate-500">
+${
+darkMode
+? 'bg-slate-800 border-slate-700'
+: 'bg-white border-slate-200'
+}
+`}
+>
+
+<p
+className={`
+text-xs
+
+${
+darkMode
+? 'text-slate-300'
+: 'text-slate-500'
+}
+`}
+>
 
 👥 Total Responden
 
 </p>
 
-<h3 className="
+<h3
+className={`
 font-black
 text-xl sm:text-2xl
-">
+
+${
+darkMode
+? 'text-white'
+: 'text-slate-800'
+}
+`}
+>
 
 {data.length}
 
@@ -227,17 +252,33 @@ text-xl sm:text-2xl
           )
           }
 
-          className="
-          w-full
-          border
-          rounded-xl sm:rounded-2xl
-          px-4 sm:px-5
-          py-3 sm:py-4
-          text-sm sm:text-base
-          outline-none
-          focus:ring-2
-          focus:ring-indigo-500
-          "
+          className={`
+            w-full
+            border
+            rounded-xl sm:rounded-2xl
+            px-4 sm:px-5
+            py-3 sm:py-4
+            text-sm sm:text-base
+            outline-none
+            focus:ring-2
+            focus:ring-indigo-500
+
+            ${
+            darkMode
+            ? `
+            bg-slate-700
+            border-slate-600
+            border-slate-700
+            text-white
+            placeholder:text-slate-400
+            `
+            : `
+            bg-white
+            border-slate-200
+            text-slate-800
+            `
+            }
+            `}
           />
 
           </div>
@@ -249,16 +290,12 @@ text-xl sm:text-2xl
           <table className="w-full min-w-[600px]">
 
             <thead className={`
-
               ${
-
-                darkMode
-                  ? 'bg-slate-800'
-                  : 'bg-slate-100'
-
+              darkMode
+              ? 'bg-slate-700'
+              : 'bg-slate-100'
               }
-
-            `}>
+              `}>
 
               <tr>
 
@@ -671,8 +708,10 @@ text-xl sm:text-2xl
 
                       ${darkMode
                       ?`
-                      bg-slate-800
-                      border-slate-700
+                      bg-slate-700
+                      border-slate-600
+                      text-white
+                      placeholder:text-slate-300
                       `
                       :`
                       bg-slate-50
