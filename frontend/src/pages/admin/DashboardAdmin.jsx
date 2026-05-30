@@ -1320,83 +1320,80 @@ pointer-events-none
 
           flex
           flex-col
-          xl:flex-row
+          2xl:flex-row
 
-          xl:justify-between
-          xl:items-start
+          justify-between
+          items-start
 
           gap-8
           mb-10
-        ">
+
+          w-full
+          ">
 
           {/* LEFT */}
 
-          <div>
+         <div
+            className="
+              flex-1
+              min-w-0
+              max-w-full
+            "
+          >
 
-<p className="
-max-w-[700px]
-">
+            <p className="
+              max-w-[700px]
+            ">
+              Dashboard Monitoring
+            </p>
 
-Dashboard Monitoring
+            <h1 className={`
+            text-[clamp(2.5rem,5vw,4.5rem)]
 
-</p>
+            font-black
 
-<h1 className={`
-text-4xl
-lg:text-6xl
-font-black
+            bg-gradient-to-r
+            from-indigo-700
+            via-purple-700
+            to-cyan-500
 
-bg-gradient-to-r
-from-indigo-700
-via-purple-700
-to-cyan-500
+            bg-clip-text
+            text-transparent
 
-bg-clip-text
-text-transparent
-drop-shadow-[0_0_20px_rgba(99,102,241,0.35)]
-`}>
+            drop-shadow-[0_0_20px_rgba(99,102,241,0.35)]
+            `}>
+              Survei Kepuasan Mahasiswa
+            </h1>
 
-Survei Kepuasan Mahasiswa
+            <p
+              className={`
+                mt-3
 
-</h1>
+                ${
+                  darkMode
+                    ? 'text-slate-300'
+                    : 'text-slate-500'
+                }
+              `}
+            >
+              Pantau respon mahasiswa secara realtime
+            </p>
 
-<p className={`
-
-mt-3
-
-${
-
-darkMode
-
-?
-
-'text-slate-300'
-
-:
-
-'text-slate-500'
-
-}
-
-`}>
-
-Pantau respon mahasiswa secara realtime
-
-</p>
-
-</div>
+          </div>
 
           {/* RIGHT */}
 
           <div className="
             flex
             flex-wrap
-
+            justify-start
             xl:justify-end
 
             gap-4
             items-center
-          ">
+
+            shrink-0
+            ">
             
 
             {/* FILTER */}

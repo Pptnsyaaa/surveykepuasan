@@ -439,8 +439,8 @@ lastId.current=terbaru.id
           },
 
           options: {
-
-            responsive: true,
+          responsive: true,
+          maintainAspectRatio: false,
 
             plugins: {
 
@@ -603,8 +603,8 @@ lastId.current=terbaru.id
           },
 
           options: {
-
-            responsive: true,
+          responsive: true,
+          maintainAspectRatio: false,
 
             scales: {
 
@@ -710,8 +710,8 @@ lastId.current=terbaru.id
           },
 
           options: {
-
-            responsive: true,
+          responsive: true,
+          maintainAspectRatio: false,
 
             plugins: {
 
@@ -766,8 +766,13 @@ lastId.current=terbaru.id
 
 <div className="
 flex
+flex-wrap
+
 justify-between
 items-center
+
+gap-4
+
 mb-6
 relative
 ">
@@ -1499,9 +1504,9 @@ b[1]-a[1]
 <div className="
 grid
 grid-cols-1
-md:grid-cols-2
-xl:grid-cols-3
-gap-4 md:gap-5
+lg:grid-cols-2
+2xl:grid-cols-3
+gap-5
 items-start
 ">
 
@@ -1509,9 +1514,9 @@ items-start
 
 className={`
 
-rounded-lg sm:rounded-2xl
-p-3 sm:p-4
-min-h-[300px] sm:min-h-[340px]
+rounded-2xl
+p-4
+h-[420px]
 
 shadow-sm
 border
@@ -1543,14 +1548,18 @@ Distribusi Rating
 
 </h3>
 
-<div className="h-[250px] sm:h-[300px] w-full flex items-center">
+<div className="
+h-[300px]
+w-full
+">
+
   <canvas
-    ref={barRef}
-    style={{
-      maxHeight: "300px",
-      width: "100%"
-    }}
-  />
+ref={barRef}
+className="
+w-full
+h-full
+"
+/>
 </div>
 
 </div>
@@ -1594,15 +1603,22 @@ Rating per Layanan
 
 </h3>
 
-<div className="h-[250px] sm:h-[300px] w-full flex items-center justify-center">
+<div className="
+h-[300px]
+w-full
+
+flex
+items-center
+justify-center
+">
   <canvas
-    ref={radarRef}
-    style={{
-      maxHeight: "280px",
-      maxWidth: "320px",
-      width: "100%"
-    }}
-  />
+  ref={radarRef}
+  className="
+  w-full
+  h-full
+  max-w-[320px]
+"
+/>
 </div>
 
 </div>
@@ -1663,23 +1679,24 @@ Realtime
 
 
 <div className="
-h-[250px] sm:h-[300px]
+h-[320px]
+w-full
 flex
 items-center
 justify-center
 ">
 
 <div className="
-w-[260px] sm:w-[300px]
-max-w-full
+w-[260px]
+h-[260px]
 ">
 
 <canvas
 ref={pieRef}
-style={{
-width:'100%',
-maxHeight:'280px'
-}}
+className="
+w-full
+h-full
+"
 />
 
 </div>

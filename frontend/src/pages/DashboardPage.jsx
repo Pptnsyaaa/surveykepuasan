@@ -454,19 +454,19 @@ export default function DashboardPage() {
 
       {/* CONTENT */}
 
-      <main className="
+     <main className="
 
         flex-1
 
         w-full
 
-        lg:ml-0 ml-0
+        lg:ml-72
 
         pt-20 lg:pt-0
 
         p-3 sm:p-4 md:p-6 lg:p-8
 
-      ">
+        ">
 
         {/* TOP */}
 
@@ -486,6 +486,9 @@ export default function DashboardPage() {
           border-white/40
 
           mb-6 sm:mb-8
+
+          max-w-[1600px]
+          mx-auto
 
         ">
 
