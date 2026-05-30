@@ -821,96 +821,131 @@ ${
   ">
 
     {/* NOTIF */}
-    <button
-      onClick={toggleNotif}
+<button
+  onClick={toggleNotif}
+  className={`
+  relative
+  w-12
+  h-12
+  rounded-2xl
+  border
+  shadow-sm
+  flex
+  justify-center
+  items-center
+  transition-all
+  duration-300
 
-      className="
-      relative
-      w-12
-      h-12
-      bg-white
-      rounded-2xl
-      border
-      border-slate-100
-      shadow-sm
-      flex
-      justify-center
-      items-center
-      "
-    >
+  ${
+    darkMode
+      ? 'bg-slate-800 border-slate-700 text-white'
+      : 'bg-white border-slate-100 text-slate-700'
+  }
+  `}
+>
 
-      🔔
+  🔔
 
-     {unreadCount > 0 && (
+  {unreadCount > 0 && (
+    <span
+      className={`
+      absolute
+      top-1
+      right-1
+      w-3
+      h-3
+      bg-red-500
+      rounded-full
+      animate-pulse
 
-          <span
-          className="
-          absolute
-          top-1
-          right-1
-          w-3
-          h-3
-          bg-red-500
-          rounded-full
-          border-2
-          border-white
-          animate-pulse
-          "
-          />
+      ${
+        darkMode
+          ? 'border-2 border-slate-800'
+          : 'border-2 border-white'
+      }
+      `}
+    />
+  )}
 
-          )}
-
-    </button>
-
+</button>
 
     {/* STATUS */}
-    <div className="
-    bg-white
-    rounded-2xl
-    px-4
-    py-3
-    shadow-sm
-    border
-    border-slate-100
-    ">
+<div
+  className={`
+  rounded-2xl
+  px-4
+  py-3
+  shadow-sm
+  border
+  transition-all
+  duration-300
 
-      <div className="
-      flex
-      items-center
-      gap-2
-      ">
+  ${
+    darkMode
+      ? 'bg-slate-800 border-slate-700'
+      : 'bg-white border-slate-100'
+  }
+  `}
+>
 
-        <div className="
-        w-2
-        h-2
-        rounded-full
-        bg-green-500
-        animate-pulse
-        "/>
+  <div
+    className="
+    flex
+    items-center
+    gap-2
+    "
+  >
 
-        <p className="text-sm font-medium">
-          Sistem aktif
-        </p>
+    <div
+      className="
+      w-2
+      h-2
+      rounded-full
+      bg-green-500
+      animate-pulse
+      "
+    />
 
-      </div>
+    <p
+      className={`
+      text-sm
+      font-medium
 
-      <p className="
-      text-xs
-      text-slate-400
-      mt-1
-      ">
-        {new Date().toLocaleDateString('id-ID')}
-      </p>
+      ${
+        darkMode
+          ? 'text-white'
+          : 'text-slate-900'
+      }
+      `}
+    >
+      Sistem aktif
+    </p>
 
-    </div>
+  </div>
 
+  <p
+    className={`
+    text-xs
+    mt-1
+
+    ${
+      darkMode
+        ? 'text-slate-300'
+        : 'text-slate-400'
+    }
+    `}
+  >
+    {new Date().toLocaleDateString('id-ID')}
+  </p>
+
+</div>
 
     {/* POPUP */}
 
 {openNotif && (
 
 <div
-className="
+className={`
 absolute
 top-16
 right-0
@@ -918,50 +953,74 @@ w-[360px]
 max-h-[500px]
 overflow-y-auto
 
-bg-white
 rounded-3xl
 shadow-2xl
 border
-border-slate-200
 
 z-50
-animate-in
-fade-in
-slide-in-from-top-2
 
-"
+${
+darkMode
+? 'bg-slate-900 border-slate-700'
+: 'bg-white border-slate-200'
+}
+`}
 >
 
 {/* HEADER */}
 
-<div className="
+<div
+className={`
 flex
 items-center
 justify-between
+
 px-5
 py-4
+
 border-b
-border-slate-100
 sticky
 top-0
-bg-white
+
 rounded-t-3xl
 z-10
-">
+
+${
+darkMode
+? 'bg-slate-900 border-slate-700'
+: 'bg-white border-slate-100'
+}
+`}
+>
 
 <div>
 
-<h3 className="
+<h3
+className={`
 font-bold
 text-lg
-">
+
+${
+darkMode
+? 'text-white'
+: 'text-slate-900'
+}
+`}
+>
 Notifikasi
 </h3>
 
-<p className="
+<p
+className={`
 text-xs
-text-slate-400
-">
+
+${
+darkMode
+? 'text-slate-300'
+: 'text-slate-400'
+}
+`}
+>
 {notifData.length} notifikasi
 </p>
 
@@ -971,12 +1030,17 @@ text-slate-400
 
 <button
 onClick={deleteAllNotif}
-className="
+className={`
 text-xs
-text-red-500
-hover:text-red-700
 font-semibold
-"
+transition-colors
+
+${
+darkMode
+? 'text-red-400 hover:text-red-300'
+: 'text-red-500 hover:text-red-700'
+}
+`}
 >
 Hapus Semua
 </button>
@@ -1011,7 +1075,7 @@ group
 relative
 
 rounded-2xl
-p-4
+p-3.5
 
 border
 transition-all
@@ -1020,9 +1084,17 @@ duration-300
 hover:shadow-md
 
 ${
+darkMode
+? (
+item.read
+? 'bg-slate-800 border-slate-700'
+: 'bg-indigo-900/30 border-indigo-700'
+)
+: (
 item.read
 ? 'bg-slate-50 border-slate-100'
 : 'bg-indigo-50 border-indigo-100'
+)
 }
 `}
 >
@@ -1048,24 +1120,37 @@ animate-pulse
 
 {/* PESAN */}
 
-<p className="
+<p
+className={`
 text-sm
 font-semibold
-text-slate-700
 pr-5
-">
+
+${
+darkMode
+? 'text-white'
+: 'text-slate-700'
+}
+`}
+>
 {item.pesan}
 </p>
 
 {/* TANGGAL */}
 
-<p className="
+<p
+className={`
 text-xs
-text-slate-400
 mt-2
-">
-{new Date(item.created_at)
-.toLocaleString("id-ID")}
+
+${
+darkMode
+? 'text-slate-400'
+: 'text-slate-500'
+}
+`}
+>
+{new Date(item.created_at).toLocaleString("id-ID")}
 </p>
 
 {/* ACTION */}
@@ -1073,6 +1158,7 @@ mt-2
 <div className="
 flex
 justify-end
+pr-2
 mt-3
 ">
 
@@ -1080,19 +1166,24 @@ mt-3
 onClick={() =>
 deleteNotif(item.id)
 }
-className="
-text-xs
-px-3
-py-1
+
+className={`
+text-sm
+px-4
+py-2
 
 rounded-lg
+font-medium
 
-bg-red-50
-text-red-500
+transition-all
+duration-300
 
-hover:bg-red-100
-transition
-"
+${
+darkMode
+? 'bg-red-500/10 text-red-400 hover:bg-red-500/20'
+: 'bg-red-50 text-red-500 hover:bg-red-100'
+}
+`}
 >
 Hapus
 </button>
