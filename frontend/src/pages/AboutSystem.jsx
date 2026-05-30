@@ -310,50 +310,61 @@ export default function AboutSystem() {
           `}>
 
             <h2 className="
-              text-lg
-              sm:text-xl
-              md:text-2xl
-              lg:text-3xl
-              font-black
-              mb-3
-              sm:mb-4
-              md:mb-5
-            ">
+                  text-lg
+                  sm:text-xl
+                  md:text-2xl
+                  lg:text-3xl
+                  font-black
+                  mb-3
+                  sm:mb-4
+                  md:mb-5
+                ">
 
-              ⚙️ Teknologi
+                  ✨ Fitur Utama Sistem
 
-            </h2>
+                </h2>
 
-            <ul className={`
+                <ul className={`
 
-              space-y-2
-              sm:space-y-2.5
-              md:space-y-3
-              text-xs
-              sm:text-sm
-              md:text-base
+                  space-y-2
+                  sm:space-y-2.5
+                  md:space-y-3
 
-              ${
+                  text-xs
+                  sm:text-sm
+                  md:text-base
 
-                darkMode
-                  ? 'text-slate-300'
-                  : 'text-slate-600'
+                  ${
 
-              }
+                    darkMode
+                      ? 'text-slate-300'
+                      : 'text-slate-600'
 
-            `}>
+                  }
 
-              <li>• React JS</li>
+                `}>
 
-              <li>• Tailwind CSS</li>
+                  <li>
+                    • Survei kepuasan mahasiswa secara online
+                  </li>
 
-              <li>• Face Emotion Detection AI</li>
+                  <li>
+                    • Deteksi ekspresi wajah berbasis AI
+                  </li>
 
-              <li>• Node JS & Express</li>
+                  <li>
+                    • Analisis sentimen respon mahasiswa
+                  </li>
 
-              <li>• MySQL Database</li>
+                  <li>
+                    • Dashboard monitoring realtime
+                  </li>
 
-            </ul>
+                  <li>
+                    • Visualisasi data dalam bentuk grafik interaktif
+                  </li>
+
+                </ul>
 
           </div>
 
