@@ -343,3 +343,10 @@ select {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
+/* Hilangkan icon mata bawaan Edge */
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
