@@ -1505,7 +1505,6 @@ b[1]-a[1]
 grid
 grid-cols-1
 lg:grid-cols-2
-2xl:grid-cols-3
 gap-5
 items-start
 ">
@@ -1569,9 +1568,9 @@ h-full
 
 className={`
 
-rounded-lg sm:rounded-2xl
-p-3 sm:p-4
-min-h-[300px] sm:min-h-[340px]
+rounded-2xl
+p-4
+h-[420px]
 
 shadow-sm
 border
@@ -1629,9 +1628,9 @@ justify-center
 
 <div
 className={`
-rounded-lg sm:rounded-2xl
-p-3 sm:p-4
-min-h-[300px] sm:min-h-[340px]
+rounded-2xl
+p-4
+h-[420px]
 
 shadow-sm
 border
