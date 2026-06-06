@@ -1,0 +1,76 @@
+========================================================================
+LOG LENGKAP MODIFIKASI & PERBAIKAN FILE (CHANGELOG DETAIL)
+PROYEK: TUGAS AKHIR (PROJECT PIPIT)
+TERAKHIR DIPERBARUI: 06 JUNI 2026
+========================================================================
+
+Dokumen ini mencatat dengan presisi dan detail setiap file kode yang telah diubah, dihapus, atau ditambahkan selama proses *debugging* dan penyempurnaan sistem aplikasi Anda. Tidak ada satu detail pun yang terlewat.
+
+------------------------------------------------------------------------
+A. FRONTEND (ANTARMUKA PENGGUNA)
+------------------------------------------------------------------------
+
+1. File: `frontend/src/pages/admin/DashboardAdmin.jsx`
+   [Modifikasi & Perbaikan]
+   - Perbaikan Bug JSON Parse: Menulis ulang logika di dalam `fetchSurvey()`. Sebelumnya aplikasi mati total (White Screen) saat menerima data string JSON yang rusak pada kolom `responses` atau `student`. Ditambahkan validasi `typeof === "string"` dan pembungkus `try/catch`.
+   - Penyesuaian UX Refresh Rate: Mengubah nilai fungsi `setInterval()` pada akhir komponen dari `3000` (3 detik) menjadi `30000` (30 detik). Ini mencegah layar berkedip terus-menerus dan meringankan beban API.
+   - Penutupan Celah Keamanan Fatal: Menyuntikkan fitur "Route Guard" di baris paling atas komponen menggunakan `useEffect()`. Logika ini akan memeriksa `localStorage.getItem('adminLogin')`. Jika tidak ada, sistem akan langsung menendang penyusup dengan peringatan alert() dan perintah `window.location.href = '/admin/login'`.
+
+2. File: `frontend/src/components/dashboard/TrenWaktu.jsx`
+   [Modifikasi & Perbaikan]
+   - Penghapusan Library Bermasalah: Menghapus total fungsi pemanggilan modul `import { motion } from 'framer-motion'` beserta elemen pembungkus `<motion.div>` yang sebelumnya membuat aplikasi error.
+   - Perbaikan Siklus Chart.js: Menambahkan logika `.destroy()` pada `useEffect()` untuk memastikan grafik kanvas yang lama dihancurkan sebelum merender grafik baru, mencegah error penumpukan kanvas (Canvas is already in use).
+   - Penstabilan Resolusi Container Grafik: Mengganti kelas CSS pembungkus grafik dari yang bersifat melar dinamis (`h-[250px] sm:h-[300px] md:h-[400px]`) menjadi absolut dan paten (`h-[300px]`). Hal ini menghentikan pemuatan ulang Chart.js di detik pertama yang mematikan/menggagalkan animasi kemunculan grafik.
+   - Injeksi Animasi Eksplisit: Khusus pada blok pengaturan (options) untuk diagram garis (Trend Line Chart), ditambahkan perintah animasi terjun bebas `animation: { y: { duration: 1500, from: 500 }, x: { duration: 1500, from: 0 } }` bertipe 'easeOutQuart' agar pergerakan grafik terlihat sangat jelas walau sebagian besar datanya bernilai nol (0).
+   - Perbaikan Scroll Perangkat Sentuh (Mobile): Menambahkan perintah CSS Tailwind `touch-pan-y` beserta inline-style `touchAction: 'pan-y'` di atas tag `<canvas>` agar jari pengguna di layar sentuh tidak tersangkut/macet saat mencoba menggeser layar ke bawah melewati grafik.
+
+3. File: `frontend/src/components/dashboard/DataResponden.jsx`
+   [Modifikasi & Perbaikan]
+   - Pembersihan Visual: Menghapus latar belakang atau elemen overlay berwarna gelap yang mengganggu dan menutupi tampilan antarmuka saat fitur/tabel ini diakses, sehingga tampilan jauh lebih jernih.
+
+------------------------------------------------------------------------
+B. BACKEND (SERVER & DATABASE)
+------------------------------------------------------------------------
+
+4. File: `backend/db.js`
+   [Modifikasi & Perbaikan]
+   - Penanggulangan Error Server Timeout: Menulis ulang cara server Node.js terhubung ke MySQL. Membuang perintah `mysql.createConnection()` dan menggantinya dengan `mysql.createPool()`.
+   - Penambahan Parameter Pool: Menambahkan parameter `waitForConnections: true, connectionLimit: 10, queueLimit: 0` agar server bisa menangani antrean koneksi tanpa batas dan otomatis menyambung ulang (*auto-reconnect*) ketika MySQL memutuskan server karena kondisi diam terlalu lama (*idle*).
+
+5. File: `backend/seed.js` (FILE BARU)
+   [Penambahan File Baru]
+   - Pembuatan Skrip Injeksi Database: Membuat file dari nol yang berfungsi menyuntikkan data kotor (dummy data) untuk pengujian. 
+   - Modifikasi Tahap 1: Memprogram injeksi ~480 data survei otomatis mundur ke 45 hari ke belakang.
+   - Modifikasi Tahap 2: Memperbaiki daftar jurusan (*array*) yang digunakan. Dari yang sebelumnya berisi nama fakultas fiktif (Fakultas Teknik, Kedokteran, dll), diubah secara persis agar sinkron dengan batasan program yakni `['TI', 'TM', 'TO', 'TEI']`.
+
+------------------------------------------------------------------------
+C. DOKUMENTASI & PENGELOLAAN PROYEK
+------------------------------------------------------------------------
+
+6. File: `DEPLOYMENT_GUIDE.md`
+   [Modifikasi]
+   - Mengubah bagian `Status Sekarang` menjadi lebih akurat (menambahkan informasi mengenai Connection Pool, proteksi URL/Route Guard, Cloudflare Tunnel, dan durasi refresh).
+   - Mengganti teks `Last Updated` menjadi 06 Juni 2026.
+
+7. File: `SETUP_CHECKLIST.md`
+   [Modifikasi]
+   - Menyisipkan pesan peringatan (Alert syntax) berbunyi penting mengenai keharusan untuk menghapus folder `node_modules` sebelum me-RAR/ZIP folder proyek.
+   - Menambahkan catatan mengenai kekuatan sistem Anti-Timeout baru pada backend.
+
+8. File: `CLOUDFLARE_TUNNEL_GUIDE.md` (FILE BARU)
+   [Penambahan File Baru]
+   - Menulis panduan baru berisi langkah demi langkah untuk menggunakan `cloudflared` (pengganti ngrok) yang jauh lebih stabil untuk tunneling koneksi localhost ke internet publik/Vercel. Meliputi panduan untuk koneksi Port 5000 (Backend) maupun Port 5173 (Frontend Lokal).
+
+9. File: `Laporan_Pembaruan_Sistem.txt` (FILE BARU)
+   [Penambahan File Baru]
+   - Menulis ringkasan laporan eksekutif tanpa menggunakan format pemformatan berlebih (*Plain Text*) sehingga tampil sangat rapi dan elegan saat dibuka dengan menggunakan aplikasi Notepad atau disalin ke MS Word.
+
+10. Sistem & Folder Direktori (`frontend/node_modules` & `backend/node_modules`)
+   [Penghapusan File/Folder Beban]
+   - Mematikan secara paksa proses `npm start` (backend), `npm run dev` (frontend), dan terminal ngrok/cloudflared.
+   - Mengeksekusi perintah Windows PowerShell `Remove-Item -Recurse -Force` untuk melenyapkan kedua folder `node_modules` hingga tak bersisa, menurunkan ukuran file proyek dari ratusan Megabyte menjadi hanya hitungan Kilobyte/sangat ringan.
+
+========================================================================
+DOKUMEN INI DAPAT DISALIN SEBAGAI BAGIAN DARI BAB LOG PERUBAHAN ATAU 
+LAMPIRAN REVISI TUGAS AKHIR ANDA.
+========================================================================

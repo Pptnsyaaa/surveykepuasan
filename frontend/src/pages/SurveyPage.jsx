@@ -338,9 +338,9 @@ export default function SurveyPage() {
     <div
       className={`
 
-        min-h-screen
+        min-h-[100dvh]
         relative
-        overflow-hidden
+        overflow-x-hidden
         transition-all
         duration-500
 

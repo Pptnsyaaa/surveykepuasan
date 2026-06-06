@@ -15,7 +15,7 @@ export default function AboutSystem() {
 
     <div className={`
 
-      min-h-screen
+      min-h-[100dvh]
 
       px-3
       sm:px-4

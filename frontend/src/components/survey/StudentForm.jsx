@@ -42,7 +42,8 @@ export default function StudentForm({ onStart }) {
       md:shadow-2xl
       lg:shadow-[0_30px_80px_rgba(0,0,0,0.16)]
 
-      p-4
+      p-3
+      xs:p-4
       sm:p-6
       md:p-8
       lg:p-10
@@ -228,6 +229,7 @@ export default function StudentForm({ onStart }) {
             className="
 
               w-full
+              appearance-none
 
               border
               border-slate-200

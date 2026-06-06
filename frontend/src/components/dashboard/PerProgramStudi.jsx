@@ -94,140 +94,72 @@ facultyData
   // CHART
   // ======================
 
+  const prevDarkMode = useRef(darkMode)
+
+  // Cleanup on unmount only
+  useEffect(() => {
+    return () => {
+      if (chartInstance.current) {
+        chartInstance.current.destroy()
+        chartInstance.current = null
+      }
+    }
+  }, [])
+
   useEffect(() => {
 
     const avgData =
       labels.map(f => {
-
-        const r =
-          facultyData[f].ratings
-
-        return r.length>0
-
-    ?
-
-    (
-    r.reduce((a,b)=>a+b,0)
-    /r.length
-    ).toFixed(2)
-
-    :0
-
+        const r = facultyData[f].ratings
+        return r.length>0 ? (r.reduce((a,b)=>a+b,0)/r.length).toFixed(2) : 0
       })
 
-    if (chartInstance.current)
-      chartInstance.current.destroy()
-
-    if (chartRef.current) {
-
-      chartInstance.current =
-        new Chart(chartRef.current, {
-
-          type: 'bar',
-
-          data: {
-
-            labels,
-
-            datasets: [
-
-              {
-
-                label:
-                  'Rating Rata-rata',
-
-                data: avgData,
-
-                backgroundColor: [
-
-                  '#4f46e5',
-                  '#7c3aed',
-                  '#2563eb',
-                  '#0891b2'
-
-                ],
-
-                borderRadius: 12,
-
-                borderSkipped: false
-
-              }
-
-            ]
-
+    const chartConfig = {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Rating Rata-rata',
+          data: avgData,
+          backgroundColor: ['#4f46e5', '#7c3aed', '#2563eb', '#0891b2'],
+          borderRadius: 12,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 5,
+            ticks: { color: darkMode ? '#cbd5e1' : '#475569' },
+            grid: { color: darkMode ? 'rgba(255,255,255,0.08)' : '#e2e8f0' }
           },
-
-          options: {
-
-            responsive: true,
-
-            plugins: {
-
-              legend: {
-
-                display: false
-
-              }
-
-            },
-
-            scales: {
-
-              y: {
-
-                beginAtZero: true,
-
-                max: 5,
-
-                ticks: {
-
-                  color:
-                    darkMode
-                      ? '#cbd5e1'
-                      : '#475569'
-
-                },
-
-                grid: {
-
-                  color:
-                    darkMode
-                      ? 'rgba(255,255,255,0.08)'
-                      : '#e2e8f0'
-
-                }
-
-              },
-
-              x: {
-
-                ticks: {
-
-                  color:
-                    darkMode
-                      ? '#cbd5e1'
-                      : '#475569'
-
-                },
-
-                grid: {
-
-                  display: false
-
-                }
-
-              }
-
-            }
-
+          x: {
+            ticks: { color: darkMode ? '#cbd5e1' : '#475569' },
+            grid: { display: false }
           }
-
-        })
-
+        }
+      }
     }
 
-    return () =>
-      chartInstance.current?.destroy()
+    if (!chartInstance.current) {
+      if (chartRef.current) {
+        chartInstance.current = new Chart(chartRef.current, chartConfig)
+        prevDarkMode.current = darkMode
+      }
+    } else {
+      if (prevDarkMode.current !== darkMode) {
+        chartInstance.current.destroy()
+        chartInstance.current = new Chart(chartRef.current, chartConfig)
+        prevDarkMode.current = darkMode
+      } else {
+        chartInstance.current.data.datasets[0].data = avgData
+        chartInstance.current.update('none')
+      }
+    }
 
   }, [data, darkMode])
 
@@ -336,29 +268,18 @@ mt-2
 
 {
 
-labels.length>0 ?
+(() => {
+  const validLabels = labels.filter(l => facultyData[l].ratings.length > 0);
 
-labels.reduce((a,b)=>{
+  if (validLabels.length === 0) return '-';
 
-const avgA=
-
-facultyData[a].ratings.reduce(
-(x,y)=>x+y,0
-)/facultyData[a].ratings.length
-
-const avgB=
-
-facultyData[b].ratings.reduce(
-(x,y)=>x+y,0
-)/facultyData[b].ratings.length
-
-return avgA>avgB?a:b
-
-})
-
-:
-
-'-'
+  return validLabels.reduce((a, b) => {
+    const avgA = facultyData[a].ratings.reduce((x, y) => x + y, 0) / facultyData[a].ratings.length;
+    const avgB = facultyData[b].ratings.reduce((x, y) => x + y, 0) / facultyData[b].ratings.length;
+    
+    return avgA > avgB ? a : b;
+  });
+})()
 
 }
 
@@ -415,21 +336,15 @@ mt-2
 
 {
 
-labels.length>0 ?
+(() => {
+  const validLabels = labels.filter(l => facultyData[l].count > 0);
 
-labels.reduce((a,b)=>
+  if (validLabels.length === 0) return '-';
 
-facultyData[a].count>
-
-facultyData[b].count
-
-?a:b
-
-)
-
-:
-
-'-'
+  return validLabels.reduce((a, b) => 
+    facultyData[a].count > facultyData[b].count ? a : b
+  );
+})()
 
 }
 

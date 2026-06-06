@@ -393,7 +393,8 @@ showManual&&(
 
 <div className="
 grid
-grid-cols-3
+grid-cols-2
+xs:grid-cols-3
 sm:grid-cols-5
 gap-2
 sm:gap-3
@@ -429,12 +430,12 @@ shadow-sm
 "
 >
 
-<div className="text-2xl sm:text-3xl">
+<div className="text-3xl sm:text-4xl">
 {emoji}
 </div>
 
 <div className="
-text-xs
+text-[10px] sm:text-xs
 font-medium
 mt-1
 ">

@@ -134,21 +134,7 @@ if (!navigator.mediaDevices.getUserMedia) {
     await navigator.mediaDevices.getUserMedia({
 
       video: {
-        facingMode: "user",
-
-        width: {
-          ideal:
-          window.innerWidth > 768
-          ? 640
-          : 480
-        },
-
-        height: {
-          ideal:
-          window.innerWidth > 768
-          ? 480
-          : 360
-        }
+        facingMode: "user"
       },
 
       audio: false
@@ -427,7 +413,7 @@ bg-black
 w-full
 max-w-2xl
 mx-auto
-aspect-video
+aspect-square sm:aspect-video
 ">
 
 {

@@ -826,6 +826,7 @@ ${
   items-center
   gap-3
   relative
+  ml-auto
   ">
 
     {/* NOTIF */}
@@ -955,10 +956,10 @@ ${
 <div
 className={`
 absolute
-top-16
-right-0
-w-[360px]
-max-h-[500px]
+top-14 sm:top-16
+right-0 sm:-right-2 lg:right-0
+w-[280px] xs:w-[320px] sm:w-[360px]
+max-h-[400px] sm:max-h-[500px]
 overflow-y-auto
 
 rounded-3xl

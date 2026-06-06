@@ -540,7 +540,7 @@ darkMode
             items-center
             justify-center
 
-            bg-black/60
+            bg-transparent
 
             p-5
 

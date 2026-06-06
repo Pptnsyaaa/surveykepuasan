@@ -137,7 +137,7 @@ export default function DashboardPage() {
 
       flex
 
-      min-h-screen
+      min-h-[100dvh]
 
       bg-slate-100/80
 

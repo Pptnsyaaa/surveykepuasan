@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
 
   host: process.env.DB_HOST,
 
@@ -13,27 +13,22 @@ const db = mysql.createConnection({
 
   database: process.env.DB_NAME,
 
-  port: process.env.DB_PORT
+  port: process.env.DB_PORT,
+
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 
 })
 
-db.connect((err) => {
-
+// Test the connection pool
+db.getConnection((err, connection) => {
   if (err) {
-
-    console.log(
-      'MYSQL ERROR:',
-      err
-    )
-
+    console.log('MYSQL ERROR:', err)
   } else {
-
-    console.log(
-      'MySQL Connected'
-    )
-
+    console.log('✅ Database connected')
+    connection.release()
   }
-
 })
 
 export default db

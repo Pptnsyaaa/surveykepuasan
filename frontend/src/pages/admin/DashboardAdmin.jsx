@@ -36,6 +36,17 @@ export default function DashboardAdmin() {
     ) || false
 
   // ======================
+  // AUTHENTICATION CHECK
+  // ======================
+  useEffect(() => {
+    const isLogin = localStorage.getItem('adminLogin')
+    if (!isLogin) {
+      alert('Akses ditolak! Anda harus login terlebih dahulu.')
+      window.location.href = '/admin/login'
+    }
+  }, [])
+
+  // ======================
   // STATE
   // ======================
 
@@ -185,13 +196,15 @@ if(!response.ok){
       item.submitted_at
       || new Date().toISOString(),
 
-    responses:
-      typeof item.responses === "string"
+    responses: (() => {
+      try { return typeof item.responses === "string" ? JSON.parse(item.responses) : (item.responses || []) }
+      catch(e) { return [] }
+    })(),
 
-      ? JSON.parse(item.responses)
-
-      : item.responses || []
-
+    student: (() => {
+      try { return typeof item.student === "string" ? JSON.parse(item.student) : (item.student || {}) }
+      catch(e) { return {} }
+    })()
 }))
 
         setData(formatted)
@@ -229,7 +242,7 @@ fetchSurvey()
 
 fetchNotifications()
 
-},3000)
+},30000)
 
 return ()=>clearInterval(interval)
 
@@ -575,7 +588,7 @@ return ()=>clearInterval(interval)
     return (
 
       <div className="
-        min-h-screen
+        min-h-[100dvh]
         overflow-y-auto
         flex
         items-center
@@ -599,7 +612,7 @@ return ()=>clearInterval(interval)
   return (
 
     <div className={`
-      min-h-screen
+      min-h-[100dvh]
       flex
 
       ${

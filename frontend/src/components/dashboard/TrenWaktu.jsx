@@ -23,7 +23,7 @@ export default function TrenWaktu({
     useRef(null)
 
   // ======================
-  // CHART
+  // CHART LIFECYCLE
   // ======================
 
   useEffect(() => {
@@ -104,255 +104,114 @@ export default function TrenWaktu({
       )
 
     // ======================
-    // TREND CHART
+    // TREND CHART CONFIG
     // ======================
-
-    if (trendChart.current)
-      trendChart.current.destroy()
-
-    if (trendRef.current) {
-
-      trendChart.current =
-        new Chart(trendRef.current, {
-
-          type: 'line',
-
-          data: {
-
-            labels,
-
-            datasets: [
-
-              {
-
-                label:
-                  'Rating Rata-rata',
-
-                data: avgRatings,
-
-                borderColor:
-                  '#6366f1',
-
-                backgroundColor:
-                  'rgba(99,102,241,0.15)',
-
-                fill: true,
-
-                tension: 0.4,
-
-                pointRadius: 5,
-
-                pointBackgroundColor:
-                  '#8b5cf6'
-
-              }
-
-            ]
-
+    const trendConfig = {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Rating Rata-rata',
+          data: avgRatings,
+          borderColor: '#6366f1',
+          backgroundColor: 'rgba(99,102,241,0.15)',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 5,
+          pointBackgroundColor: '#8b5cf6'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          y: {
+            duration: 1500,
+            from: 500,
+            easing: 'easeOutQuart'
           },
-
-          options: {
-
-            responsive: true,
-
-            plugins: {
-
-              legend: {
-
-                labels: {
-
-                  color:
-                    darkMode
-                      ? '#fff'
-                      : '#334155'
-
-                }
-
-              }
-
-            },
-
-            scales: {
-
-              y: {
-
-                beginAtZero: true,
-
-                max: 5,
-
-                ticks: {
-
-                  color:
-                    darkMode
-                      ? '#cbd5e1'
-                      : '#475569'
-
-                },
-
-                grid: {
-
-                  color:
-                    darkMode
-                      ? 'rgba(255,255,255,0.08)'
-                      : '#e2e8f0'
-
-                }
-
-              },
-
-              x: {
-
-                ticks: {
-
-                  color:
-                    darkMode
-                      ? '#cbd5e1'
-                      : '#475569'
-
-                },
-
-                grid: {
-
-                  display: false
-
-                }
-
-              }
-
-            }
-
+          x: {
+            duration: 1500,
+            from: 0,
+            easing: 'easeOutQuart'
           }
-
-        })
-
+        },
+        plugins: {
+          legend: { labels: { color: darkMode ? '#fff' : '#334155' } }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 5,
+            ticks: { color: darkMode ? '#cbd5e1' : '#475569' },
+            grid: { color: darkMode ? 'rgba(255,255,255,0.08)' : '#e2e8f0' }
+          },
+          x: {
+            ticks: { color: darkMode ? '#cbd5e1' : '#475569' },
+            grid: { display: false }
+          }
+        }
+      }
     }
 
     // ======================
-    // VOLUME CHART
+    // VOLUME CHART CONFIG
     // ======================
-
-    if (volumeChart.current)
-      volumeChart.current.destroy()
-
-    if (volumeRef.current) {
-
-      volumeChart.current =
-        new Chart(volumeRef.current, {
-
-          type: 'bar',
-
-          data: {
-
-            labels,
-
-            datasets: [
-
-              {
-
-                label:
-                  'Jumlah Responden',
-
-                data: volumes,
-
-                backgroundColor: [
-
-                  '#22c55e',
-                  '#16a34a',
-                  '#4ade80',
-                  '#15803d'
-
-                ],
-
-                borderRadius: 12,
-
-                borderSkipped: false
-
-              }
-
-            ]
-
+    const volumeConfig = {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Jumlah Responden',
+          data: volumes,
+          backgroundColor: ['#22c55e', '#16a34a', '#4ade80', '#15803d'],
+          borderRadius: 12,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: darkMode ? '#fff' : '#334155' } }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: darkMode ? '#cbd5e1' : '#475569' },
+            grid: { color: darkMode ? 'rgba(255,255,255,0.08)' : '#e2e8f0' }
           },
-
-          options: {
-
-            responsive: true,
-
-            plugins: {
-
-              legend: {
-
-                labels: {
-
-                  color:
-                    darkMode
-                      ? '#fff'
-                      : '#334155'
-
-                }
-
-              }
-
-            },
-
-            scales: {
-
-              y: {
-
-                beginAtZero: true,
-
-                ticks: {
-
-                  color:
-                    darkMode
-                      ? '#cbd5e1'
-                      : '#475569'
-
-                },
-
-                grid: {
-
-                  color:
-                    darkMode
-                      ? 'rgba(255,255,255,0.08)'
-                      : '#e2e8f0'
-
-                }
-
-              },
-
-              x: {
-
-                ticks: {
-
-                  color:
-                    darkMode
-                      ? '#cbd5e1'
-                      : '#475569'
-
-                },
-
-                grid: {
-
-                  display: false
-
-                }
-
-              }
-
-            }
-
+          x: {
+            ticks: { color: darkMode ? '#cbd5e1' : '#475569' },
+            grid: { display: false }
           }
+        }
+      }
+    }
 
-        })
+    // ======================
+    // TREND INSTANCE
+    // ======================
+    if (trendChart.current) {
+      trendChart.current.destroy()
+    }
+    if (trendRef.current) {
+      trendChart.current = new Chart(trendRef.current, trendConfig)
+    }
 
+    // ======================
+    // VOLUME INSTANCE
+    // ======================
+    if (volumeChart.current) {
+      volumeChart.current.destroy()
+    }
+    if (volumeRef.current) {
+      volumeChart.current = new Chart(volumeRef.current, volumeConfig)
     }
 
     return () => {
-
       trendChart.current?.destroy()
-
       volumeChart.current?.destroy()
-
     }
 
   }, [data, darkMode])
@@ -443,7 +302,9 @@ export default function TrenWaktu({
 
         </div>
 
-        <canvas ref={trendRef} />
+        <div className="h-[350px] w-full touch-pan-y">
+          <canvas ref={trendRef} className="w-full h-full touch-pan-y" style={{ touchAction: 'pan-y' }} />
+        </div>
 
       </div>
 
@@ -523,7 +384,9 @@ export default function TrenWaktu({
 
         </div>
 
-        <canvas ref={volumeRef} />
+        <div className="h-[300px] w-full touch-pan-y">
+          <canvas ref={volumeRef} className="w-full h-full touch-pan-y" style={{ touchAction: 'pan-y' }} />
+        </div>
 
       </div>
 

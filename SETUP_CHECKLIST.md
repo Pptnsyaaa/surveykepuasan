@@ -24,6 +24,9 @@
   # Harus tampil: 🚀 Backend Survey AI Running
   ```
 
+> [!TIP]
+> Backend sekarang menggunakan sistem **Connection Pool** sehingga akan otomatis terkoneksi ulang jika terputus (anti-timeout crash).
+
 ---
 
 ### 2️⃣ ngrok Tunnel
@@ -150,7 +153,12 @@ curl https://silica-purging-durable.ngrok-free.dev/api/survey
 # F12 → Console → Check API URLs
 ```
 
+### 📦 Sebelum Membagikan Proyek Ini (Share/ZIP)
+
+> [!WARNING]
+> Sebelum melakukan kompresi (ZIP/RAR) folder `projectpipit` untuk dikirimkan ke dosen atau rekan tim, pastikan Anda **Telah Menghapus** folder `node_modules` di dalam direktori `frontend` dan `backend` agar ukuran filenya tidak bengkak.
+
 ---
 
-**Last Updated**: 2026-05-26
-**Status**: Ready for Deployment
+**Last Updated**: 2026-06-06
+**Status**: Ready for Deployment (Secured & Optimized)
