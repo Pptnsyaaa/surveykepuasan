@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  survey_frontend:
+    image: ghcr.io/survey-kepuasan/frontend:latest # Sesuaikan nama image nantinya
+    networks:
+      - front-tier
+    deploy:
+      replicas: 2 # High Availability (HA)
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first # Zero downtime deployment
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  survey_backend:
+    image: ghcr.io/survey-kepuasan/backend:latest # Sesuaikan nama image nantinya
+    networks:
+      - front-tier
+    environment:
+      - DB_HOST=survey_db
+      - DB_USER=root
+      - DB_PASSWORD=S3cur3P@ssw0rd!
+      - DB_NAME=survey_ai
+      - DB_PORT=3306
+      - PORT=5000
+    deploy:
+      replicas: 2 # Ditingkatkan menjadi 2 untuk High Availability (HA)
+      update_config:
+        parallelism: 1
+        delay: 15s
+        order: start-first # Zero downtime deployment
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 10
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  survey_db:
+    image: mysql:8.0
+    networks:
+      - front-tier
+    environment:
+      - MYSQL_ROOT_PASSWORD=S3cur3P@ssw0rd!
+      - MYSQL_DATABASE=survey_ai
+    volumes:
+      - db_data:/var/lib/mysql
+    configs:
+      - source: survey_db_init
+        target: /docker-entrypoint-initdb.d/survey_ai.sql
+    deploy:
+      replicas: 1 # MySQL non-cluster wajib 1 replica
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+configs:
+  survey_db_init:
+    file: ./survey_ai.sql
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: nfs4
+      o: addr=172.17.2.50,rw
+      device: ":/mnt/pve/nfs-swarm/mysql_data/survey-kepuasan"
+
+networks:
+  front-tier:
+    external: true
