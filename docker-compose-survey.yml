@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   survey_frontend:
-    image: ghcr.io/survey-kepuasan/frontend:latest # Sesuaikan nama image nantinya
+    image: ghcr.io/pptnsyaaa/survey-frontend:latest
     networks:
       - front-tier
     deploy:
@@ -30,7 +30,7 @@ services:
       start_period: 10s
 
   survey_backend:
-    image: ghcr.io/survey-kepuasan/backend:latest # Sesuaikan nama image nantinya
+    image: ghcr.io/pptnsyaaa/survey-backend:latest
     networks:
       - front-tier
     environment:
