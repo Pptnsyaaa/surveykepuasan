@@ -215,10 +215,13 @@ mb-3 sm:mb-4 md:mb-5
 </h3>
 
 <p className="
-text-slate-600
+text-slate-800
 leading-relaxed
 mb-4 sm:mb-5 md:mb-6
-text-xs sm:text-sm md:text-base
+text-lg sm:text-xl md:text-2xl
+font-semibold
+tracking-tight
+max-w-3xl
 ">
 
 {service.question}
