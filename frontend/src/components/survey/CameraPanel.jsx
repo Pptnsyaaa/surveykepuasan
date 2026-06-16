@@ -142,19 +142,8 @@ if (!navigator.mediaDevices.getUserMedia) {
     })
 
     if (videoRef.current) {
-
-      videoRef.current.srcObject =
-      stream
-
-      videoRef.current
-      .onloadedmetadata = () => {
-
-        videoRef.current.play()
-
-        setCameraReady(true)
-
-      }
-
+      videoRef.current.srcObject = stream
+      // Event onLoadedMetadata akan ditangani langsung oleh elemen <video> di JSX
     }
 
   } catch (err) {
@@ -546,9 +535,12 @@ ref={videoRef}
 autoPlay
 muted
 playsInline
-webkitPlaysInline={true}
-controls={false}
-
+onLoadedMetadata={() => {
+  if (videoRef.current) {
+    videoRef.current.play().catch(e => console.error("Video play error:", e));
+    setCameraReady(true);
+  }
+}}
 className="
 w-full
 h-full
