@@ -3,19 +3,23 @@ import {
   User,
   Lock,
   Eye,
-  EyeOff
+  EyeOff,
+  Home,
+  ShieldAlert
 } from 'lucide-react'
 
 import { API } from '../../api'
 
 export default function LoginAdmin() {
 
-  const darkMode =
-    JSON.parse(
-      localStorage.getItem(
-        'darkMode'
-      )
-    ) || false
+  const darkMode = (() => {
+    try {
+      const val = localStorage.getItem('darkMode')
+      return val ? JSON.parse(val) : false
+    } catch (e) {
+      return false
+    }
+  })()
 
   const [username, setUsername] =
     useState('')
@@ -241,8 +245,8 @@ transition-all
 
 >
 
-🏠 Menu Awal
-
+<Home className="w-4 h-4 inline-block mr-1.5 -mt-0.5" />
+<span>Menu Awal</span>
 </a>
 
 </div>
@@ -753,8 +757,10 @@ mb-1
 sm:mb-1.5
 ">
 
-🛡 Akses administrator dilindungi
-
+<span className="flex items-center justify-center gap-1.5">
+  <ShieldAlert className="w-4 h-4 text-slate-400" />
+  <span>Akses administrator dilindungi</span>
+</span>
 </p>
 
 <button

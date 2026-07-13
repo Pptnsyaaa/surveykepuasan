@@ -1,0 +1,71 @@
+{
+  "departments": [
+    {
+      "id": "TI",
+      "code": "TI",
+      "name": "Teknik Informatika"
+    },
+    {
+      "id": "TM",
+      "code": "TM",
+      "name": "Teknik Mesin"
+    },
+    {
+      "id": "TO",
+      "code": "TO",
+      "name": "Teknik Otomotif"
+    },
+    {
+      "id": "TEI",
+      "code": "TEI",
+      "name": "Teknik Elektronika Industri"
+    }
+  ],
+  "questions": [
+    {
+      "id": "pengajaran",
+      "name": "Kualitas Pengajaran",
+      "question": "Bagaimana kepuasan Anda terhadap kompetensi, kedisiplinan, dan metode pengajaran dosen perkuliahan?"
+    },
+    {
+      "id": "perpustakaan",
+      "name": "Perpustakaan",
+      "question": "Bagaimana kepuasan Anda terhadap kelengkapan koleksi buku, ruang baca, dan pelayanan perpustakaan?"
+    },
+    {
+      "id": "laboratorium",
+      "name": "Laboratorium & Praktikum",
+      "question": "Bagaimana kepuasan Anda terhadap kelengkapan peralatan dan kenyamanan kegiatan praktikum di laboratorium?"
+    },
+    {
+      "id": "keuangan",
+      "name": "Layanan Keuangan",
+      "question": "Bagaimana kepuasan Anda terhadap kemudahan pelayanan administrasi keuangan (UKT/beasiswa)?"
+    },
+    {
+      "id": "kemahasiswaan",
+      "name": "Layanan & Fasilitas Kampus",
+      "question": "Bagaimana kepuasan Anda terhadap layanan kemahasiswaan, dukungan BEM/Ormawa, dan kegiatan mahasiswa?"
+    },
+    {
+      "id": "karir magang",
+      "name": "Bimbingan Karir & Magang",
+      "question": "Bagaimana kepuasan Anda terhadap layanan informasi magang (Kampus Merdeka), bimbingan karir, dan konseling?"
+    },
+    {
+      "id": "fasilitas",
+      "name": "Fasilitas Kampus",
+      "question": "Bagaimana kepuasan Anda terhadap kebersihan dan kenyamanan fasilitas umum kampus (ruang kelas, toilet, parkir)?"
+    },
+    {
+      "id": "layanan it",
+      "name": "Layanan IT & Wi-Fi",
+      "question": "Bagaimana kepuasan Anda terhadap keandalan jaringan internet (Wi-Fi) dan portal sistem informasi digital kampus?"
+    },
+    {
+      "id": "pelayanan staf",
+      "name": "Responsivitas Staf",
+      "question": "Bagaimana kepuasan Anda terhadap keramahan, kecepatan, dan responsivitas petugas/staf kampus dalam memberikan pelayanan?"
+    }
+  ]
+}

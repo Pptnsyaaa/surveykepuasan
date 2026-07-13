@@ -1,13 +1,20 @@
 import { useState } from 'react'
+import {
+  Smile,
+  SmilePlus,
+  Meh,
+  Frown,
+  Angry
+} from 'lucide-react'
 
 const EMOTION_EMOJI = {
-  happy: '😄',
-  surprised: '🙂',
-  neutral: '😐',
-  sad: '😕',
-  angry: '😠',
-  disgusted: '😠',
-  fearful: '😕'
+  happy: <Smile className="w-10 h-10 sm:w-12 sm:h-12 text-emerald-500 mx-auto" />,
+  surprised: <SmilePlus className="w-10 h-10 sm:w-12 sm:h-12 text-blue-500 mx-auto" />,
+  neutral: <Meh className="w-10 h-10 sm:w-12 sm:h-12 text-amber-500 mx-auto" />,
+  sad: <Frown className="w-10 h-10 sm:w-12 sm:h-12 text-orange-500 mx-auto" />,
+  angry: <Angry className="w-10 h-10 sm:w-12 sm:h-12 text-red-500 mx-auto" />,
+  disgusted: <Angry className="w-10 h-10 sm:w-12 sm:h-12 text-red-500 mx-auto" />,
+  fearful: <Frown className="w-10 h-10 sm:w-12 sm:h-12 text-orange-500 mx-auto" />
 }
 
 const EMOTION_LABELS = {
@@ -29,11 +36,11 @@ const RATING_COLORS = {
 }
 
 const MANUAL_RATINGS = [
-{rating:1,emoji:'😠',label:'Sangat Tidak Puas'},
-{rating:2,emoji:'😕',label:'Tidak Puas'},
-{rating:3,emoji:'😐',label:'Netral'},
-{rating:4,emoji:'🙂',label:'Puas'},
-{rating:5,emoji:'😄',label:'Sangat Puas'}
+{rating:1,icon:<Angry className="w-6 h-6 sm:w-7 sm:h-7 text-red-500 mx-auto" />,label:'Sangat Tidak Puas'},
+{rating:2,icon:<Frown className="w-6 h-6 sm:w-7 sm:h-7 text-orange-500 mx-auto" />,label:'Tidak Puas'},
+{rating:3,icon:<Meh className="w-6 h-6 sm:w-7 sm:h-7 text-amber-500 mx-auto" />,label:'Netral'},
+{rating:4,icon:<SmilePlus className="w-6 h-6 sm:w-7 sm:h-7 text-blue-500 mx-auto" />,label:'Puas'},
+{rating:5,icon:<Smile className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-500 mx-auto" />,label:'Sangat Puas'}
 ]
 
 export default function QuestionPanel({
@@ -53,10 +60,9 @@ const [comment,setComment]=useState('')
 const [showManual,setShowManual]=useState(false)
 const [showError,setShowError]=useState(false)
 
-const service=services[currentQuestion]
+const service = services?.[currentQuestion] || services?.[0] || { id: 'default', name: 'Pertanyaan Survei', question: 'Daftar pertanyaan sedang dimuat...' }
 
-const progress=
-((currentQuestion+1)/services.length)*100
+const progress = services && services.length > 0 ? ((currentQuestion + 1) / services.length) * 100 : 100
 
 const colors=
 RATING_COLORS[currentRating] ||
@@ -115,12 +121,13 @@ relative
 overflow-hidden
 bg-white/85
 backdrop-blur-xl
-rounded-xl sm:rounded-2xl
-lg:rounded-3xl
+rounded-[24px] sm:rounded-[28px]
+lg:rounded-[32px]
 border
 border-white/60
-shadow-[0_15px_40px_rgba(0,0,0,0.08)]
-p-4 sm:p-5 md:p-6 lg:p-7
+shadow-2xl
+p-3.5 sm:p-4 md:p-5
+w-full h-full flex flex-col justify-between
 ">
 
 <div className="
@@ -145,13 +152,13 @@ bg-indigo-100/50
 blur-3xl
 "/>
 
-<div className="relative z-10">
+<div className="relative z-10 flex flex-col justify-between h-full">
 
-<div className="mb-4 sm:mb-5 md:mb-6">
+<div className="mb-2 sm:mb-3">
 
 <div className="
 w-full
-h-2 sm:h-2.5 md:h-3 lg:h-4
+h-1.5 sm:h-2 md:h-2.5
 bg-slate-100
 rounded-full
 overflow-hidden
@@ -176,19 +183,18 @@ width:`${progress}%`
 
 </div>
 
-</div>
-
 <div className="
 inline-flex
 items-center
-gap-2
-bg-slate-100
-px-3 sm:px-4
-py-2 sm:py-2.5
+gap-1.5
+bg-slate-100 dark:bg-slate-800
+px-2.5 sm:px-3
+py-1 sm:py-1.5
 rounded-full
-text-xs sm:text-sm
-text-slate-600
-mb-4 sm:mb-5 md:mb-6
+text-[11px] sm:text-xs
+text-slate-600 dark:text-slate-300
+border border-transparent dark:border-slate-700
+my-2 sm:my-2.5
 ">
 
 <div className="
@@ -198,52 +204,54 @@ bg-orange-500
 "/>
 
 Pertanyaan {currentQuestion+1}
-dari {services.length}
+dari {services?.length || 1}
 
 </div>
 
 <h3 className="
 text-orange-500
 font-black
-text-lg sm:text-2xl
-md:text-3xl lg:text-4xl
-mb-3 sm:mb-4 md:mb-5
+text-base sm:text-lg
+md:text-xl lg:text-2xl
+mb-1 sm:mb-1.5
 ">
 
-{service.name}
+{service?.name || 'Pertanyaan'}
 
 </h3>
 
 <p className="
-text-slate-800
-leading-relaxed
-mb-4 sm:mb-5 md:mb-6
-text-lg sm:text-xl md:text-2xl
+text-slate-800 dark:text-white
+leading-snug
+mb-2 sm:mb-3
+text-sm sm:text-base md:text-lg
 font-semibold
 tracking-tight
-max-w-3xl
 ">
 
-{service.question}
+{service?.question || 'Daftar pertanyaan sedang dimuat...'}
 
 </p>
+
+</div>
 
 <div className={`
 flex
 flex-col
 items-center
 justify-center
-gap-2
+gap-1 sm:gap-1.5
 
-p-4 sm:p-5 md:p-6 lg:p-7
+p-3 sm:p-4
 
-rounded-xl sm:rounded-2xl md:rounded-3xl
+rounded-xl sm:rounded-2xl
 border-2
-mb-4 sm:mb-5 md:mb-6
+mb-2 sm:mb-3
+flex-1
 
-min-h-[120px] xs:min-h-[140px] sm:min-h-[160px] md:min-h-[200px] lg:min-h-[240px]
+min-h-[110px] sm:min-h-[130px] max-h-[160px] sm:max-h-[180px]
 
-shadow-lg
+shadow-md
 transition-all
 duration-300
 
@@ -258,16 +266,15 @@ ${colors.border}
 <>
 
 <div className="
-text-4xl sm:text-5xl
-md:text-6xl lg:text-7xl
+text-3xl sm:text-4xl
 animate-pulse
 ">
 📷
 </div>
 
 <h3 className="
-text-base sm:text-lg
-md:text-xl lg:text-2xl
+text-sm sm:text-base
+md:text-lg
 font-bold
 text-center
 ">
@@ -275,7 +282,7 @@ Menunggu Deteksi Wajah...
 </h3>
 
 <p className="
-text-xs sm:text-xs md:text-sm
+text-[11px] sm:text-xs
 text-slate-500
 text-center
 ">
@@ -292,23 +299,13 @@ currentEmotion ? (
 
 <>
 
-<span className="
-text-5xl
-sm:text-6xl
-lg:text-7xl
-">
-
-{
-EMOTION_EMOJI[currentEmotion]
-}
-
-</span>
+<div className="flex items-center justify-center my-1">
+  {EMOTION_EMOJI[currentEmotion]}
+</div>
 
 <span className={`
 font-bold
-text-lg
-sm:text-xl
-lg:text-2xl
+text-base sm:text-lg lg:text-xl
 ${colors.text}
 `}>
 
@@ -319,8 +316,7 @@ EMOTION_LABELS[currentEmotion]
 </span>
 
 <p className="
-text-xs
-sm:text-sm
+text-[11px] sm:text-xs
 text-slate-400
 ">
 
@@ -362,10 +358,11 @@ Memproses deteksi...
 
 </div>
 
+<div>
+
 <div className="
 text-center
-mb-3
-sm:mb-4
+mb-1.5 sm:mb-2
 ">
 
 <button
@@ -396,19 +393,16 @@ showManual&&(
 
 <div className="
 grid
-grid-cols-2
-xs:grid-cols-3
-sm:grid-cols-5
-gap-2
-sm:gap-3
-mb-4
-sm:mb-5
+grid-cols-5
+gap-1.5
+sm:gap-2
+mb-2 sm:mb-3
 ">
 
 {
 MANUAL_RATINGS.map(({
 rating,
-emoji,
+icon,
 label
 })=>(
 
@@ -421,10 +415,8 @@ emotionMap[rating]
 )
 }
 className="
-p-2
-sm:p-3
+p-1.5 sm:p-2
 rounded-xl
-sm:rounded-2xl
 border
 bg-white
 hover:scale-105
@@ -433,14 +425,15 @@ shadow-sm
 "
 >
 
-<div className="text-3xl sm:text-4xl">
-{emoji}
+<div className="flex items-center justify-center my-1">
+{icon}
 </div>
 
 <div className="
-text-[10px] sm:text-xs
+text-[9px] sm:text-[10px]
 font-medium
-mt-1
+mt-0.5
+leading-tight
 ">
 {label}
 </div>
@@ -491,20 +484,17 @@ Tuliskan kendala atau saran...
 "
 className="
 w-full
-p-3
-sm:p-4
+p-2.5 sm:p-3
 rounded-xl
-sm:rounded-2xl
 border
 border-slate-200
 bg-white
 focus:border-orange-400
 outline-none
 resize-none
-h-24
-sm:h-28
-lg:h-32
-text-sm
+h-16
+sm:h-20
+text-xs sm:text-sm
 "
 />
 
@@ -583,17 +573,14 @@ from-indigo-600
 to-purple-600
 text-white
 font-bold
-py-2
-sm:py-3
-lg:py-4
+py-2 sm:py-2.5
 rounded-xl
 sm:rounded-2xl
 transition-all
 duration-300
-shadow-xl
-text-sm
-sm:text-base
-hover:shadow-2xl
+shadow-lg
+text-sm sm:text-base
+hover:shadow-xl
 active:scale-95
 ">
 
@@ -609,13 +596,14 @@ isLast
 
 <p className="
 text-center
-text-xs
+text-[11px] sm:text-xs
 text-slate-400
-mt-3
-sm:mt-4
+mt-2
 ">
 Masukan Anda membantu meningkatkan kualitas layanan kampus
 </p>
+
+</div>
 
 </div>
 

@@ -1,15 +1,20 @@
 // src/pages/AboutSystem.jsx
 
 import { motion } from 'framer-motion'
+import {
+  Home,
+  Target,
+  Sparkles,
+  Building,
+  Globe,
+  MessageCircle,
+  Mail,
+  CheckCircle2
+} from 'lucide-react'
 
 export default function AboutSystem() {
 
-  const darkMode =
-    JSON.parse(
-      localStorage.getItem(
-        'darkMode'
-      )
-    ) || false
+  const darkMode = localStorage.getItem('darkMode') === 'true'
 
   return (
 
@@ -181,8 +186,8 @@ export default function AboutSystem() {
             "
           >
 
-            🏠 Menu Awal
-
+            <Home className="w-4 h-4 inline mr-1.5 -mt-0.5" />
+            <span>Menu Awal</span>
           </a>
 
         </div>
@@ -243,8 +248,8 @@ export default function AboutSystem() {
               md:mb-5
             ">
 
-              🎯 Tujuan Sistem
-
+              <Target className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500 inline mr-2 -mt-1" />
+              <span>Tujuan Sistem</span>
             </h2>
 
             <p className={`
@@ -320,8 +325,8 @@ export default function AboutSystem() {
                   md:mb-5
                 ">
 
-                  ✨ Fitur Utama Sistem
-
+                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 inline mr-2 -mt-1" />
+                  <span>Fitur Utama Sistem</span>
                 </h2>
 
                 <ul className={`
@@ -344,24 +349,29 @@ export default function AboutSystem() {
 
                 `}>
 
-                  <li>
-                    • Survei kepuasan mahasiswa secara online
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-1" />
+                    <span>Survei kepuasan mahasiswa secara online</span>
                   </li>
 
-                  <li>
-                    • Deteksi ekspresi wajah berbasis AI
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-1" />
+                    <span>Deteksi ekspresi wajah berbasis AI</span>
                   </li>
 
-                  <li>
-                    • Analisis sentimen respon mahasiswa
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-1" />
+                    <span>Analisis sentimen respon mahasiswa</span>
                   </li>
 
-                  <li>
-                    • Dashboard monitoring realtime
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-1" />
+                    <span>Dashboard monitoring realtime</span>
                   </li>
 
-                  <li>
-                    • Visualisasi data dalam bentuk grafik interaktif
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-1" />
+                    <span>Visualisasi data dalam bentuk grafik interaktif</span>
                   </li>
 
                 </ul>
@@ -414,8 +424,8 @@ export default function AboutSystem() {
               md:mb-5
             ">
 
-              🏫 Tentang Kampus
-
+              <Building className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 inline mr-2 -mt-1" />
+              <span>Tentang Kampus</span>
             </h2>
 
             <p className={`
@@ -513,8 +523,8 @@ export default function AboutSystem() {
                 "
               >
 
-                🌐 Website Kampus
-
+                <Globe className="w-4 h-4 inline mr-2 -mt-0.5" />
+                <span>Website Kampus</span>
               </a>
 
               {/* WHATSAPP */}
@@ -564,8 +574,8 @@ export default function AboutSystem() {
                 "
               >
 
-                💬 Contact WhatsApp Admin
-
+                <MessageCircle className="w-4 h-4 inline mr-2 -mt-0.5" />
+                <span>Contact WhatsApp Admin</span>
               </a>
 
             </div>
@@ -652,8 +662,8 @@ export default function AboutSystem() {
             "
           >
 
-            ✉️ pipitfn675@gmail.com
-
+            <Mail className="w-4 h-4 inline mr-1.5 -mt-0.5" />
+            <span>pipitfn675@gmail.com</span>
           </a>
 
         </div>

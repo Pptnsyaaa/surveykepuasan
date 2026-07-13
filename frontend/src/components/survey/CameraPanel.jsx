@@ -358,14 +358,15 @@ useEffect(() => {
   return(
 
 <div className="
-bg-white/80
+w-full h-full flex flex-col justify-between
+bg-white/85
 backdrop-blur-xl
 
-rounded-2xl sm:rounded-3xl lg:rounded-[30px]
+rounded-[24px] sm:rounded-[28px] lg:rounded-[32px]
 
-p-4 sm:p-5 md:p-6
+p-3.5 sm:p-4 md:p-5
 
-shadow-xl
+shadow-2xl
 
 border
 border-slate-100
@@ -375,7 +376,7 @@ border-slate-100
 flex
 justify-between
 items-center
-mb-4 sm:mb-5
+mb-2 sm:mb-3
 ">
 
 <h2 className="
@@ -395,14 +396,17 @@ text-orange-500
 relative
 overflow-hidden
 
-rounded-2xl sm:rounded-3xl lg:rounded-[30px]
+rounded-xl sm:rounded-2xl
 
 bg-black
 
 w-full
+flex-1
 max-w-2xl
 mx-auto
-aspect-square sm:aspect-video
+aspect-video
+max-h-[280px] sm:max-h-[320px] lg:max-h-[360px]
+flex items-center justify-center
 ">
 
 {
@@ -574,35 +578,35 @@ h-full
 {/* PETUNJUK */}
 
 <div className="
-mt-4
+mt-2 sm:mt-3
 
 bg-white
 
-rounded-2xl
+rounded-xl sm:rounded-2xl
 
 border
 border-slate-100
 
 shadow-sm
 
-px-5
-py-4
+px-3.5 sm:px-4
+py-2 sm:py-2.5
 
 flex
 items-center
-gap-3
+gap-2.5
 ">
 
 <div className="
-text-xl
+text-lg sm:text-xl
 ">
 💡
 </div>
 
 <p className="
-text-[13px]
+text-xs sm:text-[13px]
 text-slate-600
-leading-relaxed
+leading-snug
 ">
 
 Posisikan wajah dengan jelas

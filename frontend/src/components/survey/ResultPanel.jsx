@@ -1,5 +1,14 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import {
+  Smile,
+  SmilePlus,
+  Meh,
+  Frown,
+  Angry,
+  CheckCircle2,
+  Star
+} from 'lucide-react'
 
 export default function ResultPanel({
   responses,
@@ -40,14 +49,11 @@ export default function ResultPanel({
   },[])
 
   const getEmoji=(rating)=>{
-
-    if(rating===5) return '😄'
-    if(rating===4) return '🙂'
-    if(rating===3) return '😐'
-    if(rating===2) return '😕'
-
-    return '😠'
-
+    if(rating===5) return <Smile className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-500 inline" />
+    if(rating===4) return <SmilePlus className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500 inline" />
+    if(rating===3) return <Meh className="w-8 h-8 sm:w-10 sm:h-10 text-amber-500 inline" />
+    if(rating===2) return <Frown className="w-8 h-8 sm:w-10 sm:h-10 text-orange-500 inline" />
+    return <Angry className="w-8 h-8 sm:w-10 sm:h-10 text-red-500 inline" />
   }
 
   const getLabel=(rating)=>{
@@ -127,12 +133,8 @@ mx-auto
 mb-4 sm:mb-5
 ">
 
-<span className="
-text-2xl sm:text-3xl
-">
-
-✓
-
+<span className="flex items-center justify-center">
+<CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 text-emerald-600" />
 </span>
 
 </div>
@@ -140,7 +142,7 @@ text-2xl sm:text-3xl
 <h2 className="
 text-2xl sm:text-3xl lg:text-4xl
 font-black
-text-slate-800
+text-slate-800 dark:text-white
 mb-2 sm:mb-3
 ">
 
@@ -150,7 +152,7 @@ Terima kasih
 
 <p className="
 text-xs sm:text-sm
-text-slate-500
+text-slate-500 dark:text-slate-300
 leading-relaxed
 max-w-xl
 mx-auto
@@ -168,7 +170,7 @@ layanan kampus
 
 <div className="
 
-bg-orange-50
+bg-orange-50 dark:bg-slate-800/80 dark:border dark:border-slate-700/60
 
 rounded-2xl sm:rounded-3xl
 
@@ -181,7 +183,7 @@ text-center
 ">
 
 <p className="
-text-slate-500
+text-slate-500 dark:text-slate-300
 text-xs sm:text-sm
 mb-2
 ">
@@ -233,9 +235,7 @@ averageRating
 
 `}
 >
-
-★
-
+<Star className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
 </span>
 
 ))}
@@ -359,9 +359,7 @@ i<=response.rating
 `}
 
 >
-
-★
-
+<Star className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
 </span>
 
 ))

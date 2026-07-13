@@ -1,356 +1,135 @@
+import { useState, useEffect } from 'react'
+import { FileText, ShieldAlert, ArrowRight } from 'lucide-react'
+import { API } from '../../api'
+
+const DEFAULT_DEPARTMENTS = [
+  { id: 'TI', name: 'Teknik Informatika' },
+  { id: 'TM', name: 'Teknik Mesin' },
+  { id: 'TO', name: 'Teknik Otomotif' },
+  { id: 'TEI', name: 'Teknik Elektronika Industri' }
+]
+
 export default function StudentForm({ onStart }) {
+  const [departments, setDepartments] = useState(DEFAULT_DEPARTMENTS)
+
+  useEffect(() => {
+    fetch(API.SETTINGS.GET)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.departments && Array.isArray(data.departments) && data.departments.length > 0) {
+          setDepartments(data.departments)
+        }
+      })
+      .catch(err => {
+        console.log('Using default departments:', err)
+      })
+  }, [])
 
   const handleSubmit = (e) => {
-
     e.preventDefault()
-
-    const fakultas =
-      e.target.fakultas.value
-
+    const fakultas = e.target.fakultas.value
     if (!fakultas) {
-
       alert('Pilih Program Studi dulu!')
       return
     }
-
-    onStart({
-      fakultas
-    })
+    onStart({ fakultas })
   }
 
   return (
-
-    <div className="
-
-      w-full
-      max-w-xs
-      sm:max-w-sm
-      md:max-w-lg
-      lg:max-w-2xl
-      xl:max-w-3xl
-      mx-auto
-
-      bg-white/80
-      backdrop-blur-2xl
-
-      rounded-2xl
-      sm:rounded-3xl
-      lg:rounded-[2rem]
-
-      shadow-lg
-      sm:shadow-xl
-      md:shadow-2xl
-      lg:shadow-[0_30px_80px_rgba(0,0,0,0.16)]
-
-      p-3
-      xs:p-4
-      sm:p-6
-      md:p-8
-      lg:p-10
-
-      transition-all
-      duration-500
-
-    ">
-
+    <div className="w-full h-full flex flex-col justify-between transition-all duration-500">
       {/* TITLE */}
-
-      <div className="
-        mb-5
-        sm:mb-6
-        md:mb-7
-        lg:mb-8
-      ">
-
-        <div className="
-          flex
-          items-center
-          gap-2
-          sm:gap-3
-
-          mb-2
-          sm:mb-3
-        ">
-
+      <div className="mb-3 sm:mb-4">
+        <div className="flex items-center gap-2.5 sm:gap-3 mb-1.5 sm:mb-2">
           <div className="
-            w-10
-            h-10
-            sm:w-12
-            sm:h-12
-            md:w-14
-            md:h-14
-
-            rounded-lg
-            sm:rounded-xl
-            md:rounded-2xl
-
-            bg-gradient-to-r
-            from-orange-400
-            to-amber-300
-
-            flex
-            items-center
-            justify-center
-
-            text-xl
-            sm:text-2xl
-            md:text-3xl
-
-            shadow-md
-            sm:shadow-lg
+            w-9 h-9 sm:w-11 sm:h-11
+            rounded-xl
+            bg-gradient-to-r from-indigo-500 to-blue-600
+            flex items-center justify-center
+            text-white shadow-md
           ">
-
-            📝
-
+            <FileText className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
 
           <div>
-
             <h2 className="
-              text-lg
-              sm:text-2xl
-              md:text-3xl
-              lg:text-4xl
-              xl:text-5xl
-              font-black
-
-              text-slate-800
-              leading-tight
+              text-lg sm:text-xl lg:text-2xl xl:text-3xl
+              font-black text-slate-800 dark:text-white leading-tight
             ">
-
               Data Mahasiswa
-
             </h2>
 
             <p className="
-              text-sm
-              sm:text-base
-              md:text-base
-              lg:text-base
-              text-slate-500
-              leading-relaxed
+              text-xs sm:text-sm text-slate-500 dark:text-slate-300 leading-relaxed
             ">
-
               Sistem Kepuasan Mahasiswa Berbasis AI
-
             </p>
-
           </div>
-
         </div>
-
       </div>
 
       {/* ALERT */}
-
-      <div className="
-
-        bg-gradient-to-r
-        from-blue-50
-        to-indigo-50
-
-        text-blue-700
-
-        rounded-lg
-        sm:rounded-xl
-        md:rounded-2xl
-
-        p-3
-        sm:p-4
-        md:p-5
-        lg:p-6
-
-        mb-4
-        sm:mb-5
-        md:mb-6
-        lg:mb-7
-
-        text-xs
-        sm:text-sm
-        md:text-base
-        lg:text-lg
-
-        shadow-sm
-        leading-relaxed
-
-      ">
-
-        🔒 Survei ini bersifat
-        <strong> anonim </strong>
-
-        dan hanya digunakan untuk meningkatkan kualitas pelayanan kampus.
-
+      <div className="flex items-start gap-2.5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 border border-blue-100/80 dark:border-blue-800/40 text-blue-800 dark:text-blue-200 rounded-xl p-3 mb-4 text-xs sm:text-sm shadow-sm leading-relaxed">
+        <ShieldAlert className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+        <div>
+          Survei ini bersifat <strong className="font-semibold text-blue-950 dark:text-blue-100">anonim</strong> dan hanya digunakan untuk meningkatkan kualitas pelayanan kampus.
+        </div>
       </div>
 
       {/* FORM */}
-
-      <form
-        onSubmit={handleSubmit}
-      >
-
+      <form onSubmit={handleSubmit}>
         {/* SELECT */}
-
-        <div className="
-          mb-4
-          sm:mb-5
-          md:mb-6
-          lg:mb-7
-          xl:mb-8
-        ">
-
-          <label className="
-
-            block
-
-            font-bold
-            text-slate-700
-
-            mb-2
-            sm:mb-2.5
-            md:mb-3
-
-            text-sm
-            sm:text-base
-            md:text-lg
-            lg:text-xl
-
-          ">
-
+        <div className="mb-4 sm:mb-5">
+          <label className="block font-bold text-slate-700 dark:text-slate-200 mb-1.5 sm:mb-2 text-xs sm:text-sm md:text-base">
             Fakultas Teknik
-
           </label>
 
           <select
-
             name="fakultas"
-
             required
-
             className="
-
-              w-full
-              appearance-none
-
-              border
-              border-slate-200
-
-              rounded-lg
-              sm:rounded-xl
-              md:rounded-2xl
-
-              px-3
-              sm:px-4
-              md:px-5
-              py-2.5
-              sm:py-3
-              md:py-4
-
-              bg-white/80
-
-              text-slate-700
-              text-xs
-              sm:text-sm
-              md:text-base
-              lg:text-lg
-
-              shadow-sm
-              hover:shadow-md
-
-              focus:outline-none
-
-              focus:border-indigo-500
-              focus:ring-4
-              focus:ring-indigo-100
-
-              transition-all
-              duration-300
-              cursor-pointer
-
-              min-h-[44px] sm:min-h-[48px]
-
+              w-full appearance-none border border-slate-200 dark:border-slate-700 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3
+              bg-white/80 dark:bg-slate-800 text-slate-700 dark:text-white text-xs sm:text-sm md:text-base shadow-sm hover:shadow-md
+              focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900/50
+              transition-all duration-300 cursor-pointer min-h-[44px] sm:min-h-[48px]
             "
           >
-
-            <option value="">
-              Pilih Program Studi
-            </option>
-
-            <option value="TI">
-              Teknik Informatika
-            </option>
-
-            <option value="TM">
-              Teknik Mesin
-            </option>
-
-            <option value="TO">
-              Teknik Otomotif
-            </option>
-
-            <option value="TEI">
-              Teknik Elektronika Industri
-            </option>
-
+            <option value="" className="bg-white dark:bg-slate-800 text-slate-800 dark:text-white">Pilih Program Studi</option>
+            {Array.isArray(departments) && departments.map((dept, idx) => {
+              const id = dept?.id || dept?.code || dept?.name || `dept-${idx}`
+              const name = dept?.name || (typeof dept === 'string' ? dept : 'Program Studi')
+              return (
+                <option key={id} value={id} className="bg-white dark:bg-slate-800 text-slate-800 dark:text-white">
+                  {name}
+                </option>
+              )
+            })}
           </select>
-
         </div>
 
         {/* BUTTON */}
 
         <button
-
           type="submit"
-
           className="
-
             w-full
-
-            py-3
-            sm:py-3
-            md:py-4
-            lg:py-5
-
+            py-3 sm:py-3.5
             px-4
-
-            rounded-lg
-            sm:rounded-xl
-            md:rounded-2xl
-
-            bg-gradient-to-r
-            from-indigo-600
-            to-purple-600
-
+            rounded-xl
+            bg-gradient-to-r from-indigo-600 to-purple-600
             text-white
-
             font-bold
-            sm:font-black
-            text-sm
-            sm:text-base
-            md:text-base
-            lg:text-lg
-
-            shadow-md
-            sm:shadow-lg
-            md:shadow-xl
-            hover:shadow-lg
-            sm:hover:shadow-2xl
-
-            hover:scale-[1.02]
-            active:scale-[0.99]
-
-            transition-all
-            duration-300
-
-            disabled:opacity-50
-            disabled:cursor-not-allowed
-
+            text-sm sm:text-base
+            shadow-md hover:shadow-xl
+            hover:scale-[1.02] active:scale-[0.99]
+            transition-all duration-300
+            disabled:opacity-50 disabled:cursor-not-allowed
             min-h-[44px] sm:min-h-[48px]
-
           "
         >
-
-          Mulai Survei →
-
+          <span className="flex items-center justify-center gap-2">
+            <span>Mulai Survei</span>
+            <ArrowRight className="w-5 h-5" />
+          </span>
         </button>
 
       </form>

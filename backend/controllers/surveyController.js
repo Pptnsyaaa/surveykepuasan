@@ -11,37 +11,36 @@ export const saveSurvey = (
     averageRating
   } = req.body
 
+  const fakultas =
+    req.body.fakultas ||
+    req.body.student?.fakultas ||
+    req.body.student?.jurusan ||
+    'Umum'
+
+  if (!responses || !Array.isArray(responses)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Format responses tidak valid'
+    })
+  }
 
   const sql = `
-
     INSERT INTO surveys
     (
-
       fakultas,
       average_rating,
-      responses
-
+      responses,
+      submitted_at
     )
-
-    VALUES (?,?,?)
-
+    VALUES (?, ?, ?, NOW())
   `
 
-
   db.query(
-
     sql,
-
     [
-
-      student.fakultas,
-
-      averageRating,
-
-      JSON.stringify(
-        responses
-      )
-
+      fakultas,
+      averageRating || 0,
+      JSON.stringify(responses)
     ],
 
     (err,result)=>{
@@ -162,7 +161,7 @@ console.log(
 
       [
 
-      `Survey baru dari ${student.fakultas}`,
+      `Survey baru dari ${fakultas}`,
 
       'unread'
 
@@ -213,7 +212,7 @@ console.log(
 
       [
 
-      `Rating rendah dari ${student.fakultas}`,
+      `Rating rendah dari ${fakultas}`,
 
       'unread'
 

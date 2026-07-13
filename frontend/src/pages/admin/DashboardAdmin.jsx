@@ -19,6 +19,31 @@ import PerProgramStudi from '../../components/dashboard/PerProgramStudi'
 import PerLayanan from '../../components/dashboard/PerLayanan'
 import TrenWaktu from '../../components/dashboard/TrenWaktu'
 import DataResponden from '../../components/dashboard/DataResponden'
+import KelolaSurvei from '../../components/dashboard/KelolaSurvei'
+import {
+  BarChart3,
+  Building2,
+  GraduationCap,
+  Calendar,
+  Users,
+  Settings,
+  Menu,
+  X,
+  Download,
+  FileSpreadsheet,
+  FileText,
+  FileCode,
+  Printer
+} from 'lucide-react'
+
+const MENU_ITEMS = [
+  { key: 'overview', label: 'Overview', icon: BarChart3 },
+  { key: 'layanan', label: 'Per Layanan', icon: Building2 },
+  { key: 'jurusan', label: 'Per Program Studi', icon: GraduationCap },
+  { key: 'tren', label: 'Tren Waktu', icon: Calendar },
+  { key: 'responden', label: 'Data Responden', icon: Users },
+  { key: 'settings', label: 'Kelola Survei', icon: Settings }
+]
 
 // ======================
 // COMPONENT
@@ -30,10 +55,14 @@ export default function DashboardAdmin() {
   // DARK MODE
   // ======================
 
-  const darkMode =
-    JSON.parse(
-      localStorage.getItem('darkMode')
-    ) || false
+  const darkMode = (() => {
+    try {
+      const val = localStorage.getItem('darkMode')
+      return val ? JSON.parse(val) : false
+    } catch (e) {
+      return false
+    }
+  })()
 
   // ======================
   // AUTHENTICATION CHECK
@@ -83,39 +112,38 @@ export default function DashboardAdmin() {
       useState(false)
 
       const mainRef = useRef(null)
+      const exportRef = useRef(null)
       const [showHandle, setShowHandle] = useState(false)
+
+      useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (exportRef.current && !exportRef.current.contains(event.target)) {
+            setShowExport(false)
+          }
+        }
+        if (showExport) {
+          document.addEventListener('mousedown', handleClickOutside)
+        }
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside)
+        }
+      }, [showExport])
 
   // ======================
   // SERVICES
   // ======================
 
   const services = [
-
-    {
-      id: 'akademik',
-      name: 'Pelayanan Akademik'
-    },
-
-    {
-      id: 'perpustakaan',
-      name: 'Perpustakaan'
-    },
-
-    {
-      id: 'keuangan',
-      name: 'Layanan Keuangan'
-    },
-
-    {
-      id: 'kemahasiswaan',
-      name: 'Kemahasiswaan'
-    },
-
-    {
-      id: 'fasilitas',
-      name: 'Fasilitas Kampus'
-    }
-
+    { id: 'akademik', name: 'Layanan Akademik' },
+    { id: 'pengajaran', name: 'Kualitas Pengajaran' },
+    { id: 'perpustakaan', name: 'Perpustakaan' },
+    { id: 'laboratorium', name: 'Laboratorium & Praktikum' },
+    { id: 'keuangan', name: 'Layanan Keuangan' },
+    { id: 'kemahasiswaan', name: 'Kemahasiswaan' },
+    { id: 'karir_magang', name: 'Bimbingan Karir & Magang' },
+    { id: 'fasilitas', name: 'Fasilitas Kampus' },
+    { id: 'layanan_it', name: 'Layanan IT & Wi-Fi' },
+    { id: 'pelayanan_staf', name: 'Responsivitas Staf' }
   ]
 
   // ======================
@@ -133,7 +161,7 @@ await fetch(API.NOTIFICATIONS.GET_ALL)
 const result=
 await response.json()
 
-setNotifications(result)
+setNotifications(Array.isArray(result) ? result : (Array.isArray(result?.data) ? result.data : []))
 
 }
 
@@ -182,8 +210,9 @@ if(!response.ok){
         const result =
           await response.json()
 
+        const dataArray = Array.isArray(result?.data) ? result.data : (Array.isArray(result) ? result : [])
         const formatted =
-  result.data.map(item => ({
+  dataArray.map(item => ({
 
     ...item,
 
@@ -564,7 +593,7 @@ return ()=>clearInterval(interval)
   async()=>{
     try{
       const response = await fetch(
-        '/api/notifications',
+        API.NOTIFICATIONS.DELETE_ALL,
         {
           method: 'DELETE'
         }
@@ -763,37 +792,8 @@ Sistem aktif
 
 <div className="
 space-y-4
-">
-
-{
-
-[
-{
-key:'overview',
-label:'📈 Overview'
-},
-
-{
-key:'layanan',
-label:'🏢 Per Layanan'
-},
-
-{
-key:'jurusan',
-label:'🎓 Per Program Studi'
-},
-
-{
-key:'tren',
-label:'📅 Tren Waktu'
-},
-
-{
-key:'responden',
-label:'👨‍🎓 Data Responden'
-}
-
-].map(menu=>(
+            ">
+              {MENU_ITEMS.map(menu=>(
 
 <button
 
@@ -856,11 +856,12 @@ hover:translate-x-2
 }
 
 `}
->
-
-{menu.label}
-
-</button>
+                >
+                  <span className="flex items-center gap-3">
+                    <menu.icon className="w-4 h-4 shrink-0" />
+                    <span>{menu.label}</span>
+                  </span>
+                </button>
 
 ))
 
@@ -1008,11 +1009,9 @@ duration-300
 hover:scale-105
 "
 
->
-
-☰
-
-</button>
+              >
+                <Menu className="w-6 h-6" />
+              </button>
 
 </div>
 
@@ -1167,31 +1166,15 @@ onClick={() =>
 setMobileMenu(false)
 }
 
-className="
-text-2xl
-"
->
-
-✕
-
-</button>
+                className="text-2xl"
+              >
+                <X className="w-6 h-6" />
+              </button>
 
 </div>
 
-<div className="
-space-y-4
-">
-
-{
-
-[
-{ key:'overview', label:'📈 Overview' },
-{ key:'layanan', label:'🏢 Per Layanan' },
-{ key:'jurusan', label:'🎓 Per Program Studi' },
-{ key:'tren', label:'📅 Tren Waktu' },
-{ key:'responden', label:'👨‍🎓 Data Responden' }
-
-].map(menu => (
+            <div className="space-y-4">
+              {MENU_ITEMS.map(menu => (
 
 <button
 
@@ -1248,11 +1231,12 @@ hover:scale-[1.02]
 }
 
 `}
->
-
-{menu.label}
-
-</button>
+                >
+                  <span className="flex items-center gap-3">
+                    <menu.icon className="w-4 h-4 shrink-0" />
+                    <span>{menu.label}</span>
+                  </span>
+                </button>
 
 ))
 
@@ -1551,7 +1535,9 @@ pointer-events-none
 
             {/* EXPORT */}
 
-            <div className="
+            <div
+              ref={exportRef}
+              className="
               relative
             ">
 
@@ -1586,11 +1572,10 @@ pointer-events-none
                   transition-all
                   duration-300
                   "
-              >
-
-                📤 Export
-
-              </button>
+                >
+                  <Download className="w-4 h-4 inline mr-2 -mt-0.5" />
+                  <span>Export</span>
+                </button>
 
               {
 
@@ -1640,61 +1625,30 @@ pointer-events-none
                       transition-all
                     "
                   >
-
-                    📥 Export Excel
-
+                    <FileSpreadsheet className="w-4 h-4 inline mr-2 -mt-0.5 text-emerald-400" />
+                    <span>Export Excel</span>
                   </button>
 
                   <button
-
                     onClick={() => {
-
                       exportPDF()
-
                       setShowExport(false)
-
                     }}
-
-                    className="
-                      w-full
-                      px-5
-                      py-4
-                      text-left
-                      text-white
-                      font-semibold
-                      hover:bg-rose-500
-                      transition-all
-                    "
+                    className="w-full px-5 py-4 text-left text-white font-semibold hover:bg-rose-500 transition-all flex items-center gap-2"
                   >
-
-                    📄 Export PDF
-
+                    <FileText className="w-4 h-4 text-rose-300" />
+                    <span>Export PDF</span>
                   </button>
 
                   <button
-
                     onClick={() => {
-
                       exportCSV()
-
                       setShowExport(false)
-
                     }}
-
-                    className="
-                      w-full
-                      px-5
-                      py-4
-                      text-left
-                      text-white
-                      font-semibold
-                      hover:bg-cyan-500
-                      transition-all
-                    "
+                    className="w-full px-5 py-4 text-left text-white font-semibold hover:bg-cyan-500 transition-all flex items-center gap-2"
                   >
-
-                    🧾 Export CSV
-
+                    <FileCode className="w-4 h-4 text-cyan-300" />
+                    <span>Export CSV</span>
                   </button>
 
                 </div>
@@ -1730,7 +1684,8 @@ pointer-events-none
                 font-semibold
               "
             >
-              🖨️ Print
+              <Printer className="w-4 h-4 inline mr-2 -mt-0.5" />
+              <span>Print</span>
             </button>
 
           </div>
@@ -1806,6 +1761,18 @@ pointer-events-none
 
           <DataResponden
             data={filteredData}
+            darkMode={darkMode}
+          />
+
+        }
+
+        {
+
+          activeMenu === 'settings'
+
+          &&
+
+          <KelolaSurvei
             darkMode={darkMode}
           />
 

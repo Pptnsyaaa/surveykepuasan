@@ -1,7 +1,8 @@
 // src/pages/SurveyPage.jsx
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { Info, Lock, Sun, Moon, Home, Sparkles } from 'lucide-react'
 
 import StudentForm from '../components/survey/StudentForm'
 import CameraPanel from '../components/survey/CameraPanel'
@@ -10,43 +11,59 @@ import ResultPanel from '../components/survey/ResultPanel'
 
 import ParticleBackground from '../components/ui/ParticleBackground'
 
-const SERVICES = [
+import { API } from '../api'
 
+const DEFAULT_SERVICES = [
   {
     id: 'akademik',
     name: 'Layanan Akademik',
-    question:
-      'Bagaimana kepuasan Anda terhadap pelayanan administrasi akademik?'
+    question: 'Bagaimana kepuasan Anda terhadap pelayanan administrasi akademik (KRS, surat-menyurat, transkrip)?'
   },
-
+  {
+    id: 'pengajaran',
+    name: 'Kualitas Pengajaran',
+    question: 'Bagaimana kepuasan Anda terhadap kompetensi, kedisiplinan, dan metode pengajaran dosen perkuliahan?'
+  },
   {
     id: 'perpustakaan',
     name: 'Perpustakaan',
-    question:
-      'Bagaimana kepuasan Anda terhadap fasilitas dan pelayanan perpustakaan?'
+    question: 'Bagaimana kepuasan Anda terhadap kelengkapan koleksi buku, ruang baca, dan pelayanan perpustakaan?'
   },
-
+  {
+    id: 'laboratorium',
+    name: 'Laboratorium & Praktikum',
+    question: 'Bagaimana kepuasan Anda terhadap kelengkapan peralatan dan kenyamanan kegiatan praktikum di laboratorium?'
+  },
   {
     id: 'keuangan',
     name: 'Layanan Keuangan',
-    question:
-      'Bagaimana kepuasan Anda terhadap pelayanan administrasi keuangan?'
+    question: 'Bagaimana kepuasan Anda terhadap kemudahan pelayanan administrasi keuangan (UKT/beasiswa)?'
   },
-
   {
     id: 'kemahasiswaan',
-    name: 'Kemahasiswaan',
-    question:
-      'Bagaimana kepuasan Anda terhadap layanan kemahasiswaan?'
+    name: 'Layanan & Fasilitas Kampus',
+    question: 'Bagaimana kepuasan Anda terhadap layanan kemahasiswaan, dukungan BEM/Ormawa, dan kegiatan mahasiswa?'
   },
-
+  {
+    id: 'karir_magang',
+    name: 'Bimbingan Karir & Magang',
+    question: 'Bagaimana kepuasan Anda terhadap layanan informasi magang (Kampus Merdeka), bimbingan karir, dan konseling?'
+  },
   {
     id: 'fasilitas',
     name: 'Fasilitas Kampus',
-    question:
-      'Bagaimana kepuasan Anda terhadap fasilitas umum kampus?'
+    question: 'Bagaimana kepuasan Anda terhadap kebersihan dan kenyamanan fasilitas umum kampus (ruang kelas, toilet, parkir)?'
+  },
+  {
+    id: 'layanan_it',
+    name: 'Layanan IT & Wi-Fi',
+    question: 'Bagaimana kepuasan Anda terhadap keandalan jaringan internet (Wi-Fi) dan portal sistem informasi digital kampus?'
+  },
+  {
+    id: 'pelayanan_staf',
+    name: 'Responsivitas Staf',
+    question: 'Bagaimana kepuasan Anda terhadap keramahan, kecepatan, dan responsivitas petugas/staf kampus dalam memberikan pelayanan?'
   }
-
 ]
 
 const emotionToRating = {
@@ -67,6 +84,18 @@ const emotionToRating = {
 }
 
 export default function SurveyPage() {
+  const [services, setServices] = useState(DEFAULT_SERVICES)
+
+  useEffect(() => {
+    fetch(API.SETTINGS.GET)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.questions && Array.isArray(data.questions) && data.questions.length > 0) {
+          setServices(data.questions)
+        }
+      })
+      .catch(err => console.log('Using default questions:', err))
+  }, [])
 
   const [step, setStep] =
     useState('student')
@@ -98,13 +127,7 @@ export default function SurveyPage() {
 
   const [darkMode, setDarkMode] =
     useState(
-
-      JSON.parse(
-        localStorage.getItem(
-          'darkMode'
-        )
-      ) || false
-
+      localStorage.getItem('darkMode') === 'true'
     )
 
   // =========================
@@ -130,7 +153,7 @@ export default function SurveyPage() {
   ) => {
 
     const service =
-      SERVICES[currentQuestion]
+      services[currentQuestion] || services[0]
 
     const newResponse = {
 
@@ -165,7 +188,7 @@ export default function SurveyPage() {
 
     if (
       currentQuestion <
-      SERVICES.length - 1
+      services.length - 1
     ) {
 
       setCurrentQuestion(
@@ -385,7 +408,7 @@ export default function SurveyPage() {
 
       {/* CONTENT */}
 
-      <div className="
+      <div className={`
         relative
         z-10
         w-full
@@ -394,23 +417,23 @@ export default function SurveyPage() {
         px-4
         sm:px-6
         lg:px-8
-        py-6
-        ">
+        py-2
+        sm:py-3
+        ${step === 'student' || step === 'survey' ? 'min-h-[100dvh] lg:h-[100dvh] flex flex-col justify-between overflow-x-hidden' : 'py-6'}
+        `}>
 
         {/* HEADER */}
 
         <header className="
-
             flex
             flex-col
             sm:flex-row
-
             justify-between
             items-center
-
-            gap-5
-            mb-8
-
+            gap-3
+            sm:gap-4
+            mb-3
+            sm:mb-4
             ">
 
           {/* LOGO */}
@@ -484,452 +507,124 @@ export default function SurveyPage() {
               ">
 
             {step !== 'student' ? (
-
               <button
-
-                onClick={
-                  handleBackToHome
-                }
-
-                className={`
-
-                  px-3
-                  py-2
-                  sm:px-5
-                  sm:py-3
-
-                  rounded-2xl
-
-                  font-medium
-
-                  transition-all
-
-                  ${
-
-                    darkMode
-
-                      ? `
-                        bg-white/10
-                        text-white
-                      `
-
-                      : `
-                        bg-white
-                        text-slate-700
-                        border
-                        border-slate-200
-                      `
-
-                  }
-
-                `}
+                onClick={handleBackToHome}
+                className={`flex items-center gap-2 px-3 py-2 sm:px-5 sm:py-3 rounded-2xl font-medium transition-all ${
+                  darkMode
+                    ? 'bg-white/10 text-white hover:bg-white/20'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+                }`}
               >
-
-                🏠 Menu Awal
-
+                <Home className="w-4 h-4" />
+                <span>Menu Awal</span>
               </button>
-
             ) : (
-
               <>
-
                 <a
-
                   href="/tentang"
-
-                  className={`
-
-                    px-5
-                    py-3
-
-                    rounded-2xl
-
-                    font-medium
-
-                    transition-all
-
-                    ${
-
-                      darkMode
-
-                        ? `
-                          bg-indigo-500/10
-                          text-indigo-200
-                        `
-
-                        : `
-                          bg-indigo-50
-                          text-indigo-700
-                        `
-
-                    }
-
-                  `}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-medium transition-all ${
+                    darkMode
+                      ? 'bg-indigo-500/10 text-indigo-200 hover:bg-indigo-500/20'
+                      : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
+                  }`}
                 >
-
-                  ℹ️ Tentang
-
+                  <Info className="w-4 h-4" />
+                  <span>Tentang</span>
                 </a>
 
                 <a
-
                   href="/admin/login"
-
-                  className={`
-
-                    px-5
-                    py-3
-
-                    rounded-2xl
-
-                    font-medium
-
-                    transition-all
-
-                    ${
-
-                      darkMode
-
-                        ? `
-                          bg-orange-500/10
-                          text-orange-200
-                        `
-
-                        : `
-                          bg-orange-50
-                          text-orange-700
-                        `
-
-                    }
-
-                  `}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-medium transition-all ${
+                    darkMode
+                      ? 'bg-orange-500/10 text-orange-200 hover:bg-orange-500/20'
+                      : 'bg-orange-50 text-orange-700 hover:bg-orange-100'
+                  }`}
                 >
-
-                  🔐 Admin
-
+                  <Lock className="w-4 h-4" />
+                  <span>Admin</span>
                 </a>
 
                 <button
-
-                  onClick={
-                    handleToggleTheme
-                  }
-
-                  className={`
-
-                    px-5
-                    py-3
-
-                    rounded-2xl
-
-                    font-medium
-
-                    transition-all
-
-                    ${
-
-                      darkMode
-
-                        ? `
-                          bg-white/10
-                          text-white
-                        `
-
-                        : `
-                          bg-white
-                          text-slate-700
-                          border
-                          border-slate-200
-                        `
-
-                    }
-
-                  `}
-                >
-
-                  {
-
+                  onClick={handleToggleTheme}
+                  className={`flex items-center justify-center px-4 py-3 rounded-2xl font-medium transition-all ${
                     darkMode
-                      ? '☀️'
-                      : '🌙'
-
-                  }
-
+                      ? 'bg-white/10 text-amber-300 hover:bg-white/20'
+                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+                  }`}
+                  aria-label="Toggle Theme"
+                >
+                  {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 </button>
-
               </>
-
             )}
-
           </div>
-
         </header>
 
-        {/* HERO */}
-
-        {
-
-          step === 'student'
-
-          && (
-
-            <div className="
-
-              grid
-              grid-cols-1
-              lg:grid-cols-2
-
-              gap-4
-              sm:gap-8
-
-              items-center
-
-              mb-6
-
-              ">
-
-              {/* TEXT */}
-
-              <div>
-
-                <motion.div
-
-                  initial={{
-                    opacity: 0,
-                    y: 20
-                  }}
-
-                  animate={{
-                    opacity: 1,
-                    y: 0
-                  }}
-
-                  transition={{
-                    duration: 0.6
-                  }}
-
-                >
-
-                  <span className={`
-
-                    inline-block
-
-                    px-4
-                    py-2
-
-                    rounded-full
-
-                    text-sm
-                    font-medium
-
-                    mb-5
-
-                    ${
-
-                      darkMode
-
-                        ? `
-                          bg-indigo-500/10
-                          text-indigo-200
-                        `
-
-                        : `
-                          bg-indigo-100
-                          text-indigo-700
-                        `
-
-                    }
-
-                  `}>
-
-                    🎓 Smart Campus Survey
-
-                  </span>
-
-                  <h1 className={`
-
-                    text-lg
-                    sm:text-3xl
-                    lg:text-6xl
-
-                    font-black
-                    leading-tight
-                    mb-3
-
-                ${
-                  darkMode
-                      ? 'text-white'
-                      : 'text-slate-800'
-                }`}
-                >
-
-                    Survei Kepuasan
-                    Mahasiswa
-
-                  </h1>
-
-                  <p className={`
-
-                    text-xs
-                    sm:text-lg
-                    leading-normal
-
-                    ${
-
-                      darkMode
-                        ? 'text-slate-300'
-                        : 'text-slate-600'
-
-                    }
-
-                  `}>
-
-                    Evaluasi pelayanan kampus
-                    menggunakan teknologi
-
-                    <span className="
-                      font-semibold
-                    ">
-
-                      {' '}
-                      AI Face Emotion Detection
-
-                    </span>
-
-                    {' '}untuk meningkatkan kualitas
-                    pelayanan kampus.
-
-                  </p>
-
-                </motion.div>
-
-              </div>
-
-              {/* IMAGE */}
-
+        {/* HERO & FORM (COMPACT FIT TO SCREEN / DILEBARKAN AGAR TIDAK PERLU SCROLL) */}
+        {step === 'student' && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch my-auto flex-1 py-1 sm:py-2 max-w-6xl mx-auto w-full">
+            {/* LEFT COLUMN: HERO & CAMPUS PHOTO (SIMETRIS PERSIS DENGAN FORM KANAN) */}
+            <div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full">
               <motion.div
-
-                initial={{
-                  opacity: 0,
-                  scale: 0.95
-                }}
-
-                animate={{
-                  opacity: 1,
-                  scale: 1
-                }}
-
-                transition={{
-                  duration: 0.6
-                }}
-
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="mb-4"
               >
+                <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium mb-3 shadow-sm ${
+                  darkMode ? 'bg-indigo-500/10 text-indigo-200 border border-indigo-500/20' : 'bg-indigo-50 text-indigo-700 border border-indigo-200/60'
+                }`}>
+                  <Sparkles className="w-4 h-4 text-indigo-500" />
+                  <span>Smart Campus Survey</span>
+                </span>
 
-                <div className="
-                  rounded-[32px]
+                <h1 className={`text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black leading-tight mb-2 sm:mb-3 ${
+                  darkMode ? 'text-white' : 'text-slate-800'
+                }`}>
+                  Survei Kepuasan Mahasiswa
+                </h1>
 
-                  p-2
-                  sm:p-4
-                  ">
-
-                  <img
-                    src="/kampus.jpg"
-                    alt="Kampus"
-                    className="
-                    w-full
-                    h-[100px]
-                    sm:h-[220px]
-                    lg:h-[340px]
-
-                    rounded-3xl
-                    object-cover
-                    "
-                  />
-
-                </div>
-
+                <p className={`text-xs sm:text-sm lg:text-base leading-relaxed ${
+                  darkMode ? 'text-slate-300' : 'text-slate-600'
+                }`}>
+                  Evaluasi pelayanan kampus menggunakan teknologi
+                  <span className="font-semibold text-indigo-500"> AI Face Emotion Detection </span>
+                  untuk meningkatkan kualitas pelayanan secara akurat, nyata, dan responsif.
+                </p>
               </motion.div>
 
+              {/* FOTO KAMPUS (JANGAN FULL KE ATAS & MAHASISWA FULL BODY SERTA SIMETRIS PERSIS) */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className={`rounded-[28px] sm:rounded-[32px] overflow-hidden shadow-2xl border w-full flex-1 min-h-[220px] sm:min-h-[240px] max-h-[280px] relative flex items-center justify-center ${
+                  darkMode ? 'border-white/10 bg-slate-900/50' : 'border-slate-200/80 bg-slate-100'
+                }`}
+              >
+                <img
+                  src="/kampus.jpg"
+                  alt="Politeknik Baja Tegal"
+                  className="w-full h-full object-cover object-[center_bottom] hover:scale-[1.03] transition-transform duration-700 block"
+                />
+              </motion.div>
             </div>
 
-          )
-
-        }
-
-        {/* FORM MAHASISWA */}
-
-        {
-
-          step === 'student'
-
-          && (
-
-            <motion.div
-
-              initial={{
-                opacity: 0,
-                y: 20
-              }}
-
-              animate={{
-                opacity: 1,
-                y: 0
-              }}
-
-              transition={{
-                duration: 0.5
-              }}
-
-              className={`
-
-                rounded-[32px]
-
-                p-3
-                sm:p-6
-                lg:p-8
-
-                w-full
-                h-auto
-                min-h-[300px]
-                sm:min-h-fit
-
-                border
-
-                shadow-xl
-
-                backdrop-blur-xl
-
-                ${
-
-                  darkMode
-
-                    ? `
-                      bg-slate-900/60
-                      border-white/10
-                    `
-
-                    : `
-                      bg-white/80
-                      border-white/50
-                    `
-
-                }
-
-              `}
-
-            >
-
-              <StudentForm
-                onStart={
-                  handleStartSurvey
-                }
-              />
-
-            </motion.div>
-
-          )
-
-        }
+            {/* RIGHT COLUMN: COMPACT STUDENT FORM (SIMETRIS PERSIS DENGAN KIRI) */}
+            <div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className={`rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 lg:p-7 w-full h-full flex flex-col justify-between border shadow-2xl backdrop-blur-2xl ${
+                  darkMode ? 'bg-slate-900/80 border-white/10' : 'bg-white/90 border-white/60 shadow-[0_20px_60px_rgba(0,0,0,0.12)]'
+                }`}
+              >
+                <StudentForm onStart={handleStartSurvey} />
+              </motion.div>
+            </div>
+          </div>
+        )}
 
         {/* SURVEY */}
 
@@ -958,15 +653,21 @@ export default function SurveyPage() {
               className="
                 grid
                 grid-cols-1
-                lg:grid-cols-2
+                lg:grid-cols-12
                 gap-4
                 sm:gap-6
+                items-stretch
+                my-auto
+                flex-1
+                w-full
+                max-w-6xl
+                mx-auto
                 px-2
                 sm:px-0
               "
             >
-
-              <CameraPanel
+              <div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full">
+                <CameraPanel
 
                 onEmotionDetected={(
                   emotion
@@ -1021,11 +722,13 @@ export default function SurveyPage() {
                   isManualMode
                 }
               />
+              </div>
 
-              <QuestionPanel
+              <div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full">
+                <QuestionPanel
 
 
-                services={SERVICES}
+                services={services}
 
                 currentQuestion={
                   currentQuestion
@@ -1078,9 +781,10 @@ export default function SurveyPage() {
 
                 isLast={
                   currentQuestion ===
-                  SERVICES.length - 1
+                  services.length - 1
                 }
               />
+              </div>
 
             </motion.div>
 

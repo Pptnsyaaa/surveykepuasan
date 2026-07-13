@@ -1,29 +1,15 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import mysql from 'mysql2'
+import db from './db.js'
 
 import surveyRoutes from './routes/surveyRoutes.js'
 import notificationsRoutes from './routes/notificationsRoutes.js'
+import settingsRoutes from './routes/settingsRoutes.js'
 
 dotenv.config()
 
 const app = express()
-
-// ===============================
-// KONEKSI DATABASE MYSQL
-// ===============================
-
-const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-})
 
 db.getConnection((err, connection) => {
 
@@ -39,25 +25,47 @@ db.getConnection((err, connection) => {
   }
 
   console.log('✅ Database connected (Pool Active)')
-  connection.release()
+  
+  // Ensure admins table and default user exists
+  connection.query(`
+    CREATE TABLE IF NOT EXISTS admins (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      nama VARCHAR(255) DEFAULT 'Administrator',
+      username VARCHAR(255) UNIQUE,
+      password VARCHAR(255),
+      last_login DATETIME
+    )
+  `, (err) => {
+    if (!err) {
+      connection.query(`
+        INSERT INTO admins (nama, username, password) 
+        SELECT * FROM (SELECT 'Administrator' AS nama, 'admin' AS username, 'admin123' AS password) AS tmp
+        WHERE NOT EXISTS (SELECT username FROM admins WHERE username = 'admin') LIMIT 1
+      `)
+    }
+    connection.release()
+  })
 
 })
 
 // ===============================
-// CORS
+// CORS & MIDDLEWARE STABILITY
 // ===============================
 
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://surveykepuasan-seven.vercel.app",
-    "https://silica-purging-durable.ngrok-free.dev"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: (origin, callback) => {
+    // Izinkan localhost, domain vercel, ngrok, trycloudflare, atau request tanpa origin (seperti dari curl/mobile/server proxy)
+    if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1') || origin.includes('.trycloudflare.com') || origin.includes('.vercel.app') || origin.includes('.ngrok-free.dev') || origin.includes('.ngrok.io')) {
+      return callback(null, true)
+    }
+    return callback(null, true) // Mengizinkan akses agar tidak terblokir oleh proxy tunnel
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   credentials: true
 }))
 
-app.use(express.json())
+app.use(express.json({ limit: '15mb' }))
+app.use(express.urlencoded({ limit: '15mb', extended: true }))
 
 
 // ===============================
@@ -70,6 +78,8 @@ app.use(
   '/api/notifications',
   notificationsRoutes
 )
+
+app.use('/api/settings', settingsRoutes)
 
 // ===============================
 // TEST API

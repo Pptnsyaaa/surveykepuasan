@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Star, MessageSquare, FileText, CheckCircle2, AlertTriangle, XCircle, Award, Calendar, X } from 'lucide-react'
 
 export default function DataResponden({
   data,
@@ -12,24 +13,17 @@ export default function DataResponden({
     useState("")
 
   // ======================
-  // EMOJI
+  // RATING BADGE HELPER
   // ======================
 
-              const getEmoji = (rating) => {
-
-            const value=Math.round(rating)
-
-            if(value>=5) return "😄"
-
-            if(value>=4) return "🙂"
-
-            if(value>=3) return "😐"
-
-            if(value>=2) return "😕"
-
-            return "😠"
-
-            }
+  const getRatingBadge = (rating) => {
+    const value = Math.round(rating)
+    if (value >= 5) return { label: "Sangat Puas", color: "bg-emerald-500 text-white", icon: CheckCircle2 }
+    if (value >= 4) return { label: "Puas", color: "bg-blue-500 text-white", icon: CheckCircle2 }
+    if (value >= 3) return { label: "Netral", color: "bg-amber-500 text-white", icon: Award }
+    if (value >= 2) return { label: "Tidak Puas", color: "bg-orange-500 text-white", icon: AlertTriangle }
+    return { label: "Sangat Tidak Puas", color: "bg-red-500 text-white", icon: XCircle }
+  }
 
   // ======================
   // TEXT
@@ -410,25 +404,24 @@ darkMode
                       <div className="
                         inline-flex
                         items-center
-                        gap-2
+                        gap-1.5
 
                         px-3 sm:px-4
                         py-1.5 sm:py-2
 
                         rounded-lg sm:rounded-xl
 
-                        bg-yellow-400
+                        bg-indigo-600
 
-                        text-black
+                        text-white
                         font-bold
                         text-xs sm:text-sm
+                        shadow-sm
                       ">
-
+                        <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current shrink-0" />
                         <span>
-              {getEmoji(item.average_rating)}{" "}
-              {Number(item.average_rating).toFixed(1)}
-              </span>
-
+                          {Number(item.average_rating).toFixed(1)} / 5.0
+                        </span>
                       </div>
 
                     </td>
@@ -553,7 +546,7 @@ darkMode
 
               max-h-[85vh] sm:max-h-[90vh]
 
-              overflow-y-auto
+              flex flex-col overflow-hidden
 
               rounded-2xl sm:rounded-3xl
 
@@ -579,31 +572,32 @@ darkMode
 
             `}>
 
-              {/* HEADER */}
+              {/* HEADER - FIXED TOP */}
 
               <div className={`
-
+                shrink-0
                 px-4 sm:px-6 md:px-8
-                py-4 sm:py-6
+                py-4 sm:py-5
 
                 border-b
 
                 flex
                 justify-between
                 items-center
-                flex-col sm:flex-row
+                flex-row
                 gap-4
+                z-20
 
                 ${
 
                   darkMode
 
                     ? `
-                      border-slate-800
+                      bg-slate-900/95 border-slate-800
                     `
 
                     : `
-                      border-slate-200
+                      bg-white/95 border-slate-200
                     `
 
                 }
@@ -614,10 +608,10 @@ darkMode
 
                   <h2 className={`
 
-                    text-2xl sm:text-3xl
+                    text-xl sm:text-2xl
                     font-black
 
-                    mb-2
+                    mb-1 flex items-center gap-2.5
 
                     ${
 
@@ -629,7 +623,8 @@ darkMode
 
                   `}>
 
-                    📋 Detail Evaluasi
+                    <FileText className="w-6 h-6 sm:w-7 sm:h-7 text-indigo-500 shrink-0" />
+                    <span>Detail Evaluasi Responden</span>
 
                   </h2>
 
@@ -647,46 +642,26 @@ darkMode
 
                   `}>
 
-                    Detail review mahasiswa
+                    Detail review mahasiswa (Scroll di bawah untuk melihat semua komentar)
 
                   </p>
 
                 </div>
 
                 <button
-
-                  onClick={() =>
-                    setSelected(null)
-                  }
-
-                  className="
-                    px-4 sm:px-5
-                    py-2
-
-                    rounded-lg sm:rounded-xl
-
-                    bg-red-500
-
-                    text-white
-                    font-bold
-                    text-sm sm:text-base
-
-                    hover:bg-red-600
-
-                    transition-all
-                    min-h-[40px]
-                  "
+                  type="button"
+                  onClick={() => setSelected(null)}
+                  className="px-5 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all shrink-0 min-h-[40px]"
                 >
-
                   Tutup
-
                 </button>
 
               </div>
 
-              {/* CONTENT */}
+              {/* CONTENT - SCROLLABLE */}
 
               <div className="
+                flex-1 overflow-y-auto
                 p-4 sm:p-6 md:p-8
 
                 grid
@@ -751,37 +726,39 @@ darkMode
                       ">
 
                       <div className="
-                      bg-yellow-400
+                      bg-indigo-600
+                      text-white
                       rounded-xl
-                      px-4
-                      py-2
-                      font-bold
+                      px-3.5
+                      py-1.5
+                      font-bold text-sm
+                      inline-flex items-center gap-1.5
                       ">
-
-                      ⭐ {response.rating}
-
+                      <Star className="w-4 h-4 fill-current" />
+                      <span>{response.rating} / 5</span>
                       </div>
 
                       <div className="
                       text-slate-500
-                      font-medium
+                      font-medium text-sm
                       ">
-
                       {getText(response.rating)}
-
                       </div>
 
                       </div>
 
                       </div>
 
-                      <div className="
-                      text-4xl
-                      ">
-
-                      {getEmoji(response.rating)}
-
-                      </div>
+                      {(() => {
+                        const badge = getRatingBadge(response.rating)
+                        const IconComp = badge.icon
+                        return (
+                          <div className={`p-2.5 rounded-2xl flex items-center gap-2 font-bold text-xs ${badge.color}`}>
+                            <IconComp className="w-4 h-4 shrink-0" />
+                            <span>{badge.label}</span>
+                          </div>
+                        )
+                      })()}
 
                       </div>
 
@@ -791,21 +768,21 @@ darkMode
                       mt-4
                       rounded-2xl
                       p-4
+                      flex items-start gap-3 text-sm
 
                       ${darkMode
                       ?`
-                      bg-slate-900
-                      text-slate-300
+                      bg-slate-900/80
+                      text-slate-300 border border-slate-800
                       `
                       :`
                       bg-white
-                      text-slate-600
+                      text-slate-700 border border-slate-200
                       `
                       }
                       `}>
-
-                      💬 {response.comment}
-
+                      <MessageSquare className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                      <span className="leading-relaxed">{response.comment}</span>
                       </div>
 
                       )}
