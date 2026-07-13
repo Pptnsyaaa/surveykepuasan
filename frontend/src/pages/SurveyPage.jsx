@@ -360,7 +360,7 @@ export default function SurveyPage() {
 
     <div
       className={`
-
+        survey-page-shell
         min-h-[100dvh]
         relative
         overflow-x-hidden
@@ -611,7 +611,7 @@ export default function SurveyPage() {
             </div>
 
             {/* RIGHT COLUMN: COMPACT STUDENT FORM (SIMETRIS PERSIS DENGAN KIRI) */}
-            <div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full">
+<div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full lg:pt-[44px]">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -620,7 +620,7 @@ export default function SurveyPage() {
                   darkMode ? 'bg-slate-900/80 border-white/10' : 'bg-white/90 border-white/60 shadow-[0_20px_60px_rgba(0,0,0,0.12)]'
                 }`}
               >
-                <StudentForm onStart={handleStartSurvey} />
+                <StudentForm onStart={handleStartSurvey} darkMode={darkMode} />
               </motion.div>
             </div>
           </div>

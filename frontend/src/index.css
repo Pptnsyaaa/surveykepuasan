@@ -297,6 +297,7 @@ select {
 ========================= */
 
 .dark body {
+  color: #f8fafc;
 
   background:
     linear-gradient(
@@ -308,6 +309,38 @@ select {
 
   background-size: cover;
   background-position: center;
+}
+
+.dark .survey-page-shell {
+  color: #f8fafc;
+}
+
+.dark .survey-page-shell .text-slate-800,
+.dark .survey-page-shell .text-slate-700,
+.dark .survey-page-shell .text-slate-600,
+.dark .survey-page-shell .text-slate-500,
+.dark .survey-page-shell .text-slate-400,
+.dark .survey-page-shell .text-slate-300,
+.dark .survey-page-shell .text-slate-200,
+.dark .survey-page-shell .text-slate-100 {
+  color: #f8fafc !important;
+}
+
+.dark .glass-card,
+.dark .soft-card,
+.dark .dashboard-card {
+  background: rgba(15, 23, 42, 0.82);
+  border-color: rgba(148, 163, 184, 0.24);
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.45);
+}
+
+.dark .campus-header h1 {
+  color: #f8fafc;
+}
+
+.dark .campus-header p,
+.dark .footer-campus {
+  color: #cbd5e1;
 }
 
 /* =========================

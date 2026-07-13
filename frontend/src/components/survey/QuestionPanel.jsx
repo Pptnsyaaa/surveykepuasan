@@ -119,7 +119,8 @@ return(
 <div className="
 relative
 overflow-hidden
-bg-white/85
+bg-white/85 dark:bg-slate-900/80
+dark:border-slate-700/70
 backdrop-blur-xl
 rounded-[24px] sm:rounded-[28px]
 lg:rounded-[32px]
@@ -159,7 +160,7 @@ blur-3xl
 <div className="
 w-full
 h-1.5 sm:h-2 md:h-2.5
-bg-slate-100
+bg-slate-100 dark:bg-slate-800
 rounded-full
 overflow-hidden
 shadow-inner
@@ -209,7 +210,7 @@ dari {services?.length || 1}
 </div>
 
 <h3 className="
-text-orange-500
+text-orange-500 dark:text-orange-400
 font-black
 text-base sm:text-lg
 md:text-xl lg:text-2xl
@@ -221,7 +222,7 @@ mb-1 sm:mb-1.5
 </h3>
 
 <p className="
-text-slate-800 dark:text-white
+text-slate-800 dark:text-slate-100
 leading-snug
 mb-2 sm:mb-3
 text-sm sm:text-base md:text-lg
@@ -277,13 +278,14 @@ text-sm sm:text-base
 md:text-lg
 font-bold
 text-center
+text-slate-800 dark:text-slate-100
 ">
 Menunggu Deteksi Wajah...
 </h3>
 
 <p className="
 text-[11px] sm:text-xs
-text-slate-500
+text-slate-500 dark:text-slate-400
 text-center
 ">
 Arahkan wajah ke kamera
@@ -317,7 +319,7 @@ EMOTION_LABELS[currentEmotion]
 
 <p className="
 text-[11px] sm:text-xs
-text-slate-400
+text-slate-500 dark:text-slate-400
 ">
 
 Respon berhasil dibaca
@@ -345,7 +347,7 @@ animate-pulse
 <p className="
 text-sm
 sm:text-base
-text-slate-500
+text-slate-500 dark:text-slate-400
 ">
 Memproses deteksi...
 </p>
@@ -370,8 +372,8 @@ onClick={handleToggleManual}
 className="
 text-xs
 sm:text-sm
-text-slate-400
-hover:text-indigo-600
+text-slate-500 dark:text-slate-300
+hover:text-indigo-600 dark:hover:text-indigo-400
 transition
 "
 >
@@ -418,7 +420,9 @@ className="
 p-1.5 sm:p-2
 rounded-xl
 border
-bg-white
+border-slate-200 dark:border-slate-700
+bg-white/90 dark:bg-slate-800/80
+text-slate-700 dark:text-slate-100
 hover:scale-105
 transition-all
 shadow-sm
@@ -464,7 +468,7 @@ block
 text-xs
 sm:text-sm
 font-medium
-text-slate-600
+text-slate-700 dark:text-slate-200
 mb-2
 ">
 
@@ -487,9 +491,10 @@ w-full
 p-2.5 sm:p-3
 rounded-xl
 border
-border-slate-200
-bg-white
-focus:border-orange-400
+border-slate-200 dark:border-slate-700
+bg-white/90 dark:bg-slate-800/80
+dark:text-slate-100
+focus:border-orange-400 dark:focus:border-orange-400
 outline-none
 resize-none
 h-16
@@ -500,7 +505,7 @@ text-xs sm:text-sm
 
 <p className="
 text-xs
-text-slate-400
+text-slate-500 dark:text-slate-400
 mt-1
 sm:mt-2
 ">
@@ -520,9 +525,9 @@ showError&&(
 <div className="
 mb-3
 sm:mb-4
-bg-red-50
+bg-red-50 dark:bg-red-950/30
 border
-border-red-200
+border-red-200 dark:border-red-800/60
 rounded-xl
 sm:rounded-2xl
 p-3
@@ -540,7 +545,7 @@ sm:gap-3
 
 <p className="
 font-semibold
-text-red-600
+text-red-600 dark:text-red-400
 text-sm
 sm:text-base
 ">
@@ -550,7 +555,7 @@ Komentar diperlukan
 <p className="
 text-xs
 sm:text-sm
-text-slate-500
+text-slate-600 dark:text-slate-300
 ">
 Mohon isi masukan terlebih dahulu
 untuk rating rendah
@@ -597,7 +602,7 @@ isLast
 <p className="
 text-center
 text-[11px] sm:text-xs
-text-slate-400
+text-slate-500 dark:text-slate-400
 mt-2
 ">
 Masukan Anda membantu meningkatkan kualitas layanan kampus

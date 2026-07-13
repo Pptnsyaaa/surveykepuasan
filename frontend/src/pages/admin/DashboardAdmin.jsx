@@ -33,7 +33,8 @@ import {
   FileSpreadsheet,
   FileText,
   FileCode,
-  Printer
+  Moon,
+  Sun
 } from 'lucide-react'
 
 const MENU_ITEMS = [
@@ -55,14 +56,30 @@ export default function DashboardAdmin() {
   // DARK MODE
   // ======================
 
-  const darkMode = (() => {
+  const [darkMode, setDarkMode] = useState(() => {
     try {
       const val = localStorage.getItem('darkMode')
       return val ? JSON.parse(val) : false
     } catch (e) {
       return false
     }
-  })()
+  })
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode)
+    document.body.classList.toggle('dark', darkMode)
+    document.body.style.colorScheme = darkMode ? 'dark' : 'light'
+
+    try {
+      localStorage.setItem('darkMode', JSON.stringify(darkMode))
+    } catch (e) {
+      // ignore storage errors
+    }
+  }, [darkMode])
+
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev)
+  }
 
   // ======================
   // AUTHENTICATION CHECK
@@ -540,16 +557,6 @@ return ()=>clearInterval(interval)
       'DataSurvey.csv'
 
     a.click()
-
-  }
-
-  // ======================
-  // PRINT
-  // ======================
-
-  const handlePrint = () => {
-
-    window.print()
 
   }
 
@@ -1338,9 +1345,10 @@ pointer-events-none
             "
           >
 
-            <p className="
+            <p className={`
               max-w-[700px]
-            ">
+              ${darkMode ? 'text-slate-300' : 'text-slate-600'}
+            `}>
               Dashboard Monitoring
             </p>
 
@@ -1393,6 +1401,26 @@ pointer-events-none
             ">
             
 
+            <button
+              onClick={toggleDarkMode}
+              className={`
+                px-4 py-3
+                rounded-2xl
+                border
+                text-sm font-semibold
+                flex items-center gap-2
+                transition-all duration-300
+                ${darkMode
+                  ? 'bg-slate-800/90 border-slate-700 text-slate-100 hover:bg-slate-700'
+                  : 'bg-white/80 border-white text-slate-700 hover:bg-slate-100'
+                }
+              `}
+              type="button"
+            >
+              {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              <span>{darkMode ? 'Mode terang' : 'Mode gelap'}</span>
+            </button>
+
             {/* FILTER */}
 
             <select
@@ -1422,8 +1450,8 @@ pointer-events-none
                   darkMode
 
                     ? `
-                      bg-[#1e293b]
-                      border-slate-600
+                      bg-slate-800/90
+                      border-slate-700
                       text-slate-100
                     `
 
@@ -1431,7 +1459,7 @@ pointer-events-none
                       bg-white/80
                       backdrop-blur-md
 
-                      border-white
+                      border-slate-200
 
                       shadow-lg
                       transition-all
@@ -1498,15 +1526,16 @@ pointer-events-none
                     )
                   }
 
-                  className="
+                  className={`
                     px-4
                     py-3
                     rounded-2xl
-                    bg-[#1e293b]
                     border
-                    border-slate-600
-                    text-slate-100
-                  "
+                    ${darkMode
+                      ? 'bg-slate-800 border-slate-700 text-slate-100'
+                      : 'bg-white/80 border-slate-200 text-slate-700'
+                    }
+                  `}
                 />
 
                 <input
@@ -1518,15 +1547,16 @@ pointer-events-none
                     )
                   }
 
-                  className="
+                  className={`
                     px-4
                     py-3
                     rounded-2xl
-                    bg-[#1e293b]
                     border
-                    border-slate-600
-                    text-slate-100
-                  "
+                    ${darkMode
+                      ? 'bg-slate-800 border-slate-700 text-slate-100'
+                      : 'bg-white/80 border-slate-200 text-slate-700'
+                    }
+                  `}
                 />
 
               </div>
@@ -1598,8 +1628,7 @@ pointer-events-none
 
                   border
 
-                  bg-[#1e293b]
-                  border-slate-700
+                  ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-white/95 border-slate-200'}
 
                   z-50
                 ">
@@ -1614,16 +1643,15 @@ pointer-events-none
 
                     }}
 
-                    className="
+                    className={`
                       w-full
                       px-5
                       py-4
                       text-left
-                      text-white
                       font-semibold
-                      hover:bg-emerald-500
                       transition-all
-                    "
+                      ${darkMode ? 'text-slate-100 hover:bg-emerald-600' : 'text-slate-700 hover:bg-emerald-50'}
+                    `}
                   >
                     <FileSpreadsheet className="w-4 h-4 inline mr-2 -mt-0.5 text-emerald-400" />
                     <span>Export Excel</span>
@@ -1634,7 +1662,7 @@ pointer-events-none
                       exportPDF()
                       setShowExport(false)
                     }}
-                    className="w-full px-5 py-4 text-left text-white font-semibold hover:bg-rose-500 transition-all flex items-center gap-2"
+                    className={`w-full px-5 py-4 text-left font-semibold transition-all flex items-center gap-2 ${darkMode ? 'text-slate-100 hover:bg-rose-600' : 'text-slate-700 hover:bg-rose-50'}`}
                   >
                     <FileText className="w-4 h-4 text-rose-300" />
                     <span>Export PDF</span>
@@ -1645,7 +1673,7 @@ pointer-events-none
                       exportCSV()
                       setShowExport(false)
                     }}
-                    className="w-full px-5 py-4 text-left text-white font-semibold hover:bg-cyan-500 transition-all flex items-center gap-2"
+                    className={`w-full px-5 py-4 text-left font-semibold transition-all flex items-center gap-2 ${darkMode ? 'text-slate-100 hover:bg-cyan-600' : 'text-slate-700 hover:bg-cyan-50'}`}
                   >
                     <FileCode className="w-4 h-4 text-cyan-300" />
                     <span>Export CSV</span>
@@ -1656,37 +1684,6 @@ pointer-events-none
               }
 
             </div>
-
-            {/* PRINT */}
-
-            <button
-              onClick={handlePrint}
-              className="
-                px-5
-                py-3
-                rounded-2xl
-                bg-gradient-to-r
-                from-indigo-500
-                to-purple-600
-
-                hover:from-indigo-600
-                hover:to-purple-700
-
-                shadow-lg
-                transition-all
-                duration-300
-
-                hover:-translate-y-1
-                hover:shadow-2xl
-                shadow-purple-300/40
-                transition-all
-                text-white
-                font-semibold
-              "
-            >
-              <Printer className="w-4 h-4 inline mr-2 -mt-0.5" />
-              <span>Print</span>
-            </button>
 
           </div>
 

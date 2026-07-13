@@ -97,7 +97,8 @@ className="
 max-w-2xl sm:max-w-3xl lg:max-w-4xl
 mx-auto
 
-bg-white/95
+bg-white/95 dark:bg-slate-900/85
+dark:border dark:border-slate-700/70
 backdrop-blur-xl
 
 rounded-2xl sm:rounded-3xl lg:rounded-[32px]
@@ -123,7 +124,7 @@ h-14 sm:h-16
 
 rounded-full
 
-bg-orange-50
+bg-orange-50 dark:bg-orange-950/30
 
 flex
 items-center
@@ -183,7 +184,7 @@ text-center
 ">
 
 <p className="
-text-slate-500 dark:text-slate-300
+text-slate-600 dark:text-slate-300
 text-xs sm:text-sm
 mb-2
 ">
@@ -254,7 +255,7 @@ mb-6 sm:mb-8
 <h3 className="
 text-base sm:text-lg
 font-bold
-text-slate-700
+text-slate-800 dark:text-slate-100
 mb-3 sm:mb-4
 ">
 
@@ -272,9 +273,10 @@ key={index}
 
 className="
 border
-border-slate-200
+border-slate-200 dark:border-slate-700/70
 rounded-lg sm:rounded-2xl
 p-3 sm:p-4
+bg-white/70 dark:bg-slate-800/70
 "
 
 >
@@ -291,7 +293,7 @@ mb-3
 <h4 className="
 font-semibold
 text-sm sm:text-base
-text-slate-700
+text-slate-800 dark:text-slate-100
 ">
 
 {response.serviceName}
@@ -300,7 +302,7 @@ text-slate-700
 
 <p className="
 text-xs
-text-slate-400
+text-slate-500 dark:text-slate-400
 ">
 
 {getLabel(
@@ -373,11 +375,11 @@ i<=response.rating
 response.comment &&(
 
 <div className="
-bg-slate-50
+bg-slate-50 dark:bg-slate-700/60
 rounded-lg sm:rounded-xl
 p-2 sm:p-3
 text-xs sm:text-sm
-text-slate-600
+text-slate-700 dark:text-slate-200
 ">
 
 💬 {response.comment}
@@ -401,7 +403,7 @@ text-slate-600
 <div className="
 text-center
 
-bg-slate-50
+bg-slate-50 dark:bg-slate-800/70
 
 rounded-lg sm:rounded-2xl
 
@@ -410,7 +412,7 @@ p-3 sm:p-4
 
 <p className="
 text-xs sm:text-sm
-text-slate-500
+text-slate-600 dark:text-slate-300
 mb-1 sm:mb-2
 ">
 
@@ -421,7 +423,7 @@ Mengalihkan ke halaman awal dalam
 <h2 className="
 text-2xl sm:text-3xl lg:text-4xl
 font-black
-text-orange-500
+text-orange-500 dark:text-orange-400
 ">
 
 {countdown}
