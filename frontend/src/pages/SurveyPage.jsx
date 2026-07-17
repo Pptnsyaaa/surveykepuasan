@@ -157,27 +157,27 @@ export default function SurveyPage() {
 
     const newResponse = {
 
-  serviceId: service.id,
+      serviceId: service.id,
 
-  serviceName: service.name,
+      serviceName: service.name,
 
-  rating: currentRating,
+      rating: currentRating,
 
-  emotion: currentEmotion,
+      emotion: currentEmotion,
 
-  ai_rating: currentRating,
+      ai_rating: currentRating,
 
-  raw_ai_emotion: currentEmotion,
+      raw_ai_emotion: currentEmotion,
 
-  comment:
-    currentRating <= 2
-      ? comment
-      : '',
+      comment:
+        currentRating <= 2
+          ? comment
+          : '',
 
-  timestamp:
-    new Date().toISOString()
+      timestamp:
+        new Date().toISOString()
 
-}
+    }
 
     const newResponses = [
       ...responses,
@@ -253,12 +253,12 @@ export default function SurveyPage() {
     try {
 
       console.log(
-  "DATA DIKIRIM:",
-  surveyData
-)
+        "DATA DIKIRIM:",
+        surveyData
+      )
 
       await fetch(
-       '/api/save-survey',
+        '/api/save-survey',
 
         {
 
@@ -367,13 +367,11 @@ export default function SurveyPage() {
         transition-all
         duration-500
 
-        ${
+        ${darkMode
 
-          darkMode
+          ? 'bg-[#020617]'
 
-            ? 'bg-[#020617]'
-
-            : 'bg-[#f8fafc]'
+          : 'bg-[#f8fafc]'
 
         }
 
@@ -417,9 +415,7 @@ export default function SurveyPage() {
         px-4
         sm:px-6
         lg:px-8
-        py-2
-        sm:py-3
-        ${step === 'student' || step === 'survey' ? 'min-h-[100dvh] lg:h-[100dvh] flex flex-col justify-between overflow-x-hidden' : 'py-6'}
+        ${step === 'student' || step === 'survey' ? 'h-[100dvh] flex flex-col justify-between overflow-y-auto sm:overflow-hidden' : 'py-6'}
         `}>
 
         {/* HEADER */}
@@ -445,16 +441,16 @@ export default function SurveyPage() {
           ">
 
             <img
-                src="/logopbjt.png"
-                alt="Logo"
-                className="
+              src="/logopbjt.png"
+              alt="Logo"
+              className="
                   w-10
                   h-10
                   sm:w-14
                   sm:h-14
                   object-contain
                 "
-              />
+            />
 
             <div>
 
@@ -463,11 +459,9 @@ export default function SurveyPage() {
                 text-xl
                 font-bold
 
-                ${
-
-                  darkMode
-                    ? 'text-white'
-                    : 'text-slate-800'
+                ${darkMode
+                  ? 'text-white'
+                  : 'text-slate-800'
 
                 }
 
@@ -509,11 +503,10 @@ export default function SurveyPage() {
             {step !== 'student' ? (
               <button
                 onClick={handleBackToHome}
-                className={`flex items-center gap-2 px-3 py-2 sm:px-5 sm:py-3 rounded-2xl font-medium transition-all ${
-                  darkMode
-                    ? 'bg-white/10 text-white hover:bg-white/20'
-                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
-                }`}
+                className={`flex items-center gap-2 px-3 py-2 sm:px-5 sm:py-3 rounded-2xl font-medium transition-all ${darkMode
+                  ? 'bg-white/10 text-white hover:bg-white/20'
+                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+                  }`}
               >
                 <Home className="w-4 h-4" />
                 <span>Menu Awal</span>
@@ -522,11 +515,10 @@ export default function SurveyPage() {
               <>
                 <a
                   href="/tentang"
-                  className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-medium transition-all ${
-                    darkMode
-                      ? 'bg-indigo-500/10 text-indigo-200 hover:bg-indigo-500/20'
-                      : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
-                  }`}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-medium transition-all ${darkMode
+                    ? 'bg-indigo-500/10 text-indigo-200 hover:bg-indigo-500/20'
+                    : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
+                    }`}
                 >
                   <Info className="w-4 h-4" />
                   <span>Tentang</span>
@@ -534,11 +526,10 @@ export default function SurveyPage() {
 
                 <a
                   href="/admin/login"
-                  className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-medium transition-all ${
-                    darkMode
-                      ? 'bg-orange-500/10 text-orange-200 hover:bg-orange-500/20'
-                      : 'bg-orange-50 text-orange-700 hover:bg-orange-100'
-                  }`}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-medium transition-all ${darkMode
+                    ? 'bg-orange-500/10 text-orange-200 hover:bg-orange-500/20'
+                    : 'bg-orange-50 text-orange-700 hover:bg-orange-100'
+                    }`}
                 >
                   <Lock className="w-4 h-4" />
                   <span>Admin</span>
@@ -546,11 +537,10 @@ export default function SurveyPage() {
 
                 <button
                   onClick={handleToggleTheme}
-                  className={`flex items-center justify-center px-4 py-3 rounded-2xl font-medium transition-all ${
-                    darkMode
-                      ? 'bg-white/10 text-amber-300 hover:bg-white/20'
-                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
-                  }`}
+                  className={`flex items-center justify-center px-4 py-3 rounded-2xl font-medium transition-all ${darkMode
+                    ? 'bg-white/10 text-amber-300 hover:bg-white/20'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+                    }`}
                   aria-label="Toggle Theme"
                 >
                   {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -562,31 +552,28 @@ export default function SurveyPage() {
 
         {/* HERO & FORM (COMPACT FIT TO SCREEN / DILEBARKAN AGAR TIDAK PERLU SCROLL) */}
         {step === 'student' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch my-auto flex-1 py-1 sm:py-2 max-w-6xl mx-auto w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 lg:gap-8 items-stretch my-auto flex-1 py-1 sm:py-2 max-w-6xl mx-auto w-full">
             {/* LEFT COLUMN: HERO & CAMPUS PHOTO (SIMETRIS PERSIS DENGAN FORM KANAN) */}
             <div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="mb-4"
+                className="mb-2 sm:mb-4"
               >
-                <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium mb-3 shadow-sm ${
-                  darkMode ? 'bg-indigo-500/10 text-indigo-200 border border-indigo-500/20' : 'bg-indigo-50 text-indigo-700 border border-indigo-200/60'
-                }`}>
+                <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium mb-2 sm:mb-3 shadow-sm ${darkMode ? 'bg-indigo-500/10 text-indigo-200 border border-indigo-500/20' : 'bg-indigo-50 text-indigo-700 border border-indigo-200/60'
+                  }`}>
                   <Sparkles className="w-4 h-4 text-indigo-500" />
                   <span>Smart Campus Survey</span>
                 </span>
 
-                <h1 className={`text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black leading-tight mb-2 sm:mb-3 ${
-                  darkMode ? 'text-white' : 'text-slate-800'
-                }`}>
+                <h1 className={`text-xl sm:text-3xl lg:text-4xl xl:text-5xl font-black leading-tight mb-1.5 sm:mb-3 ${darkMode ? 'text-white' : 'text-slate-800'
+                  }`}>
                   Survei Kepuasan Mahasiswa
                 </h1>
 
-                <p className={`text-xs sm:text-sm lg:text-base leading-relaxed ${
-                  darkMode ? 'text-slate-300' : 'text-slate-600'
-                }`}>
+                <p className={`text-xs sm:text-sm lg:text-base leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'
+                  }`}>
                   Evaluasi pelayanan kampus menggunakan teknologi
                   <span className="font-semibold text-indigo-500"> AI Face Emotion Detection </span>
                   untuk meningkatkan kualitas pelayanan secara akurat, nyata, dan responsif.
@@ -598,9 +585,8 @@ export default function SurveyPage() {
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className={`rounded-[28px] sm:rounded-[32px] overflow-hidden shadow-2xl border w-full flex-1 min-h-[220px] sm:min-h-[240px] max-h-[280px] relative flex items-center justify-center ${
-                  darkMode ? 'border-white/10 bg-slate-900/50' : 'border-slate-200/80 bg-slate-100'
-                }`}
+                className={`rounded-[20px] sm:rounded-[32px] overflow-hidden shadow-2xl border w-full flex-1 min-h-[110px] sm:min-h-[240px] max-h-[130px] sm:max-h-[280px] relative flex items-center justify-center ${darkMode ? 'border-white/10 bg-slate-900/50' : 'border-slate-200/80 bg-slate-100'
+                  }`}
               >
                 <img
                   src="/kampus.jpg"
@@ -611,14 +597,13 @@ export default function SurveyPage() {
             </div>
 
             {/* RIGHT COLUMN: COMPACT STUDENT FORM (SIMETRIS PERSIS DENGAN KIRI) */}
-<div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full lg:pt-[44px]">
+            <div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full lg:pt-[44px]">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className={`rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 lg:p-7 w-full h-full flex flex-col justify-between border shadow-2xl backdrop-blur-2xl ${
-                  darkMode ? 'bg-slate-900/80 border-white/10' : 'bg-white/90 border-white/60 shadow-[0_20px_60px_rgba(0,0,0,0.12)]'
-                }`}
+                className={`rounded-[20px] sm:rounded-[32px] p-3.5 sm:p-6 lg:p-7 w-full h-full flex flex-col justify-between border shadow-2xl backdrop-blur-2xl ${darkMode ? 'bg-slate-900/80 border-white/10' : 'bg-white/90 border-white/60 shadow-[0_20px_60px_rgba(0,0,0,0.12)]'
+                  }`}
               >
                 <StudentForm onStart={handleStartSurvey} darkMode={darkMode} />
               </motion.div>
@@ -654,7 +639,7 @@ export default function SurveyPage() {
                 grid
                 grid-cols-1
                 lg:grid-cols-12
-                gap-4
+                gap-2
                 sm:gap-6
                 items-stretch
                 my-auto
@@ -662,128 +647,127 @@ export default function SurveyPage() {
                 w-full
                 max-w-6xl
                 mx-auto
-                px-2
-                sm:px-0
+                px-1 sm:px-0
               "
             >
               <div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full">
                 <CameraPanel
 
-                onEmotionDetected={(
-                  emotion
-                ) => {
+                  onEmotionDetected={(
+                    emotion
+                  ) => {
 
-                  if (
-                    !isManualMode
-                  ) {
+                    if (
+                      !isManualMode
+                    ) {
 
-                    // FIX NATURAL
+                      // FIX NATURAL
 
-                    if (!emotion) {
+                      if (!emotion) {
 
-                    // loading hanya awal
-                    if (!hasDetectedFace) {
+                        // loading hanya awal
+                        if (!hasDetectedFace) {
 
-                      setCurrentEmotion(null)
+                          setCurrentEmotion(null)
+
+                        }
+
+                        return
+
+                      }
+
+                      const mappedRating =
+                        emotionToRating[
+                        emotion
+                        ] || 3
+
+                      setCurrentEmotion(
+                        emotion
+                      )
+                      setHasDetectedFace(true)
+
+                      setCurrentRating(
+                        mappedRating
+                      )
 
                     }
 
-                    return
+                  }}
 
+                  currentEmotion={
+                    currentEmotion
                   }
 
-                    const mappedRating =
-                      emotionToRating[
-                        emotion
-                      ] || 3
-
-                    setCurrentEmotion(
-                      emotion
-                    )
-                    setHasDetectedFace(true)
-
-                    setCurrentRating(
-                      mappedRating
-                    )
-
+                  currentRating={
+                    currentRating
                   }
 
-                }}
-
-                currentEmotion={
-                  currentEmotion
-                }
-
-                currentRating={
-                  currentRating
-                }
-
-                manualMode={
-                  isManualMode
-                }
-              />
+                  manualMode={
+                    isManualMode
+                  }
+                />
               </div>
 
               <div className="lg:col-span-6 w-full max-w-lg mx-auto flex flex-col justify-between h-full">
                 <QuestionPanel
 
 
-                services={services}
+                  services={services}
 
-                currentQuestion={
-                  currentQuestion
-                }
+                  currentQuestion={
+                    currentQuestion
+                  }
 
-                currentEmotion={
-                  currentEmotion
-                }
+                  currentEmotion={
+                    currentEmotion
+                  }
 
-                currentRating={
-                  currentRating
-                }
+                  currentRating={
+                    currentRating
+                  }
 
-                hasDetectedFace={
-                  hasDetectedFace
-                }
+                  hasDetectedFace={
+                    hasDetectedFace
+                  }
 
-                isManualMode={
-                  isManualMode
-                }
+                  isManualMode={
+                    isManualMode
+                  }
 
-                onManualRating={(
-                  rating,
-                  emotion
-                ) => {
-
-                  setIsManualMode(
-                    true
-                  )
-
-                  setCurrentRating(
-                    rating
-                  )
-
-                  setCurrentEmotion(
+                  onManualRating={(
+                    rating,
                     emotion
-                  )
+                  ) => {
 
-                }}
+                    setIsManualMode(
+                      true
+                    )
 
-                onToggleManual={() =>
-                  setIsManualMode(
-                    prev => !prev
-                  )
-                }
+                    setCurrentRating(
+                      rating
+                    )
 
-                onNext={
-                  handleSaveAndNext
-                }
+                    setCurrentEmotion(
+                      emotion
+                    )
 
-                isLast={
-                  currentQuestion ===
-                  services.length - 1
-                }
-              />
+                  }}
+
+                  onToggleManual={() =>
+                    setIsManualMode(
+                      prev => !prev
+                    )
+                  }
+
+                  onNext={
+                    handleSaveAndNext
+                  }
+
+                  isLast={
+                    currentQuestion ===
+                    services.length - 1
+                  }
+                />
               </div>
 
             </motion.div>

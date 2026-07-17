@@ -8,13 +8,13 @@ import {
 } from 'lucide-react'
 
 const EMOTION_EMOJI = {
-  happy: <Smile className="w-10 h-10 sm:w-12 sm:h-12 text-emerald-500 mx-auto" />,
-  surprised: <SmilePlus className="w-10 h-10 sm:w-12 sm:h-12 text-blue-500 mx-auto" />,
-  neutral: <Meh className="w-10 h-10 sm:w-12 sm:h-12 text-amber-500 mx-auto" />,
-  sad: <Frown className="w-10 h-10 sm:w-12 sm:h-12 text-orange-500 mx-auto" />,
-  angry: <Angry className="w-10 h-10 sm:w-12 sm:h-12 text-red-500 mx-auto" />,
-  disgusted: <Angry className="w-10 h-10 sm:w-12 sm:h-12 text-red-500 mx-auto" />,
-  fearful: <Frown className="w-10 h-10 sm:w-12 sm:h-12 text-orange-500 mx-auto" />
+  happy: <Smile className="w-6 h-6 sm:w-12 sm:h-12 text-emerald-500 mx-auto" />,
+  surprised: <SmilePlus className="w-6 h-6 sm:w-12 sm:h-12 text-blue-500 mx-auto" />,
+  neutral: <Meh className="w-6 h-6 sm:w-12 sm:h-12 text-amber-500 mx-auto" />,
+  sad: <Frown className="w-6 h-6 sm:w-12 sm:h-12 text-orange-500 mx-auto" />,
+  angry: <Angry className="w-6 h-6 sm:w-12 sm:h-12 text-red-500 mx-auto" />,
+  disgusted: <Angry className="w-6 h-6 sm:w-12 sm:h-12 text-red-500 mx-auto" />,
+  fearful: <Frown className="w-6 h-6 sm:w-12 sm:h-12 text-orange-500 mx-auto" />
 }
 
 const EMOTION_LABELS = {
@@ -127,7 +127,7 @@ lg:rounded-[32px]
 border
 border-white/60
 shadow-2xl
-p-3.5 sm:p-4 md:p-5
+p-2 sm:p-4 md:p-5
 w-full h-full flex flex-col justify-between
 ">
 
@@ -155,7 +155,7 @@ blur-3xl
 
 <div className="relative z-10 flex flex-col justify-between h-full">
 
-<div className="mb-2 sm:mb-3">
+<div className="mb-1 sm:mb-3">
 
 <div className="
 w-full
@@ -190,12 +190,12 @@ items-center
 gap-1.5
 bg-slate-100 dark:bg-slate-800
 px-2.5 sm:px-3
-py-1 sm:py-1.5
+py-0.5 sm:py-1.5
 rounded-full
-text-[11px] sm:text-xs
+text-[10px] sm:text-xs
 text-slate-600 dark:text-slate-300
 border border-transparent dark:border-slate-700
-my-2 sm:my-2.5
+my-1 sm:my-2.5
 ">
 
 <div className="
@@ -205,16 +205,16 @@ bg-orange-500
 "/>
 
 Pertanyaan {currentQuestion+1}
-dari {services?.length || 1}
+{' '}dari {services?.length || 1}
 
 </div>
 
 <h3 className="
 text-orange-500 dark:text-orange-400
 font-black
-text-base sm:text-lg
+text-sm sm:text-lg
 md:text-xl lg:text-2xl
-mb-1 sm:mb-1.5
+mb-0.5 sm:mb-1.5
 ">
 
 {service?.name || 'Pertanyaan'}
@@ -223,9 +223,9 @@ mb-1 sm:mb-1.5
 
 <p className="
 text-slate-800 dark:text-slate-100
-leading-snug
-mb-2 sm:mb-3
-text-sm sm:text-base md:text-lg
+leading-tight
+mb-1 sm:mb-3
+text-xs sm:text-base md:text-lg
 font-semibold
 tracking-tight
 ">
@@ -241,16 +241,16 @@ flex
 flex-col
 items-center
 justify-center
-gap-1 sm:gap-1.5
+gap-0.5 sm:gap-1.5
 
-p-3 sm:p-4
+p-2 sm:p-4
 
 rounded-xl sm:rounded-2xl
 border-2
-mb-2 sm:mb-3
+mb-1 sm:mb-3
 flex-1
 
-min-h-[110px] sm:min-h-[130px] max-h-[160px] sm:max-h-[180px]
+min-h-[64px] sm:min-h-[130px] max-h-[85px] sm:max-h-[180px]
 
 shadow-md
 transition-all
@@ -267,14 +267,14 @@ ${colors.border}
 <>
 
 <div className="
-text-3xl sm:text-4xl
+text-2xl sm:text-4xl
 animate-pulse
 ">
 📷
 </div>
 
 <h3 className="
-text-sm sm:text-base
+text-xs sm:text-base
 md:text-lg
 font-bold
 text-center
@@ -284,6 +284,7 @@ Menunggu Deteksi Wajah...
 </h3>
 
 <p className="
+hidden sm:block
 text-[11px] sm:text-xs
 text-slate-500 dark:text-slate-400
 text-center
@@ -301,13 +302,13 @@ currentEmotion ? (
 
 <>
 
-<div className="flex items-center justify-center my-1">
+<div className="flex items-center justify-center my-0.5 sm:my-1">
   {EMOTION_EMOJI[currentEmotion]}
 </div>
 
 <span className={`
 font-bold
-text-base sm:text-lg lg:text-xl
+text-xs sm:text-lg lg:text-xl
 ${colors.text}
 `}>
 
@@ -318,6 +319,7 @@ EMOTION_LABELS[currentEmotion]
 </span>
 
 <p className="
+hidden sm:block
 text-[11px] sm:text-xs
 text-slate-500 dark:text-slate-400
 ">
@@ -600,6 +602,7 @@ isLast
 </button>
 
 <p className="
+hidden sm:block
 text-center
 text-[11px] sm:text-xs
 text-slate-500 dark:text-slate-400

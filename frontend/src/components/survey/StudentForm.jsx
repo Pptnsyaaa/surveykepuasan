@@ -63,14 +63,14 @@ export default function StudentForm({ onStart, darkMode }) {
               <h2 className={`
                 text-lg sm:text-xl lg:text-2xl xl:text-3xl
                 font-black leading-tight
-                ${isDark ? 'text-white' : 'text-slate-800 dark:text-white'}
+                ${isDark ? 'text-white' : 'text-slate-800'}
               `}>
                 Data Mahasiswa
               </h2>
 
               <p className={`
                 text-xs sm:text-sm leading-relaxed
-                ${isDark ? 'text-slate-200' : 'text-slate-500 dark:text-slate-300'}
+                ${isDark ? 'text-slate-200' : 'text-slate-500'}
               `}>
                 Sistem Kepuasan Mahasiswa Berbasis AI
               </p>
@@ -79,10 +79,14 @@ export default function StudentForm({ onStart, darkMode }) {
         </div>
 
         {/* ALERT */}
-        <div className="flex items-start gap-2.5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 border border-blue-100/80 dark:border-blue-800/40 text-blue-800 dark:text-blue-200 rounded-xl p-3 mb-2 text-xs sm:text-sm shadow-sm leading-relaxed">
-          <ShieldAlert className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+        <div className={`flex items-start gap-2.5 rounded-xl p-3 mb-2 text-xs sm:text-sm shadow-sm leading-relaxed border ${
+          isDark
+            ? 'bg-gradient-to-r from-blue-950/60 to-indigo-950/60 border-blue-800/60 text-blue-200'
+            : 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-100/80 text-blue-800'
+        }`}>
+          <ShieldAlert className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 mt-0.5 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
           <div>
-            Survei ini bersifat <strong className="font-semibold text-blue-950 dark:text-blue-100">anonim</strong> dan hanya digunakan untuk meningkatkan kualitas pelayanan kampus.
+            Survei ini bersifat <strong className={`font-semibold ${isDark ? 'text-blue-100' : 'text-blue-950'}`}>anonim</strong> dan hanya digunakan untuk meningkatkan kualitas pelayanan kampus.
           </div>
         </div>
       </div>
@@ -92,7 +96,7 @@ export default function StudentForm({ onStart, darkMode }) {
         {/* SELECT */}
         <div className="mb-4 sm:mb-5">
           <label className={`block font-bold mb-1.5 sm:mb-2 text-xs sm:text-sm md:text-base ${
-            isDark ? 'text-white' : 'text-slate-700 dark:text-slate-200'
+            isDark ? 'text-white' : 'text-slate-700'
           }`}>
             Fakultas Teknik
           </label>
@@ -103,17 +107,16 @@ export default function StudentForm({ onStart, darkMode }) {
             className={`
               w-full appearance-none border rounded-xl px-3 sm:px-4 py-2.5 sm:py-3
               text-xs sm:text-sm md:text-base shadow-sm hover:shadow-md
-              focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900/50
-              transition-all duration-300 cursor-pointer min-h-[44px] sm:min-h-[48px]
-              ${isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white/80 border-slate-200 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-white'}
+              focus:outline-none focus:border-indigo-500 focus:ring-4 transition-all duration-300 cursor-pointer min-h-[44px] sm:min-h-[48px]
+              ${isDark ? 'bg-slate-800 border-slate-700 text-white focus:ring-indigo-900/50' : 'bg-white border-slate-200 text-slate-700 focus:ring-indigo-100'}
             `}
           >
-            <option value="" className="bg-white dark:bg-slate-800 text-slate-800 dark:text-white">Pilih Program Studi</option>
+            <option value="" className={isDark ? "bg-slate-800 text-white" : "bg-white text-slate-800"}>Pilih Program Studi</option>
             {Array.isArray(departments) && departments.map((dept, idx) => {
               const id = dept?.id || dept?.code || dept?.name || `dept-${idx}`
               const name = dept?.name || (typeof dept === 'string' ? dept : 'Program Studi')
               return (
-                <option key={id} value={id} className="bg-white dark:bg-slate-800 text-slate-800 dark:text-white">
+                <option key={id} value={id} className={isDark ? "bg-slate-800 text-white" : "bg-white text-slate-800"}>
                   {name}
                 </option>
               )
