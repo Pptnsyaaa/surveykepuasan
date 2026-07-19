@@ -59,7 +59,7 @@ C. DOKUMENTASI & PENGELOLAAN PROYEK
 
 8. File: `CLOUDFLARE_TUNNEL_GUIDE.md` (FILE BARU)
    [Penambahan File Baru]
-   - Menulis panduan baru berisi langkah demi langkah untuk menggunakan `cloudflared` (pengganti ngrok) yang jauh lebih stabil untuk tunneling koneksi localhost ke internet publik/Vercel. Meliputi panduan untuk koneksi Port 5000 (Backend) maupun Port 5173 (Frontend Lokal).
+   - Menulis panduan baru berisi langkah demi langkah untuk menggunakan `cloudflared` (pengganti ngrok) yang jauh lebih stabil untuk tunneling koneksi localhost ke internet publik. Meliputi panduan untuk koneksi Port 5000 (Backend) maupun Port 5173 (Frontend Lokal).
 
 9. File: `Laporan_Pembaruan_Sistem.txt` (FILE BARU)
    [Penambahan File Baru]
