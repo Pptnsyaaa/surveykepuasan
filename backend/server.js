@@ -54,8 +54,8 @@ db.getConnection((err, connection) => {
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Izinkan localhost, domain vercel, ngrok, trycloudflare, atau request tanpa origin (seperti dari curl/mobile/server proxy)
-    if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1') || origin.includes('.trycloudflare.com') || origin.includes('.vercel.app') || origin.includes('.ngrok-free.dev') || origin.includes('.ngrok.io')) {
+    // Izinkan localhost, ngrok, trycloudflare, atau request tanpa origin (seperti dari curl/mobile/server proxy)
+    if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1') || origin.includes('.trycloudflare.com') || origin.includes('.ngrok-free.dev') || origin.includes('.ngrok.io')) {
       return callback(null, true)
     }
     return callback(null, true) // Mengizinkan akses agar tidak terblokir oleh proxy tunnel
