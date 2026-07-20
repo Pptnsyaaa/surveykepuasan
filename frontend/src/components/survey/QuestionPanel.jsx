@@ -28,95 +28,95 @@ const EMOTION_LABELS = {
 }
 
 const RATING_COLORS = {
-  1:{bg:'bg-red-50 dark:bg-red-950/30',border:'border-red-400 dark:border-red-800/60',text:'text-red-600 dark:text-red-400'},
-  2:{bg:'bg-orange-50 dark:bg-orange-950/30',border:'border-orange-400 dark:border-orange-800/60',text:'text-orange-600 dark:text-orange-400'},
-  3:{bg:'bg-yellow-50 dark:bg-yellow-950/30',border:'border-yellow-400 dark:border-yellow-800/60',text:'text-yellow-600 dark:text-yellow-400'},
-  4:{bg:'bg-blue-50 dark:bg-blue-950/30',border:'border-blue-400 dark:border-blue-800/60',text:'text-blue-600 dark:text-blue-400'},
-  5:{bg:'bg-green-50 dark:bg-green-950/30',border:'border-green-400 dark:border-green-800/60',text:'text-green-600 dark:text-green-400'}
+  1: { bg: 'bg-red-50 dark:bg-red-950/30', border: 'border-red-400 dark:border-red-800/60', text: 'text-red-600 dark:text-red-400' },
+  2: { bg: 'bg-orange-50 dark:bg-orange-950/30', border: 'border-orange-400 dark:border-orange-800/60', text: 'text-orange-600 dark:text-orange-400' },
+  3: { bg: 'bg-yellow-50 dark:bg-yellow-950/30', border: 'border-yellow-400 dark:border-yellow-800/60', text: 'text-yellow-600 dark:text-yellow-400' },
+  4: { bg: 'bg-blue-50 dark:bg-blue-950/30', border: 'border-blue-400 dark:border-blue-800/60', text: 'text-blue-600 dark:text-blue-400' },
+  5: { bg: 'bg-green-50 dark:bg-green-950/30', border: 'border-green-400 dark:border-green-800/60', text: 'text-green-600 dark:text-green-400' }
 }
 
 const MANUAL_RATINGS = [
-{rating:1,icon:<Angry className="w-6 h-6 sm:w-7 sm:h-7 text-red-500 mx-auto" />,label:'Sangat Tidak Puas'},
-{rating:2,icon:<Frown className="w-6 h-6 sm:w-7 sm:h-7 text-orange-500 mx-auto" />,label:'Tidak Puas'},
-{rating:3,icon:<Meh className="w-6 h-6 sm:w-7 sm:h-7 text-amber-500 mx-auto" />,label:'Netral'},
-{rating:4,icon:<SmilePlus className="w-6 h-6 sm:w-7 sm:h-7 text-blue-500 mx-auto" />,label:'Puas'},
-{rating:5,icon:<Smile className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-500 mx-auto" />,label:'Sangat Puas'}
+  { rating: 1, icon: <Angry className="w-6 h-6 sm:w-7 sm:h-7 text-red-500 mx-auto" />, label: 'Sangat Tidak Puas' },
+  { rating: 2, icon: <Frown className="w-6 h-6 sm:w-7 sm:h-7 text-orange-500 mx-auto" />, label: 'Tidak Puas' },
+  { rating: 3, icon: <Meh className="w-6 h-6 sm:w-7 sm:h-7 text-amber-500 mx-auto" />, label: 'Netral' },
+  { rating: 4, icon: <SmilePlus className="w-6 h-6 sm:w-7 sm:h-7 text-blue-500 mx-auto" />, label: 'Puas' },
+  { rating: 5, icon: <Smile className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-500 mx-auto" />, label: 'Sangat Puas' }
 ]
 
 export default function QuestionPanel({
-services,
-currentQuestion,
-currentEmotion,
-currentRating,
-hasDetectedFace,
-isManualMode,
-onManualRating,
-onToggleManual,
-onNext,
-isLast
-}){
+  services,
+  currentQuestion,
+  currentEmotion,
+  currentRating,
+  hasDetectedFace,
+  isManualMode,
+  onManualRating,
+  onToggleManual,
+  onNext,
+  isLast
+}) {
 
-const [comment,setComment]=useState('')
-const [showManual,setShowManual]=useState(false)
-const [showError,setShowError]=useState(false)
+  const [comment, setComment] = useState('')
+  const [showManual, setShowManual] = useState(false)
+  const [showError, setShowError] = useState(false)
 
-const service = services?.[currentQuestion] || services?.[0] || { id: 'default', name: 'Pertanyaan Survei', question: 'Daftar pertanyaan sedang dimuat...' }
+  const service = services?.[currentQuestion] || services?.[0] || { id: 'default', name: 'Pertanyaan Survei', question: 'Daftar pertanyaan sedang dimuat...' }
 
-const progress = services && services.length > 0 ? ((currentQuestion + 1) / services.length) * 100 : 100
+  const progress = services && services.length > 0 ? ((currentQuestion + 1) / services.length) * 100 : 100
 
-const colors=
-RATING_COLORS[currentRating] ||
-RATING_COLORS[3]
+  const colors =
+    RATING_COLORS[currentRating] ||
+    RATING_COLORS[3]
 
-const emotionMap={
-1:'angry',
-2:'sad',
-3:'neutral',
-4:'surprised',
-5:'happy'
-}
+  const emotionMap = {
+    1: 'angry',
+    2: 'sad',
+    3: 'neutral',
+    4: 'surprised',
+    5: 'happy'
+  }
 
-const handleNext=()=>{
+  const handleNext = () => {
 
-if(
-(currentRating===1||
-currentRating===2)
-&&
-comment.trim()===''
-){
+    if (
+      (currentRating === 1 ||
+        currentRating === 2)
+      &&
+      comment.trim() === ''
+    ) {
 
-setShowError(true)
+      setShowError(true)
 
-setTimeout(()=>{
+      setTimeout(() => {
 
-setShowError(false)
+        setShowError(false)
 
-},3000)
+      }, 3000)
 
-return
+      return
 
-}
+    }
 
-onNext(comment)
+    onNext(comment)
 
-setComment('')
-setShowManual(false)
+    setComment('')
+    setShowManual(false)
 
-}
+  }
 
-const handleToggleManual=()=>{
+  const handleToggleManual = () => {
 
-setShowManual(
-prev=>!prev
-)
+    setShowManual(
+      prev => !prev
+    )
 
-onToggleManual()
+    onToggleManual()
 
-}
+  }
 
-return(
+  return (
 
-<div className="
+    <div className="
 relative
 overflow-hidden
 bg-white/85 dark:bg-slate-900/80
@@ -131,7 +131,7 @@ p-2 sm:p-4 md:p-5
 w-full h-full flex flex-col justify-between
 ">
 
-<div className="
+      <div className="
 absolute
 -top-20
 -right-20
@@ -142,7 +142,7 @@ bg-orange-100/50
 blur-3xl
 "/>
 
-<div className="
+      <div className="
 absolute
 -bottom-20
 -left-20
@@ -153,11 +153,11 @@ bg-indigo-100/50
 blur-3xl
 "/>
 
-<div className="relative z-10 flex flex-col justify-between h-full">
+      <div className="relative z-10 flex flex-col justify-between h-full">
 
-<div className="mb-1 sm:mb-3">
+        <div className="mb-1 sm:mb-3">
 
-<div className="
+          <div className="
 w-full
 h-1.5 sm:h-2 md:h-2.5
 bg-slate-100 dark:bg-slate-800
@@ -166,8 +166,8 @@ overflow-hidden
 shadow-inner
 ">
 
-<div
-className="
+            <div
+              className="
 h-full
 bg-gradient-to-r
 from-orange-500
@@ -177,14 +177,14 @@ rounded-full
 transition-all
 duration-700
 "
-style={{
-width:`${progress}%`
-}}
-/>
+              style={{
+                width: `${progress}%`
+              }}
+            />
 
-</div>
+          </div>
 
-<div className="
+          <div className="
 inline-flex
 items-center
 gap-1.5
@@ -198,18 +198,18 @@ border border-transparent dark:border-slate-700
 my-1 sm:my-2.5
 ">
 
-<div className="
+            <div className="
 w-2 h-2
 rounded-full
 bg-orange-500
 "/>
 
-Pertanyaan {currentQuestion+1}
-{' '}dari {services?.length || 1}
+            Pertanyaan {currentQuestion + 1}
+            {' '}dari {services?.length || 1}
 
-</div>
+          </div>
 
-<h3 className="
+          <h3 className="
 text-orange-500 dark:text-orange-400
 font-black
 text-sm sm:text-lg
@@ -217,11 +217,11 @@ md:text-xl lg:text-2xl
 mb-0.5 sm:mb-1.5
 ">
 
-{service?.name || 'Pertanyaan'}
+            {service?.name || 'Pertanyaan'}
 
-</h3>
+          </h3>
 
-<p className="
+          <p className="
 text-slate-800 dark:text-slate-100
 leading-tight
 mb-1 sm:mb-3
@@ -230,13 +230,13 @@ font-semibold
 tracking-tight
 ">
 
-{service?.question || 'Daftar pertanyaan sedang dimuat...'}
+            {service?.question || 'Daftar pertanyaan sedang dimuat...'}
 
-</p>
+          </p>
 
-</div>
+        </div>
 
-<div className={`
+        <div className={`
 flex
 flex-col
 items-center
@@ -260,142 +260,142 @@ ${colors.bg}
 ${colors.border}
 `}>
 
-{
+          {
 
-!hasDetectedFace ? (
+            !hasDetectedFace ? (
 
-<>
+              <>
 
-<div className="
+                <div className="
 text-2xl sm:text-4xl
 animate-pulse
 ">
-📷
-</div>
+                  📷
+                </div>
 
-<h3 className="
+                <h3 className="
 text-xs sm:text-base
 md:text-lg
 font-bold
 text-center
 text-slate-800 dark:text-slate-100
 ">
-Menunggu Deteksi Wajah...
-</h3>
+                  Menunggu Deteksi Wajah...
+                </h3>
 
-<p className="
+                <p className="
 hidden sm:block
 text-[11px] sm:text-xs
 text-slate-500 dark:text-slate-400
 text-center
 ">
-Arahkan wajah ke kamera
-</p>
+                  Arahkan wajah ke kamera
+                </p>
 
-</>
+              </>
 
-)
+            )
 
-:
+              :
 
-currentEmotion ? (
+              currentEmotion ? (
 
-<>
+                <>
 
-<div className="flex items-center justify-center my-0.5 sm:my-1">
-  {EMOTION_EMOJI[currentEmotion]}
-</div>
+                  <div className="flex items-center justify-center my-0.5 sm:my-1">
+                    {EMOTION_EMOJI[currentEmotion]}
+                  </div>
 
-<span className={`
+                  <span className={`
 font-bold
 text-xs sm:text-lg lg:text-xl
 ${colors.text}
 `}>
 
-{
-EMOTION_LABELS[currentEmotion]
-}
+                    {
+                      EMOTION_LABELS[currentEmotion]
+                    }
 
-</span>
+                  </span>
 
-<p className="
+                  <p className="
 hidden sm:block
 text-[11px] sm:text-xs
 text-slate-500 dark:text-slate-400
 ">
 
-Respon berhasil dibaca
+                    Respon berhasil dibaca
 
-</p>
+                  </p>
 
-</>
+                </>
 
-)
+              )
 
-:
+                :
 
-(
+                (
 
-<>
+                  <>
 
-<div className="
+                    <div className="
 text-4xl
 sm:text-5xl
 lg:text-6xl
 animate-pulse
 ">
-</div>
+                    </div>
 
-<p className="
+                    <p className="
 text-sm
 sm:text-base
 text-slate-500 dark:text-slate-400
 ">
-Memproses deteksi...
-</p>
+                      Memproses deteksi...
+                    </p>
 
-</>
+                  </>
 
-)
+                )
 
-}
+          }
 
-</div>
+        </div>
 
-<div>
+        <div>
 
-<div className="
+          <div className="
 text-center
 mb-1.5 sm:mb-2
 ">
 
-<button
-onClick={handleToggleManual}
-className="
+            <button
+              onClick={handleToggleManual}
+              className="
 text-xs
 sm:text-sm
 text-slate-500 dark:text-slate-300
 hover:text-indigo-600 dark:hover:text-indigo-400
 transition
 "
->
+            >
 
-{
-showManual
-?
-'✖ Tutup rating manual'
-:
-'⚙️ Pilih rating manual'
-}
+              {
+                showManual
+                  ?
+                  '✖ Tutup rating manual'
+                  :
+                  '⚙️ Pilih rating manual'
+              }
 
-</button>
+            </button>
 
-</div>
+          </div>
 
-{
-showManual&&(
+          {
+            showManual && (
 
-<div className="
+              <div className="
 grid
 grid-cols-5
 gap-1.5
@@ -403,22 +403,22 @@ sm:gap-2
 mb-2 sm:mb-3
 ">
 
-{
-MANUAL_RATINGS.map(({
-rating,
-icon,
-label
-})=>(
+                {
+                  MANUAL_RATINGS.map(({
+                    rating,
+                    icon,
+                    label
+                  }) => (
 
-<button
-key={rating}
-onClick={()=>
-onManualRating(
-rating,
-emotionMap[rating]
-)
-}
-className="
+                    <button
+                      key={rating}
+                      onClick={() =>
+                        onManualRating(
+                          rating,
+                          emotionMap[rating]
+                        )
+                      }
+                      className="
 p-1.5 sm:p-2
 rounded-xl
 border
@@ -429,151 +429,56 @@ hover:scale-105
 transition-all
 shadow-sm
 "
->
+                    >
 
-<div className="flex items-center justify-center my-1">
-{icon}
-</div>
+                      <div className="flex items-center justify-center my-1">
+                        {icon}
+                      </div>
 
-<div className="
+                      <div className="
 text-[9px] sm:text-[10px]
 font-medium
 mt-0.5
 leading-tight
 ">
-{label}
-</div>
+                        {label}
+                      </div>
 
-</button>
+                    </button>
 
-))
-}
+                  ))
+                }
 
-</div>
+              </div>
 
-)
-}
+            )
+          }
 
-{
-(currentRating===1||
-currentRating===2)
+          <div className="mb-4 sm:mb-5 transition-all duration-300">
+            <label className="block text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 mb-2">
+              {currentRating <= 2 ? 'Kendala & Saran (Wajib)' : 'Masukan Tambahan (Opsional)'}
+            </label>
+            
+            <textarea
+              value={comment}
+              onChange={(e) => {
+                setComment(e.target.value)
+                if (showError && e.target.value.trim() !== '') {
+                  setShowError(false)
+                }
+              }}
+              placeholder={currentRating <= 2 ? 'Tuliskan detail kendala atau saran Anda...' : 'Ada apresiasi atau saran tambahan untuk kami?'}
+              className={`w-full p-3 rounded-xl border bg-white/90 dark:bg-slate-800/80 dark:text-slate-100 outline-none resize-y min-h-[100px] sm:min-h-[120px] text-xs sm:text-sm transition-all duration-300 ${showError ? 'border-red-500 ring-2 ring-red-500/50' : 'border-slate-200 dark:border-slate-700 focus:border-indigo-500 dark:focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30'}`}
+            />
+            
+            <p className={`text-xs mt-1.5 sm:mt-2 font-medium transition-colors duration-300 ${showError ? 'text-red-500 dark:text-red-400' : 'text-slate-500 dark:text-slate-400'}`}>
+              {showError ? '⚠️ Mohon isi masukan terlebih dahulu!' : (currentRating <= 2 ? 'Komentar diwajibkan untuk rating rendah.' : 'Masukan Anda sangat berharga bagi kami.')}
+            </p>
+          </div>
 
-&&(
-
-<div className="
-mb-4
-sm:mb-5
-">
-
-<label className="
-block
-text-xs
-sm:text-sm
-font-medium
-text-slate-700 dark:text-slate-200
-mb-2
-">
-
-Berikan masukan
-
-</label>
-
-<textarea
-value={comment}
-onChange={(e)=>
-setComment(
-e.target.value
-)
-}
-placeholder="
-Tuliskan kendala atau saran...
-"
-className="
-w-full
-p-2.5 sm:p-3
-rounded-xl
-border
-border-slate-200 dark:border-slate-700
-bg-white/90 dark:bg-slate-800/80
-dark:text-slate-100
-focus:border-orange-400 dark:focus:border-orange-400
-focus:ring-2 focus:ring-orange-400/50 transition-shadow duration-300
-outline-none
-resize-y
-min-h-[100px] sm:min-h-[120px]
-text-xs sm:text-sm
-"
-/>
-
-<p className="
-text-xs
-text-slate-500 dark:text-slate-400
-mt-1
-sm:mt-2
-">
-Komentar diperlukan untuk rating rendah
-</p>
-
-</div>
-
-)
-
-}
-
-{
-
-showError&&(
-
-<div className="
-mb-3
-sm:mb-4
-bg-red-50 dark:bg-red-950/30
-border
-border-red-200 dark:border-red-800/60
-rounded-xl
-sm:rounded-2xl
-p-3
-sm:p-4
-flex
-gap-2
-sm:gap-3
-">
-
-<div className="text-xl sm:text-2xl flex-shrink-0">
-⚠️
-</div>
-
-<div>
-
-<p className="
-font-semibold
-text-red-600 dark:text-red-400
-text-sm
-sm:text-base
-">
-Komentar diperlukan
-</p>
-
-<p className="
-text-xs
-sm:text-sm
-text-slate-600 dark:text-slate-300
-">
-Mohon isi masukan terlebih dahulu
-untuk rating rendah
-</p>
-
-</div>
-
-</div>
-
-)
-
-}
-
-<button
-onClick={handleNext}
-className="
+          <button
+            onClick={handleNext}
+            className="
 w-full
 bg-gradient-to-r
 from-indigo-600
@@ -591,32 +496,32 @@ hover:shadow-xl
 active:scale-95
 ">
 
-{
-isLast
-?
-'Selesai ✓'
-:
-'Lanjut →'
-}
+            {
+              isLast
+                ?
+                'Selesai ✓'
+                :
+                'Lanjut →'
+            }
 
-</button>
+          </button>
 
-<p className="
+          <p className="
 hidden sm:block
 text-center
 text-[11px] sm:text-xs
 text-slate-500 dark:text-slate-400
 mt-2
 ">
-Masukan Anda membantu meningkatkan kualitas layanan kampus
-</p>
+            Masukan Anda membantu meningkatkan kualitas layanan kampus
+          </p>
 
-</div>
+        </div>
 
-</div>
+      </div>
 
-</div>
+    </div>
 
-)
+  )
 
 }
