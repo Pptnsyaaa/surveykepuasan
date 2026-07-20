@@ -497,10 +497,10 @@ border-slate-200 dark:border-slate-700
 bg-white/90 dark:bg-slate-800/80
 dark:text-slate-100
 focus:border-orange-400 dark:focus:border-orange-400
+focus:ring-2 focus:ring-orange-400/50 transition-shadow duration-300
 outline-none
-resize-none
-h-16
-sm:h-20
+resize-y
+min-h-[100px] sm:min-h-[120px]
 text-xs sm:text-sm
 "
 />

@@ -414,7 +414,7 @@ export default function SurveyPage() {
         px-4
         sm:px-6
         lg:px-8
-        ${step === 'student' || step === 'survey' ? 'h-[100dvh] flex flex-col justify-between overflow-y-auto sm:overflow-hidden py-6 sm:py-8' : 'py-6'}
+        ${step === 'student' || step === 'survey' ? 'min-h-[100dvh] flex flex-col justify-between py-6 sm:py-8' : 'py-6'}
         `}>
 
         {/* HEADER */}
