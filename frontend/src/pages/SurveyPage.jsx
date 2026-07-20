@@ -130,6 +130,14 @@ export default function SurveyPage() {
       localStorage.getItem('darkMode') === 'true'
     )
 
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [darkMode])
+
   // =========================
   // START SURVEY
   // =========================
@@ -366,15 +374,6 @@ export default function SurveyPage() {
         overflow-x-hidden
         transition-all
         duration-500
-
-        ${darkMode
-
-          ? 'bg-[#020617]'
-
-          : 'bg-[#f8fafc]'
-
-        }
-
       `}
     >
 
@@ -415,7 +414,7 @@ export default function SurveyPage() {
         px-4
         sm:px-6
         lg:px-8
-        ${step === 'student' || step === 'survey' ? 'h-[100dvh] flex flex-col justify-between overflow-y-auto sm:overflow-hidden' : 'py-6'}
+        ${step === 'student' || step === 'survey' ? 'h-[100dvh] flex flex-col justify-between overflow-y-auto sm:overflow-hidden py-6 sm:py-8' : 'py-6'}
         `}>
 
         {/* HEADER */}
