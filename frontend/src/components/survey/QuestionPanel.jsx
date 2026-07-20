@@ -28,11 +28,11 @@ const EMOTION_LABELS = {
 }
 
 const RATING_COLORS = {
-  1:{bg:'bg-red-50',border:'border-red-400',text:'text-red-600'},
-  2:{bg:'bg-orange-50',border:'border-orange-400',text:'text-orange-600'},
-  3:{bg:'bg-yellow-50',border:'border-yellow-400',text:'text-yellow-600'},
-  4:{bg:'bg-blue-50',border:'border-blue-400',text:'text-blue-600'},
-  5:{bg:'bg-green-50',border:'border-green-400',text:'text-green-600'}
+  1:{bg:'bg-red-50 dark:bg-red-950/30',border:'border-red-400 dark:border-red-800/60',text:'text-red-600 dark:text-red-400'},
+  2:{bg:'bg-orange-50 dark:bg-orange-950/30',border:'border-orange-400 dark:border-orange-800/60',text:'text-orange-600 dark:text-orange-400'},
+  3:{bg:'bg-yellow-50 dark:bg-yellow-950/30',border:'border-yellow-400 dark:border-yellow-800/60',text:'text-yellow-600 dark:text-yellow-400'},
+  4:{bg:'bg-blue-50 dark:bg-blue-950/30',border:'border-blue-400 dark:border-blue-800/60',text:'text-blue-600 dark:text-blue-400'},
+  5:{bg:'bg-green-50 dark:bg-green-950/30',border:'border-green-400 dark:border-green-800/60',text:'text-green-600 dark:text-green-400'}
 }
 
 const MANUAL_RATINGS = [

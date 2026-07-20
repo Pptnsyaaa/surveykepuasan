@@ -359,7 +359,7 @@ useEffect(() => {
 
 <div className="
 w-full h-full flex flex-col justify-between
-bg-white/85
+bg-white/85 dark:bg-slate-900/80
 backdrop-blur-xl
 
 rounded-[24px] sm:rounded-[28px] lg:rounded-[32px]
@@ -369,7 +369,7 @@ p-3.5 sm:p-4 md:p-5
 shadow-2xl
 
 border
-border-slate-100
+border-slate-100 dark:border-slate-700/70
 ">
 
 <div className="
@@ -580,12 +580,12 @@ h-full
 <div className="
 mt-2 sm:mt-3
 
-bg-white
+bg-white dark:bg-slate-800/80
 
 rounded-xl sm:rounded-2xl
 
 border
-border-slate-100
+border-slate-100 dark:border-slate-700
 
 shadow-sm
 
@@ -605,7 +605,7 @@ text-lg sm:text-xl
 
 <p className="
 text-xs sm:text-[13px]
-text-slate-600
+text-slate-600 dark:text-slate-300
 leading-snug
 ">
 
