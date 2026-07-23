@@ -560,11 +560,7 @@ export default function SurveyPage() {
                 transition={{ duration: 0.6 }}
                 className="mb-2 sm:mb-4"
               >
-                <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium mb-2 sm:mb-3 shadow-sm ${darkMode ? 'bg-indigo-500/10 text-indigo-200 border border-indigo-500/20' : 'bg-indigo-50 text-indigo-700 border border-indigo-200/60'
-                  }`}>
-                  <Sparkles className="w-4 h-4 text-indigo-500" />
-                  <span>Smart Campus Survey</span>
-                </span>
+
 
                 <h1 className={`text-xl sm:text-3xl lg:text-4xl xl:text-5xl font-black leading-tight mb-1.5 sm:mb-3 ${darkMode ? 'text-white' : 'text-slate-800'
                   }`}>
